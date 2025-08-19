@@ -64,9 +64,14 @@
       },
       "accountType": "business"
     },
-    "notes": "Entrega en horario de oficina únicamente",
-    "distance": 1650,
-    "estimatedDuration": 1200
+    "route": {
+      "distance": 1650,
+      "estimatedTime": 1200
+    },
+    "notes": [
+      "Entrega en horario de oficina únicamente",
+      "Contactar 30 minutos antes de la entrega"
+    ]
   },
   {
     "id": "SH002",
@@ -130,9 +135,14 @@
       },
       "accountType": "business"
     },
-    "notes": "Mantener cadena de frío",
-    "distance": 2100,
-    "estimatedDuration": 1800
+    "route": {
+      "distance": 2100,
+      "estimatedTime": 1800
+    },
+    "notes": [
+      "Mantener cadena de frío",
+      "Requiere refrigeración constante"
+    ]
   },
   {
     "id": "SH003",
@@ -200,8 +210,13 @@
       },
       "accountType": "business"
     },
-    "distance": 920,
-    "estimatedDuration": 780
+    "route": {
+      "distance": 920,
+      "estimatedTime": 780
+    },
+    "notes": [
+      "Mercancía frágil - manejar con cuidado"
+    ]
   },
   {
     "id": "SH004",
@@ -268,8 +283,14 @@
       },
       "accountType": "business"
     },
-    "notes": "Entrega urgente - Equipo crítico",
-    "distance": 650,
-    "estimatedDuration": 480
+    "route": {
+      "distance": 650,
+      "estimatedTime": 480
+    },
+    "notes": [
+      "Entrega urgente - Equipo crítico",
+      "Prioridad máxima",
+      "Contactar al responsable médico al llegar"
+    ]
   }
 ]

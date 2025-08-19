@@ -1,178 +1,70 @@
 [
   {
     "id": "DR001",
-    "firstName": "Carlos",
-    "lastName": "González",
-    "email": "carlos.gonzalez@transport.com",
+    "name": "Carlos González",
+    "license": "LIC123456789",
     "phone": "+52 555 987 6543",
-    "licenseNumber": "LIC123456789",
-    "licenseExpiry": "2026-08-15T00:00:00.000Z",
-    "status": "active",
-    "dateOfBirth": "1985-03-20T00:00:00.000Z",
-    "hireDate": "2020-01-15T00:00:00.000Z",
-    "profileImage": "/images/user/user-01.jpg",
-    "address": {
-      "street": "Calle Principal 456",
-      "city": "Guadalajara",
-      "state": "Jalisco",
-      "zipCode": "44100",
-      "country": "México",
-      "coordinates": {
-        "latitude": 20.6597,
-        "longitude": -103.3496
-      }
-    },
-    "emergencyContact": {
-      "name": "María González",
-      "relationship": "Esposa",
-      "phone": "+52 555 456 7890",
-      "email": "maria.gonzalez@email.com"
-    }
+    "email": "carlos.gonzalez@transport.com",
+    "status": "on-delivery",
+    "currentVehicle": "VH001",
+    "rating": 4.8,
+    "totalDeliveries": 145,
+    "onTimeDeliveries": 138
   },
   {
     "id": "DR002",
-    "firstName": "Roberto",
-    "lastName": "Martínez",
-    "email": "roberto.martinez@transport.com",
+    "name": "Roberto Martínez",
+    "license": "LIC987654321",
     "phone": "+52 555 234 5678",
-    "licenseNumber": "LIC987654321",
-    "licenseExpiry": "2025-12-20T00:00:00.000Z",
-    "status": "active",
-    "dateOfBirth": "1978-11-10T00:00:00.000Z",
-    "hireDate": "2018-05-22T00:00:00.000Z",
-    "profileImage": "/images/user/user-02.jpg",
-    "address": {
-      "street": "Av. Independencia 789",
-      "city": "Monterrey",
-      "state": "Nuevo León",
-      "zipCode": "64000",
-      "country": "México",
-      "coordinates": {
-        "latitude": 25.6866,
-        "longitude": -100.3161
-      }
-    },
-    "emergencyContact": {
-      "name": "Luis Martínez",
-      "relationship": "Hermano",
-      "phone": "+52 555 345 6789"
-    }
+    "email": "roberto.martinez@transport.com",
+    "status": "available",
+    "rating": 4.6,
+    "totalDeliveries": 98,
+    "onTimeDeliveries": 91
   },
   {
     "id": "DR003",
-    "firstName": "Ana",
-    "lastName": "Rodríguez",
-    "email": "ana.rodriguez@transport.com",
+    "name": "Ana Rodríguez",
+    "license": "LIC456789123",
     "phone": "+52 555 876 5432",
-    "licenseNumber": "LIC456789123",
-    "licenseExpiry": "2027-04-30T00:00:00.000Z",
-    "status": "active",
-    "dateOfBirth": "1990-07-18T00:00:00.000Z",
-    "hireDate": "2022-03-08T00:00:00.000Z",
-    "profileImage": "/images/user/user-03.jpg",
-    "address": {
-      "street": "Calle Revolución 321",
-      "city": "Mérida",
-      "state": "Yucatán",
-      "zipCode": "97000",
-      "country": "México",
-      "coordinates": {
-        "latitude": 20.9674,
-        "longitude": -89.5926
-      }
-    },
-    "emergencyContact": {
-      "name": "Pedro Rodríguez",
-      "relationship": "Padre",
-      "phone": "+52 555 765 4321",
-      "email": "pedro.rodriguez@email.com"
-    }
+    "email": "ana.rodriguez@transport.com",
+    "status": "on-delivery",
+    "currentVehicle": "VH005",
+    "rating": 4.9,
+    "totalDeliveries": 67,
+    "onTimeDeliveries": 65
   },
   {
     "id": "DR004",
-    "firstName": "Miguel",
-    "lastName": "Hernández",
-    "email": "miguel.hernandez@transport.com",
+    "name": "Miguel Hernández",
+    "license": "LIC789123456",
     "phone": "+52 555 654 3210",
-    "licenseNumber": "LIC789123456",
-    "licenseExpiry": "2026-01-15T00:00:00.000Z",
-    "status": "inactive",
-    "dateOfBirth": "1982-09-25T00:00:00.000Z",
-    "hireDate": "2019-07-12T00:00:00.000Z",
-    "profileImage": "/images/user/user-04.jpg",
-    "address": {
-      "street": "Blvd. López Mateos 654",
-      "city": "Tijuana",
-      "state": "Baja California",
-      "zipCode": "22000",
-      "country": "México",
-      "coordinates": {
-        "latitude": 32.5149,
-        "longitude": -117.0382
-      }
-    },
-    "emergencyContact": {
-      "name": "Carmen Hernández",
-      "relationship": "Madre",
-      "phone": "+52 555 432 1098"
-    }
+    "email": "miguel.hernandez@transport.com",
+    "status": "off-duty",
+    "rating": 4.2,
+    "totalDeliveries": 78,
+    "onTimeDeliveries": 70
   },
   {
     "id": "DR005",
-    "firstName": "José",
-    "lastName": "López",
-    "email": "jose.lopez@transport.com",
+    "name": "José López",
+    "license": "LIC321654987",
     "phone": "+52 555 321 0987",
-    "licenseNumber": "LIC321654987",
-    "licenseExpiry": "2025-09-30T00:00:00.000Z",
-    "status": "active",
-    "dateOfBirth": "1975-12-05T00:00:00.000Z",
-    "hireDate": "2017-11-20T00:00:00.000Z",
-    "profileImage": "/images/user/user-05.jpg",
-    "address": {
-      "street": "Calle Juárez 987",
-      "city": "Puebla",
-      "state": "Puebla",
-      "zipCode": "72000",
-      "country": "México",
-      "coordinates": {
-        "latitude": 19.0414,
-        "longitude": -98.2063
-      }
-    },
-    "emergencyContact": {
-      "name": "Elena López",
-      "relationship": "Esposa",
-      "phone": "+52 555 210 9876",
-      "email": "elena.lopez@email.com"
-    }
+    "email": "jose.lopez@transport.com",
+    "status": "available",
+    "rating": 4.7,
+    "totalDeliveries": 156,
+    "onTimeDeliveries": 148
   },
   {
     "id": "DR006",
-    "firstName": "Fernando",
-    "lastName": "Silva",
-    "email": "fernando.silva@transport.com",
+    "name": "Fernando Silva",
+    "license": "LIC654321098",
     "phone": "+52 555 109 8765",
-    "licenseNumber": "LIC654321098",
-    "licenseExpiry": "2026-06-10T00:00:00.000Z",
+    "email": "fernando.silva@transport.com",
     "status": "suspended",
-    "dateOfBirth": "1988-04-14T00:00:00.000Z",
-    "hireDate": "2021-09-05T00:00:00.000Z",
-    "address": {
-      "street": "Av. Constitución 147",
-      "city": "Veracruz",
-      "state": "Veracruz",
-      "zipCode": "91700",
-      "country": "México",
-      "coordinates": {
-        "latitude": 19.1738,
-        "longitude": -96.1342
-      }
-    },
-    "emergencyContact": {
-      "name": "Ricardo Silva",
-      "relationship": "Hermano",
-      "phone": "+52 555 098 7654"
-    }
+    "rating": 3.8,
+    "totalDeliveries": 45,
+    "onTimeDeliveries": 38
   }
 ]

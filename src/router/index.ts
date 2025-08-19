@@ -89,14 +89,6 @@ const router = createRouter({
       },
     },
     {
-      path: '/avatars',
-      name: 'Avatars',
-      component: () => import('../views/UiElements/Avatars.vue'),
-      meta: {
-        title: 'Avatars',
-      },
-    },
-    {
       path: '/badge',
       name: 'Badge',
       component: () => import('../views/UiElements/Badges.vue'),

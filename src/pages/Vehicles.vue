@@ -100,9 +100,9 @@
             >
               <option value="">Todos los estados</option>
               <option value="available">Disponible</option>
-              <option value="in_transit">En Tránsito</option>
+              <option value="in-use">En Uso</option>
               <option value="maintenance">Mantenimiento</option>
-              <option value="out_of_service">Fuera de Servicio</option>
+              <option value="offline">Fuera de Línea</option>
             </select>
           </div>
   
@@ -283,9 +283,9 @@ const filteredVehicles = computed(() => {
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
     available: 'success',
-    in_transit: 'primary',
+    'in-use': 'primary',
     maintenance: 'warning',
-    out_of_service: 'error'
+    offline: 'error'
   }
   return colors[status] || 'light'
 }
@@ -293,9 +293,9 @@ function getStatusColor(status: string) {
 function getStatusLabel(status: string) {
   const labels: Record<string, string> = {
     available: 'Disponible',
-    in_transit: 'En Tránsito',
+    'in-use': 'En Uso',
     maintenance: 'Mantenimiento',
-    out_of_service: 'Fuera de Servicio'
+    offline: 'Fuera de Línea'
   }
   return labels[status] || status
 }

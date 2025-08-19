@@ -2,18 +2,15 @@
 
 export interface Driver {
   id: string
-  firstName: string
-  lastName: string
-  email: string
+  name: string
+  license: string
   phone: string
-  licenseNumber: string
-  licenseExpiry: string
-  status: 'active' | 'inactive' | 'suspended'
-  dateOfBirth: string
-  hireDate: string
-  profileImage?: string
-  address: Address
-  emergencyContact: EmergencyContact
+  email: string
+  status: 'available' | 'on-delivery' | 'off-duty' | 'suspended'
+  currentVehicle?: string
+  rating: number
+  totalDeliveries: number
+  onTimeDeliveries: number
 }
 
 export interface Vehicle {
@@ -25,7 +22,7 @@ export interface Vehicle {
   type: 'truck' | 'van' | 'trailer' | 'pickup'
   capacity: number
   fuelType: 'diesel' | 'gasoline' | 'electric' | 'hybrid'
-  status: 'available' | 'in_transit' | 'maintenance' | 'out_of_service'
+  status: 'available' | 'in-use' | 'maintenance' | 'offline'
   mileage: number
   lastMaintenance: string
   nextMaintenance: string
@@ -55,10 +52,13 @@ export interface Shipment {
   driverId?: string
   vehicleId?: string
   customer: Customer
-  notes?: string
-  distance: number
-  estimatedDuration: number
-  route?: RoutePoint[]
+  route: {
+    distance: number
+    estimatedTime: number
+  }
+  notes: string[]
+  // Additional route details for complex routing
+  routePoints?: RoutePoint[]
 }
 
 export interface Address {
@@ -71,13 +71,6 @@ export interface Address {
     latitude: number
     longitude: number
   }
-}
-
-export interface EmergencyContact {
-  name: string
-  relationship: string
-  phone: string
-  email?: string
 }
 
 export interface CargoItem {

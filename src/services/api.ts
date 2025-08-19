@@ -31,9 +31,9 @@ async function loadMockData() {
     const vehiclesData = await import('@/mock/vehicles.json')
     const driversData = await import('@/mock/drivers.json')
     
-    mockShipments = shipmentsData.default || []
-    mockVehicles = vehiclesData.default || []
-    mockDrivers = driversData.default || []
+    mockShipments = shipmentsData.default as Shipment[] || []
+    mockVehicles = vehiclesData.default as Vehicle[] || []
+    mockDrivers = driversData.default as Driver[] || []
   } catch (error) {
     console.warn('No se pudieron cargar los datos mock:', error)
     // Use default data if JSON files cannot be loaded
@@ -101,8 +101,13 @@ function initializeDefaultData() {
         },
         accountType: 'business'
       },
-      distance: 1650,
-      estimatedDuration: 1200
+      route: {
+        distance: 1650,
+        estimatedTime: 1200
+      },
+      notes: [
+        'Entrega en horario de oficina únicamente'
+      ]
     }
   ]
 
@@ -116,7 +121,7 @@ function initializeDefaultData() {
       type: 'truck',
       capacity: 5000,
       fuelType: 'diesel',
-      status: 'in_transit',
+      status: 'in-use',
       mileage: 45000,
       lastMaintenance: '2024-12-15T00:00:00.000Z',
       nextMaintenance: '2025-03-15T00:00:00.000Z',
@@ -130,27 +135,15 @@ function initializeDefaultData() {
   mockDrivers = [
     {
       id: 'DR001',
-      firstName: 'Carlos',
-      lastName: 'González',
-      email: 'carlos.gonzalez@transport.com',
+      name: 'Carlos González',
+      license: 'LIC123456789',
       phone: '+52 555 987 6543',
-      licenseNumber: 'LIC123456789',
-      licenseExpiry: '2026-08-15T00:00:00.000Z',
-      status: 'active',
-      dateOfBirth: '1985-03-20T00:00:00.000Z',
-      hireDate: '2020-01-15T00:00:00.000Z',
-      address: {
-        street: 'Calle Principal 456',
-        city: 'Guadalajara',
-        state: 'Jalisco',
-        zipCode: '44100',
-        country: 'México'
-      },
-      emergencyContact: {
-        name: 'María González',
-        relationship: 'Esposa',
-        phone: '+52 555 456 7890'
-      }
+      email: 'carlos.gonzalez@transport.com',
+      status: 'on-delivery',
+      currentVehicle: 'VH001',
+      rating: 4.8,
+      totalDeliveries: 145,
+      onTimeDeliveries: 138
     }
   ]
 }
@@ -284,8 +277,8 @@ export const api = {
       }).length,
       pendingShipments: mockShipments.filter(s => s.status === 'pending').length,
       totalRevenue: mockShipments.reduce((total, s) => total + s.value, 0),
-      activeVehicles: mockVehicles.filter(v => ['available', 'in_transit'].includes(v.status)).length,
-      availableDrivers: mockDrivers.filter(d => d.status === 'active').length,
+      activeVehicles: mockVehicles.filter(v => ['available', 'in-use'].includes(v.status)).length,
+      availableDrivers: mockDrivers.filter(d => ['available', 'on-delivery'].includes(d.status)).length,
       maintenanceVehicles: mockVehicles.filter(v => v.status === 'maintenance').length
     }
     

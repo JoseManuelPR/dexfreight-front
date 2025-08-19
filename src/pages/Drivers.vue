@@ -87,8 +87,9 @@
               class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
             >
               <option value="">Todos los estados</option>
-              <option value="active">Activo</option>
-              <option value="inactive">Inactivo</option>
+              <option value="available">Disponible</option>
+              <option value="on-delivery">En Entrega</option>
+              <option value="off-duty">Fuera de Servicio</option>
               <option value="suspended">Suspendido</option>
             </select>
           </div>
@@ -151,15 +152,14 @@
               >
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
-                    <Avatar 
-                      :src="driver.profileImage" 
-                      :name="`${driver.firstName} ${driver.lastName}`"
-                      size="md"
-                      class="mr-4"
-                    />
+                    <div class="w-10 h-10 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center mr-4">
+                      <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {{ driver.name.charAt(0).toUpperCase() }}
+                      </span>
+                    </div>
                     <div>
                       <div class="text-sm font-medium text-gray-900 dark:text-white">
-                        {{ driver.firstName }} {{ driver.lastName }}
+                        {{ driver.name }}
                       </div>
                       <div class="text-sm text-gray-500 dark:text-gray-400">
                         ID: {{ driver.id }}
@@ -177,10 +177,7 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm text-gray-900 dark:text-white">
-                    {{ driver.licenseNumber }}
-                  </div>
-                  <div class="text-sm text-gray-500 dark:text-gray-400">
-                    Exp: {{ formatDate(driver.licenseExpiry) }}
+                    {{ driver.license }}
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -193,7 +190,7 @@
                   </Badge>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                  {{ formatDate(driver.hireDate) }}
+                  -
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <div class="flex items-center justify-end gap-2">
@@ -219,7 +216,6 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
-import Avatar from '@/components/ui/Avatar.vue'
 import { useDriversStore } from '@/store'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
 import PlusIcon from '@/icons/PlusIcon.vue'
@@ -246,10 +242,10 @@ const filteredDrivers = computed(() => {
   if (searchTerm.value) {
     const term = searchTerm.value.toLowerCase()
     filtered = filtered.filter(d => 
-      `${d.firstName} ${d.lastName}`.toLowerCase().includes(term) ||
+      d.name.toLowerCase().includes(term) ||
       d.email.toLowerCase().includes(term) ||
       d.phone.includes(term) ||
-      d.licenseNumber.toLowerCase().includes(term)
+      d.license.toLowerCase().includes(term)
     )
   }
 
@@ -263,8 +259,9 @@ const filteredDrivers = computed(() => {
 // Methods
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
-    active: 'success',
-    inactive: 'light',
+    available: 'success',
+    'on-delivery': 'primary',
+    'off-duty': 'warning',
     suspended: 'error'
   }
   return colors[status] || 'light'
@@ -272,14 +269,16 @@ function getStatusColor(status: string) {
 
 function getStatusLabel(status: string) {
   const labels: Record<string, string> = {
-    active: 'Activo',
-    inactive: 'Inactivo',
+    available: 'Disponible',
+    'on-delivery': 'En Entrega',
+    'off-duty': 'Fuera de Servicio',
     suspended: 'Suspendido'
   }
   return labels[status] || status
 }
 
-function formatDate(dateString: string) {
+function formatDate(dateString: string | undefined) {
+  if (!dateString) return '-'
   return new Intl.DateTimeFormat('es-MX', {
     day: 'numeric',
     month: 'short',

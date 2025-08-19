@@ -140,7 +140,7 @@ export const useVehiclesStore = defineStore('vehicles', () => {
   )
 
   const vehiclesInTransit = computed(() => 
-    vehicles.value.filter(v => v.status === 'in_transit')
+    vehicles.value.filter(v => v.status === 'in-use')
   )
 
   const vehiclesInMaintenance = computed(() => 
@@ -195,7 +195,7 @@ export const useDriversStore = defineStore('drivers', () => {
   const error = ref<string | null>(null)
 
   const activeDrivers = computed(() => 
-    drivers.value.filter(d => d.status === 'active')
+    drivers.value.filter(d => ['available', 'on-delivery'].includes(d.status))
   )
 
   const availableDrivers = computed(() => {
