@@ -53,6 +53,14 @@ export const useShipmentsStore = defineStore('shipments', () => {
     shipments.value.filter(s => s.status === 'delivered')
   )
 
+  const cancelledShipments = computed(() => 
+    shipments.value.filter(s => s.status === 'cancelled')
+  )
+
+  const delayedShipments = computed(() => 
+    shipments.value.filter(s => s.status === 'delayed')
+  )
+
   // Actions
   async function fetchShipments() {
     loading.value = true
@@ -125,6 +133,8 @@ export const useShipmentsStore = defineStore('shipments', () => {
     activeShipments,
     pendingShipments,
     deliveredShipments,
+    cancelledShipments,
+    delayedShipments,
     // Actions
     fetchShipments,
     createShipment,
@@ -144,13 +154,20 @@ export const useVehiclesStore = defineStore('vehicles', () => {
     vehicles.value.filter(v => v.status === 'available')
   )
 
-  const vehiclesInTransit = computed(() => 
+  const vehiclesInUse = computed(() => 
     vehicles.value.filter(v => v.status === 'in-use')
   )
 
   const vehiclesInMaintenance = computed(() => 
     vehicles.value.filter(v => v.status === 'maintenance')
   )
+
+  const vehiclesOffline = computed(() => 
+    vehicles.value.filter(v => v.status === 'offline')
+  )
+
+  // Legacy computed for backward compatibility
+  const vehiclesInTransit = computed(() => vehiclesInUse.value)
 
   async function fetchVehicles() {
     loading.value = true
@@ -186,8 +203,10 @@ export const useVehiclesStore = defineStore('vehicles', () => {
     loading,
     error,
     availableVehicles,
-    vehiclesInTransit,
+    vehiclesInUse,
     vehiclesInMaintenance,
+    vehiclesOffline,
+    vehiclesInTransit, // Legacy - alias for vehiclesInUse
     fetchVehicles,
     updateVehicleStatus
   }
@@ -206,6 +225,18 @@ export const useDriversStore = defineStore('drivers', () => {
   const availableDrivers = computed(() => {
     return drivers.value.filter(d => d.status === 'available')
   })
+
+  const driversOnDelivery = computed(() => 
+    drivers.value.filter(d => d.status === 'on-delivery')
+  )
+
+  const driversOffDuty = computed(() => 
+    drivers.value.filter(d => d.status === 'off-duty')
+  )
+
+  const driversSuspended = computed(() => 
+    drivers.value.filter(d => d.status === 'suspended')
+  )
 
   async function fetchDrivers() {
     loading.value = true
@@ -228,6 +259,9 @@ export const useDriversStore = defineStore('drivers', () => {
     error,
     activeDrivers,
     availableDrivers,
+    driversOnDelivery,
+    driversOffDuty,
+    driversSuspended,
     fetchDrivers
   }
 })
@@ -264,10 +298,18 @@ export const useDashboardStore = defineStore('dashboard', () => {
       activeShipments: shipmentsStore.activeShipments.length,
       deliveredShipments: shipmentsStore.deliveredShipments.length,
       pendingShipments: shipmentsStore.pendingShipments.length,
+      cancelledShipments: shipmentsStore.cancelledShipments.length,
+      delayedShipments: shipmentsStore.delayedShipments.length,
       totalRevenue: shipmentsStore.shipments.reduce((total, s) => total + s.value, 0),
-      activeVehicles: vehiclesStore.availableVehicles.length + vehiclesStore.vehiclesInTransit.length,
+      activeVehicles: vehiclesStore.availableVehicles.length + vehiclesStore.vehiclesInUse.length,
       availableDrivers: driversStore.availableDrivers.length,
-      maintenanceVehicles: vehiclesStore.vehiclesInMaintenance.length
+      availableVehicles: vehiclesStore.availableVehicles.length,
+      vehiclesInUse: vehiclesStore.vehiclesInUse.length,
+      maintenanceVehicles: vehiclesStore.vehiclesInMaintenance.length,
+      vehiclesOffline: vehiclesStore.vehiclesOffline.length,
+      driversOnDelivery: driversStore.driversOnDelivery.length,
+      driversOffDuty: driversStore.driversOffDuty.length,
+      driversSuspended: driversStore.driversSuspended.length
     }
   })
 

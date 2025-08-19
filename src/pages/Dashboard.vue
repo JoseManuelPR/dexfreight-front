@@ -126,19 +126,25 @@
               <div class="flex items-center justify-between">
                 <span class="text-sm text-gray-600 dark:text-gray-400">Disponibles</span>
                 <Badge color="success" variant="light" size="sm">
-                  {{ availableVehicles }}
+                  {{ vehiclesStore.availableVehicles.length }}
                 </Badge>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-600 dark:text-gray-400">En Tránsito</span>
+                <span class="text-sm text-gray-600 dark:text-gray-400">En Uso</span>
                 <Badge color="primary" variant="light" size="sm">
-                  {{ vehiclesInTransit }}
+                  {{ vehiclesStore.vehiclesInUse.length }}
                 </Badge>
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-sm text-gray-600 dark:text-gray-400">Mantenimiento</span>
                 <Badge color="warning" variant="light" size="sm">
-                  {{ stats?.maintenanceVehicles || 0 }}
+                  {{ vehiclesStore.vehiclesInMaintenance.length }}
+                </Badge>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-600 dark:text-gray-400">Fuera de Línea</span>
+                <Badge color="error" variant="light" size="sm">
+                  {{ vehiclesStore.vehiclesOffline.length }}
                 </Badge>
               </div>
             </div>
@@ -218,8 +224,6 @@ const recentShipments = computed(() =>
     .slice(0, 5)
 )
 
-const availableVehicles = computed(() => vehiclesStore.availableVehicles.length)
-const vehiclesInTransit = computed(() => vehiclesStore.vehiclesInTransit.length)
 const activeDrivers = computed(() => driversStore.activeDrivers.length)
 
 // Methods

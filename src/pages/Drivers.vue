@@ -24,40 +24,73 @@
         </div>
       </div>
   
-      <!-- Stats Overview -->
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total</p>
-              <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ drivers.length }}</p>
-            </div>
-            <div class="bg-orange-500 p-2 rounded-lg">
-              <UserGroupIcon class="h-5 w-5 text-white" />
-            </div>
-          </div>
-        </div>
-        
-        <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Activos</p>
-              <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ activeDrivers.length }}</p>
-            </div>
-            <div class="bg-success-500 p-2 rounded-lg">
-              <CheckIcon class="h-5 w-5 text-white" />
+      <!-- Team Overview -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Total Drivers Card -->
+        <div class="lg:col-span-1">
+          <div class="rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 text-white shadow-lg">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-orange-100 font-medium">Equipo Total</p>
+                <p class="text-4xl font-bold mt-2">{{ drivers.length }}</p>
+                <p class="text-orange-100 text-sm mt-1">Conductores registrados</p>
+              </div>
+              <div class="bg-orange-400 bg-opacity-30 p-3 rounded-lg">
+                <UserGroupIcon class="h-8 w-8 text-white" />
+              </div>
             </div>
           </div>
         </div>
-  
-        <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Disponibles</p>
-              <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ availableDrivers.length }}</p>
+
+        <!-- Status Breakdown -->
+        <div class="lg:col-span-2">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Disponibles</p>
+                  <p class="text-2xl font-semibold text-green-600 dark:text-green-400">{{ driversStore.availableDrivers.length }}</p>
+                </div>
+                <div class="bg-green-500 p-2 rounded-lg">
+                  <CheckIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
             </div>
-            <div class="bg-brand-500 p-2 rounded-lg">
-              <UserCircleIcon class="h-5 w-5 text-white" />
+            
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">En Entrega</p>
+                  <p class="text-2xl font-semibold text-blue-600 dark:text-blue-400">{{ driversStore.driversOnDelivery.length }}</p>
+                </div>
+                <div class="bg-blue-500 p-2 rounded-lg">
+                  <UserCircleIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Fuera de Servicio</p>
+                  <p class="text-2xl font-semibold text-yellow-600 dark:text-yellow-400">{{ driversStore.driversOffDuty.length }}</p>
+                </div>
+                <div class="bg-yellow-500 p-2 rounded-lg">
+                  <UserCircleIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Suspendidos</p>
+                  <p class="text-2xl font-semibold text-red-600 dark:text-red-400">{{ driversStore.driversSuspended.length }}</p>
+                </div>
+                <div class="bg-red-500 p-2 rounded-lg">
+                  <UserCircleIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -136,9 +169,6 @@
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Estado
                 </th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Fecha de Ingreso
-                </th>
                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Acciones
                 </th>
@@ -189,16 +219,10 @@
                     {{ getStatusLabel(driver.status) }}
                   </Badge>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                  -
-                </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <div class="flex items-center justify-end gap-2">
                     <Button variant="outline" size="sm">
                       Ver
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      Editar
                     </Button>
                   </div>
                 </td>
@@ -218,7 +242,6 @@ import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
 import { useDriversStore } from '@/store'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
-import PlusIcon from '@/icons/PlusIcon.vue'
 import UserGroupIcon from '@/icons/UserGroupIcon.vue'
 import UserCircleIcon from '@/icons/UserCircleIcon.vue'
 import CheckIcon from '@/icons/CheckIcon.vue'

@@ -24,52 +24,73 @@
         </div>
       </div>
   
-      <!-- Stats Overview -->
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total</p>
-              <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ vehicles.length }}</p>
-            </div>
-            <div class="bg-orange-500 p-2 rounded-lg">
-              <BoxIcon class="h-5 w-5 text-white" />
-            </div>
-          </div>
-        </div>
-        
-        <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Disponibles</p>
-              <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ availableVehicles.length }}</p>
-            </div>
-            <div class="bg-success-500 p-2 rounded-lg">
-              <CheckIcon class="h-5 w-5 text-white" />
+      <!-- Fleet Overview -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Total Fleet Card -->
+        <div class="lg:col-span-1">
+          <div class="rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 text-white shadow-lg">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-orange-100 font-medium">Flota Total</p>
+                <p class="text-4xl font-bold mt-2">{{ vehicles.length }}</p>
+                <p class="text-orange-100 text-sm mt-1">Vehículos registrados</p>
+              </div>
+              <div class="bg-orange-400 bg-opacity-30 p-3 rounded-lg">
+                <BoxIcon class="h-8 w-8 text-white" />
+              </div>
             </div>
           </div>
         </div>
-  
-        <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">En Tránsito</p>
-              <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ vehiclesInTransit.length }}</p>
+
+        <!-- Status Breakdown -->
+        <div class="lg:col-span-2">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Disponibles</p>
+                  <p class="text-2xl font-semibold text-green-600 dark:text-green-400">{{ vehiclesStore.availableVehicles.length }}</p>
+                </div>
+                <div class="bg-green-500 p-2 rounded-lg">
+                  <CheckIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
             </div>
-            <div class="bg-brand-500 p-2 rounded-lg">
-              <BoxIcon class="h-5 w-5 text-white" />
+            
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">En Uso</p>
+                  <p class="text-2xl font-semibold text-blue-600 dark:text-blue-400">{{ vehiclesStore.vehiclesInUse.length }}</p>
+                </div>
+                <div class="bg-blue-500 p-2 rounded-lg">
+                  <BoxIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-  
-        <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Mantenimiento</p>
-              <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ vehiclesInMaintenance.length }}</p>
+            
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Mantenimiento</p>
+                  <p class="text-2xl font-semibold text-yellow-600 dark:text-yellow-400">{{ vehiclesStore.vehiclesInMaintenance.length }}</p>
+                </div>
+                <div class="bg-yellow-500 p-2 rounded-lg">
+                  <WarningIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
             </div>
-            <div class="bg-warning-500 p-2 rounded-lg">
-              <WarningIcon class="h-5 w-5 text-white" />
+            
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Fuera de Línea</p>
+                  <p class="text-2xl font-semibold text-red-600 dark:text-red-400">{{ vehiclesStore.vehiclesOffline.length }}</p>
+                </div>
+                <div class="bg-red-500 p-2 rounded-lg">
+                  <BoxIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -206,22 +227,6 @@
             <Button variant="outline" size="sm" class="flex-1">
               Ver Detalles
             </Button>
-            <Button 
-              v-if="vehicle.status === 'available'"
-              variant="primary" 
-              size="sm" 
-              class="flex-1"
-            >
-              Asignar
-            </Button>
-            <Button 
-              v-else-if="vehicle.status === 'maintenance'"
-              variant="outline" 
-              size="sm" 
-              class="flex-1"
-            >
-              Finalizar
-            </Button>
           </div>
         </div>
       </div>
@@ -236,7 +241,6 @@ import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
 import { useVehiclesStore } from '@/store'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
-import PlusIcon from '@/icons/PlusIcon.vue'
 import BoxIcon from '@/icons/BoxIcon.vue'
 import CheckIcon from '@/icons/CheckIcon.vue'
 import WarningIcon from '@/icons/WarningIcon.vue'

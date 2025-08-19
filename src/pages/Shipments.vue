@@ -24,6 +24,78 @@
         </div>
       </div>
   
+      <!-- Shipments Overview -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Total Shipments Card -->
+        <div class="lg:col-span-1">
+          <div class="rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 text-white shadow-lg">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-orange-100 font-medium">Total de Envíos</p>
+                <p class="text-4xl font-bold mt-2">{{ shipmentsStore.shipments.length }}</p>
+                <p class="text-orange-100 text-sm mt-1">Envíos registrados</p>
+              </div>
+              <div class="bg-orange-400 bg-opacity-30 p-3 rounded-lg">
+                <BoxIcon class="h-8 w-8 text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Breakdown -->
+        <div class="lg:col-span-2">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Pendientes</p>
+                  <p class="text-2xl font-semibold text-yellow-600 dark:text-yellow-400">{{ shipmentsStore.pendingShipments.length }}</p>
+                </div>
+                <div class="bg-yellow-500 p-2 rounded-lg">
+                  <BoxIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">En Tránsito</p>
+                  <p class="text-2xl font-semibold text-blue-600 dark:text-blue-400">{{ shipmentsStore.activeShipments.length }}</p>
+                </div>
+                <div class="bg-blue-500 p-2 rounded-lg">
+                  <BoxIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Entregados</p>
+                  <p class="text-2xl font-semibold text-green-600 dark:text-green-400">{{ shipmentsStore.deliveredShipments.length }}</p>
+                </div>
+                <div class="bg-green-500 p-2 rounded-lg">
+                  <CheckIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Cancelados/Retrasados</p>
+                  <p class="text-2xl font-semibold text-red-600 dark:text-red-400">{{ shipmentsStore.cancelledShipments.length + shipmentsStore.delayedShipments.length }}</p>
+                </div>
+                <div class="bg-red-500 p-2 rounded-lg">
+                  <BoxIcon class="h-5 w-5 text-white" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
       <!-- Filters -->
       <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -133,9 +205,6 @@
                   Prioridad
                 </th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Valor
-                </th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Fecha
                 </th>
                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -192,9 +261,6 @@
                     {{ getPriorityLabel(shipment.priority) }}
                   </Badge>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                  {{ formatCurrency(shipment.value) }}
-                </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   {{ formatDate(shipment.createdAt) }}
                 </td>
@@ -206,9 +272,6 @@
                       @click="openShipmentDetail(shipment)"
                     >
                       Ver
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      Editar
                     </Button>
                   </div>
                 </td>
@@ -242,6 +305,7 @@ import type { Shipment } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
 import PlusIcon from '@/icons/PlusIcon.vue'
 import BoxIcon from '@/icons/BoxIcon.vue'
+import CheckIcon from '@/icons/CheckIcon.vue'
 
 // Stores
 const shipmentsStore = useShipmentsStore()
@@ -329,13 +393,6 @@ function getPriorityLabel(priority: string) {
     urgent: 'Urgente'
   }
   return labels[priority] || priority
-}
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat('es-PE', {
-    style: 'currency',
-    currency: 'PEN'
-  }).format(value)
 }
 
 function formatDate(dateString: string) {
