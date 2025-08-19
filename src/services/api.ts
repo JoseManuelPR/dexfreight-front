@@ -332,6 +332,14 @@ export const api = {
 
   // Dashboard
   async getDashboardStats(): Promise<ApiResponse<DashboardStats>> {
+    const cacheKey = 'dashboard-stats'
+    
+    // Check cache first
+    const cached = apiCache.get<DashboardStats>(cacheKey)
+    if (cached) {
+      return createApiResponse(cached)
+    }
+    
     await delay(600)
     
     const stats: DashboardStats = {
@@ -344,6 +352,9 @@ export const api = {
       availableDrivers: mockDrivers.filter(d => ['available', 'on-delivery'].includes(d.status)).length,
       maintenanceVehicles: mockVehicles.filter(v => v.status === 'maintenance').length
     }
+    
+    // Save to cache
+    apiCache.set(cacheKey, stats)
     
     return createApiResponse(stats)
   }
