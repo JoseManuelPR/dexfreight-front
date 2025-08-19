@@ -55,13 +55,13 @@ export default defineConfig({
           if (id.includes('pinia')) {
             return 'vue-core'
           }
-          if (id.includes('lucide-vue-next')) {
-            return 'icons-lazy'
+          if (id.includes('lucide-vue-next') || id.includes('/icons/')) {
+            return 'ui-icons'
           }
           if (id.includes('flatpickr') || id.includes('dropzone')) {
             return 'forms-lazy'
           }
-          if (id.includes('jsvectormap') || id.includes('vuevectormap') || 
+          if (id.includes('vuevectormap') || 
               id.includes('vuedraggable')) {
             return 'utils-lazy'
           }
@@ -76,12 +76,15 @@ export default defineConfig({
           }
           if (id.includes('/pages/Drivers.vue') || id.includes('/components/drivers/')) {
             return 'page-drivers'
-          }          
-          if (id.includes('/components/layout/') && !id.includes('AdminLayout')) {
-            return undefined
           }
           if (id.includes('AdminLayout')) {
             return 'layout-admin'
+          }
+          if (id.includes('/components/layout/') && !id.includes('AdminLayout')) {
+            return 'layout-common'
+          }
+          if (id.includes('/store/') || id.includes('/services/')) {
+            return 'app-core'
           }
         },
       },
@@ -91,8 +94,12 @@ export default defineConfig({
     terserOptions: {
       compress: {
         drop_console: true,
-        drop_debugger: true
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug']
       },
+      mangle: {
+        safari10: true
+      }
     },
     chunkSizeWarningLimit: 250,
     sourcemap: false,
@@ -104,6 +111,7 @@ export default defineConfig({
         return deps.filter(dep => 
           dep.includes('vue-core') || 
           dep.includes('page-dashboard') ||
+          dep.includes('layout-admin') ||
           dep.includes('main.css')
         )
       }

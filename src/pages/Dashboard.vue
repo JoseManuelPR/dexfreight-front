@@ -283,24 +283,20 @@ function editShipment(shipment: Shipment) {
 }
 
 onMounted(async () => {
-  dashboardStore.fetchDashboardStats()
+  await dashboardStore.fetchDashboardStats()
   
-  if (window.requestIdleCallback) {
-    window.requestIdleCallback(() => {
-      Promise.all([
-        shipmentsStore.fetchShipments(),
-        vehiclesStore.fetchVehicles(),
-        driversStore.fetchDrivers()
-      ])
-    })
+  const loadSecondaryData = () => {
+    Promise.allSettled([
+      shipmentsStore.fetchShipments(),
+      vehiclesStore.fetchVehicles(),
+      driversStore.fetchDrivers()
+    ]).catch(err => console.error('Error loading secondary data:', err))
+  }
+  
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(loadSecondaryData, { timeout: 1000 })
   } else {
-    setTimeout(() => {
-      Promise.all([
-        shipmentsStore.fetchShipments(),
-        vehiclesStore.fetchVehicles(),
-        driversStore.fetchDrivers()
-      ])
-    }, 0)
+    setTimeout(loadSecondaryData, 50)
   }
 })
 

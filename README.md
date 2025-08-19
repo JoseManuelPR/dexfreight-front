@@ -40,7 +40,6 @@ This project is built upon the **TailAdmin** free template, a modern admin dashb
 ### Additional Libraries
 - **Icons**: Lucide Vue Next
 - **Date Handling**: Flatpickr
-- **Maps**: JSVectorMap
 - **Forms**: Dropzone, Vue-Flatpickr
 
 ## 🚀 Quick Start

@@ -15,9 +15,8 @@ app.mount('#app')
 
 const loadNonCriticalDeps = async () => {
   try {
-    await Promise.all([
-      import('jsvectormap/dist/jsvectormap.css' as any),
-      import('flatpickr/dist/flatpickr.css' as any)
+    await Promise.allSettled([
+      import('flatpickr/dist/flatpickr.css')
     ])
   } catch (error) {
     console.warn('Failed to load non-critical dependencies:', error)
@@ -25,8 +24,8 @@ const loadNonCriticalDeps = async () => {
 }
 
 if (typeof window !== 'undefined') {
-  if ((window as any).requestIdleCallback) {
-    (window as any).requestIdleCallback(loadNonCriticalDeps)
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(loadNonCriticalDeps, { timeout: 2000 })
   } else {
     setTimeout(loadNonCriticalDeps, 100)
   }
