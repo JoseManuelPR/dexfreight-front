@@ -160,7 +160,6 @@ loadMockData()
 export const api = {
   // Shipments
   async getShipments(filters?: any): Promise<ApiResponse<Shipment[]>> {
-    // Create cache key based on filters
     const cacheKey = CacheService.createKey('shipments', filters)
     
     // Check cache first
@@ -169,7 +168,7 @@ export const api = {
       return createApiResponse(cached)
     }
     
-    await delay(500) // Simulate network latency
+    await delay(500)
     
     let filtered = [...mockShipments]
     

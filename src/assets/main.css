@@ -325,51 +325,6 @@ layer(base);
 }
 
 /* third-party libraries CSS */
-.apexcharts-legend-text {
-  @apply !text-gray-700 dark:!text-gray-400;
-}
-
-.apexcharts-text {
-  @apply !fill-gray-700 dark:!fill-gray-400;
-}
-
-.apexcharts-tooltip.apexcharts-theme-light {
-  @apply gap-1 !rounded-lg !border-gray-200 p-3 !shadow-theme-sm dark:!border-gray-800 dark:!bg-gray-900;
-}
-
-.apexcharts-legend-text {
-  @apply !pl-5 !text-gray-700 dark:!text-gray-400;
-}
-.apexcharts-tooltip-series-group {
-  @apply !p-0;
-}
-.apexcharts-tooltip-y-group {
-  @apply !p-0;
-}
-.apexcharts-tooltip-title {
-  @apply !mb-0 !border-b-0 !bg-transparent !p-0 !text-[10px] !leading-4 !text-gray-800 dark:!text-white/90;
-}
-.apexcharts-tooltip-text {
-  @apply !text-theme-xs !text-gray-700 dark:!text-white/90;
-}
-.apexcharts-tooltip-text-y-value {
-  @apply !font-medium;
-}
-
-.apexcharts-gridline {
-  @apply !stroke-gray-100 dark:!stroke-gray-800;
-}
-#chartTwo .apexcharts-datalabels-group {
-  @apply !-translate-y-24;
-}
-#chartTwo .apexcharts-datalabels-group .apexcharts-text {
-  @apply !fill-gray-800 !font-semibold dark:!fill-white/90;
-}
-
-#chartSixteen .apexcharts-legend {
-  @apply !p-0 !pl-6;
-}
-
 .jvm-container {
   @apply !bg-gray-50 dark:!bg-gray-900;
 }
@@ -743,12 +698,6 @@ span.flatpickr-weekday,
     0px 1px 2px 0px rgba(16, 24, 40, 0.06);
   opacity: 0.8;
   cursor: grabbing; /* Changes the cursor to indicate dragging */
-}
-
-.custom-calendar .fc-h-event {
-  background-color: transparent;
-  border: none;
-  color: black;
 }
 
 .social-button {

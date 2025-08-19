@@ -27,7 +27,6 @@ import HomeIcon from "./HomeIcon.vue";
 import ChevronRightIcon from "./ChevronRightIcon.vue";
 import BoxIcon from "./BoxIcon.vue";
 import ErrorHexaIcon from "./ErrorHexaIcon.vue";
-import Calendar2Line from "./Calendar2Line.vue";
 import Message2Line from "./Message2Line.vue";
 import PaperclipIcon from "./PaperclipIcon.vue";
 import MenuIcon from "./MenuIcon.vue";
@@ -44,11 +43,11 @@ import SupportIcon from "./SupportIcon.vue";
 import LayoutDashboardIcon from "./LayoutDashboardIcon.vue";
 import UserGroupIcon from "./UserGroupIcon.vue";
 import BellIcon from "./BellIcon.vue";
-import BarChartIcon from "./BarChartIcon.vue";
+
 
 export {
   BellIcon,
-  BarChartIcon,
+
   LayoutDashboardIcon,
   UserGroupIcon,
   FolderIcon,
@@ -75,7 +74,7 @@ export {
   PieChartIcon,
   ChevronDownIcon,
   HorizontalDots,
-  Calendar2Line,
+
   PlugInIcon,
   PageIcon,
   TableIcon,

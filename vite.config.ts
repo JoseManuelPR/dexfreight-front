@@ -55,24 +55,16 @@ export default defineConfig({
           if (id.includes('pinia')) {
             return 'vue-core'
           }
-          
           if (id.includes('lucide-vue-next')) {
             return 'icons-lazy'
           }
-          if (id.includes('apexcharts') || id.includes('vue3-apexcharts')) {
-            return 'charts-lazy'
-          }
           if (id.includes('flatpickr') || id.includes('dropzone')) {
             return 'forms-lazy'
-          }
-          if (id.includes('@fullcalendar')) {
-            return 'calendar-lazy'
           }
           if (id.includes('jsvectormap') || id.includes('vuevectormap') || 
               id.includes('swiper') || id.includes('vuedraggable')) {
             return 'utils-lazy'
           }
-          
           if (id.includes('/pages/Dashboard.vue')) {
             return 'page-dashboard'
           }
@@ -84,12 +76,10 @@ export default defineConfig({
           }
           if (id.includes('/pages/Drivers.vue') || id.includes('/components/drivers/')) {
             return 'page-drivers'
-          }
-          
+          }          
           if (id.includes('/components/layout/') && !id.includes('AdminLayout')) {
             return undefined
           }
-          
           if (id.includes('AdminLayout')) {
             return 'layout-admin'
           }

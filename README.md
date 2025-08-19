@@ -38,7 +38,6 @@ DexFreight is a comprehensive transport management system designed for logistics
 This project is built upon the **TailAdmin** free template, a modern admin dashboard template built with Tailwind CSS. For more information about TailAdmin features and documentation, visit: [https://tailadmin.com/docs](https://tailadmin.com/docs)
 
 ### Additional Libraries
-- **Charts**: ApexCharts + Vue3-ApexCharts
 - **Icons**: Lucide Vue Next
 - **Date Handling**: Flatpickr
 - **Maps**: JSVectorMap
