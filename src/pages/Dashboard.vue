@@ -180,12 +180,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { computed, defineAsyncComponent, onMounted, ref } from 'vue'
 import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
 import StatsCard from '@/components/dashboard/StatsCard.vue'
-import ShipmentDetailModal from '@/components/shipments/ShipmentDetailModal.vue'
+
+const ShipmentDetailModal = defineAsyncComponent(() => 
+  import('@/components/shipments/ShipmentDetailModal.vue')
+)
 import { useShipmentsStore } from '@/store'
 import { useVehiclesStore } from '@/store'
 import { useDriversStore } from '@/store'
@@ -201,7 +204,7 @@ const dashboardStore = useDashboardStore()
 const showDetailModal = ref(false)
 const selectedShipment = ref<Shipment | null>(null)
 
-const stats = computed(() => dashboardStore.stats || dashboardStore.computedStats)
+const stats = computed(() => dashboardStore.stats || dashboardStore.getComputedStats())
 const loading = computed(() => dashboardStore.loading)
 const shipmentsLoading = computed(() => shipmentsStore.loading)
 const drivers = computed(() => driversStore.drivers)
@@ -254,12 +257,13 @@ function formatDate(dateString: string) {
 }
 
 async function refreshData() {
-  await Promise.all([
+  await dashboardStore.fetchDashboardStats()
+  
+  Promise.all([
     shipmentsStore.fetchShipments(),
     vehiclesStore.fetchVehicles(),
-    driversStore.fetchDrivers(),
-    dashboardStore.fetchDashboardStats()
-  ])
+    driversStore.fetchDrivers()
+  ]).catch(err => console.error('Error loading secondary data:', err))
 }
 
 function openShipmentDetail(shipment: Shipment) {
@@ -278,13 +282,26 @@ function editShipment(shipment: Shipment) {
   closeShipmentDetail()
 }
 
-onMounted(() => {
-  refreshData()
-})
-
-defineComponent({
-  components: {
-    AdminLayout
+onMounted(async () => {
+  dashboardStore.fetchDashboardStats()
+  
+  if (window.requestIdleCallback) {
+    window.requestIdleCallback(() => {
+      Promise.all([
+        shipmentsStore.fetchShipments(),
+        vehiclesStore.fetchVehicles(),
+        driversStore.fetchDrivers()
+      ])
+    })
+  } else {
+    setTimeout(() => {
+      Promise.all([
+        shipmentsStore.fetchShipments(),
+        vehiclesStore.fetchVehicles(),
+        driversStore.fetchDrivers()
+      ])
+    }, 0)
   }
 })
+
 </script>

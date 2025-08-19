@@ -287,8 +287,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
     }
   }
 
-  // Computed stats based on other stores when no API is available
-  const computedStats = computed(() => {
+  function getComputedStats() {
     const shipmentsStore = useShipmentsStore()
     const vehiclesStore = useVehiclesStore()
     const driversStore = useDriversStore()
@@ -311,13 +310,13 @@ export const useDashboardStore = defineStore('dashboard', () => {
       driversOffDuty: driversStore.driversOffDuty.length,
       driversSuspended: driversStore.driversSuspended.length
     }
-  })
+  }
 
   return {
     stats,
     loading,
     error,
-    computedStats,
+    getComputedStats,
     fetchDashboardStats
   }
 })

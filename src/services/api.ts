@@ -1,3 +1,6 @@
+import shipmentsData from '@/mock/shipments.json'
+import vehiclesData from '@/mock/vehicles.json' 
+import driversData from '@/mock/drivers.json'
 import type {
   Shipment,
   Vehicle,
@@ -25,16 +28,17 @@ let mockVehicles: Vehicle[] = []
 let mockDrivers: Driver[] = []
 
 // Load mock data on initialization
-async function loadMockData() {
+function loadMockData() {
   try {
-    // Import static JSON data
-    const shipmentsData = await import('@/mock/shipments.json')
-    const vehiclesData = await import('@/mock/vehicles.json')
-    const driversData = await import('@/mock/drivers.json')
+    mockShipments = shipmentsData as Shipment[] || []
+    mockVehicles = vehiclesData as Vehicle[] || []
+    mockDrivers = driversData as Driver[] || []
     
-    mockShipments = shipmentsData.default as Shipment[] || []
-    mockVehicles = vehiclesData.default as Vehicle[] || []
-    mockDrivers = driversData.default as Driver[] || []
+    console.log('Mock data loaded:', {
+      shipments: mockShipments.length,
+      vehicles: mockVehicles.length,
+      drivers: mockDrivers.length
+    })
   } catch (error) {
     console.warn('No se pudieron cargar los datos mock:', error)
     // Use default data if JSON files cannot be loaded

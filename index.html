@@ -2,15 +2,64 @@
 <html lang="">
   <head>
     <meta charset="UTF-8" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="preconnect" href="//fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="/assets/index-jUyEUHQf.css" as="style" />
+
+    <link rel="prefetch" href="/assets/vue-core-C-62BrAB.js" />
+    <link rel="prefetch" href="/assets/page-dashboard-DZ0OoFSP.js" />
+    <link rel="prefetch" href="/assets/layout-admin-BrYYEnQT.js" />
+    
     <!-- Favicon moderno -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DexFreight - Sistema de Gestión de Transporte</title>
     <meta name="theme-color" content="#fb6514" />
+    
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #f9fafb;
+      }
+      .dark body { background: #111827; }
+      #app { min-height: 100vh; }
+      .admin-layout { display: flex; min-height: 100vh; }
+      .sidebar { width: 280px; background: #fff; flex-shrink: 0; }
+      .dark .sidebar { background: #1f2937; }
+      .main-content { flex: 1; background: #f9fafb; }
+      .dark .main-content { background: #111827; }
+      .loading-placeholder {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+      .loading-spinner {
+        width: 24px;
+        height: 24px;
+        border: 2px solid #e5e7eb;
+        border-top: 2px solid #fb6514;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 8px;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body class="dark:bg-gray-900">
-    <div id="app"></div>
+    <div id="app">
+      <div class="loading-placeholder">
+        <div class="loading-spinner"></div>
+        <div>Cargando...</div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

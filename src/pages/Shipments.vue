@@ -284,17 +284,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, defineComponent, onMounted, ref, watch } from 'vue'
 import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
-import ShipmentDetailModal from '@/components/shipments/ShipmentDetailModal.vue'
+
 import { useShipmentsStore, useDriversStore, useVehiclesStore } from '@/store'
 import type { Shipment } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
-import PlusIcon from '@/icons/PlusIcon.vue'
 import BoxIcon from '@/icons/BoxIcon.vue'
 import CheckIcon from '@/icons/CheckIcon.vue'
+
+const ShipmentDetailModal = defineAsyncComponent(() => 
+  import('@/components/shipments/ShipmentDetailModal.vue')
+)
 
 const shipmentsStore = useShipmentsStore()
 const driversStore = useDriversStore()
