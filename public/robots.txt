@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://dexfreight.com/sitemap.xml
+
+# Crawl-delay (opcional)
+Crawl-delay: 1
+
+# Disallow archivos específicos
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /assets/
+Disallow: /src/
+
+# Allow específico para archivos importantes
+Allow: /assets/*.css
+Allow: /assets/*.js
+
+# Configuración para bots específicos
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /

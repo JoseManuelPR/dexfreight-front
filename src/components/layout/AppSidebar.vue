@@ -79,6 +79,8 @@
                       ? 'lg:justify-center'
                       : 'lg:justify-start',
                   ]"
+                  :aria-label="`${isSubmenuOpen(groupIndex, index) ? 'Cerrar' : 'Abrir'} submenú de ${item.name}`"
+                  :aria-expanded="isSubmenuOpen(groupIndex, index)"
                 >
                   <span
                     :class="[
@@ -117,6 +119,7 @@
                       'menu-item-inactive': !isActive(item.path),
                     },
                   ]"
+                  :aria-label="`Ir a ${item.name}`"
                 >
                   <span
                     :class="[
@@ -160,6 +163,7 @@
                               ),
                             },
                           ]"
+                          :aria-label="`Ir a ${subItem.name}`"
                         >
                           {{ subItem.name }}
                           <span class="flex items-center gap-1 ml-auto">
@@ -210,9 +214,29 @@
   </aside>
 </template>
 
-<script setup>
-import { ref, computed } from "vue";
+<script setup lang="ts">
+import { computed } from "vue";
 import { useRoute } from "vue-router";
+import type { Component } from "vue";
+
+interface MenuItem {
+  icon: Component;
+  name: string;
+  path?: string;
+  subItems?: SubMenuItem[];
+}
+
+interface SubMenuItem {
+  name: string;
+  path: string;
+  new?: boolean;
+  pro?: boolean;
+}
+
+interface MenuGroup {
+  title: string;
+  items: MenuItem[];
+}
 
 import {
   GridIcon,
@@ -228,7 +252,7 @@ const route = useRoute();
 
 const { isExpanded, isMobileOpen, isHovered, openSubmenu } = useSidebar();
 
-const menuGroups = [
+const menuGroups: MenuGroup[] = [
   {
     title: "Gestión de Transporte",
     items: [
@@ -256,9 +280,9 @@ const menuGroups = [
   },
 ];
 
-const isActive = (path) => route.path === path;
+const isActive = (path: string) => route.path === path;
 
-const toggleSubmenu = (groupIndex, itemIndex) => {
+const toggleSubmenu = (groupIndex: number, itemIndex: number) => {
   const key = `${groupIndex}-${itemIndex}`;
   openSubmenu.value = openSubmenu.value === key ? null : key;
 };
@@ -272,7 +296,7 @@ const isAnySubmenuRouteActive = computed(() => {
   );
 });
 
-const isSubmenuOpen = (groupIndex, itemIndex) => {
+const isSubmenuOpen = (groupIndex: number, itemIndex: number) => {
   const key = `${groupIndex}-${itemIndex}`;
   return (
     openSubmenu.value === key ||
@@ -283,15 +307,17 @@ const isSubmenuOpen = (groupIndex, itemIndex) => {
   );
 };
 
-const startTransition = (el) => {
-  el.style.height = "auto";
-  const height = el.scrollHeight;
-  el.style.height = "0px";
-  el.offsetHeight; // force reflow
-  el.style.height = height + "px";
+const startTransition = (el: Element) => {
+  const htmlEl = el as HTMLElement;
+  htmlEl.style.height = "auto";
+  const height = htmlEl.scrollHeight;
+  htmlEl.style.height = "0px";
+  htmlEl.offsetHeight; // eslint-disable-line @typescript-eslint/no-unused-expressions
+  htmlEl.style.height = height + "px";
 };
 
-const endTransition = (el) => {
-  el.style.height = "";
+const endTransition = (el: Element) => {
+  const htmlEl = el as HTMLElement;
+  htmlEl.style.height = "";
 };
 </script>

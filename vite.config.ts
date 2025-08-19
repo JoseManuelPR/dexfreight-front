@@ -62,7 +62,7 @@ export default defineConfig({
             return 'forms-lazy'
           }
           if (id.includes('jsvectormap') || id.includes('vuevectormap') || 
-              id.includes('swiper') || id.includes('vuedraggable')) {
+              id.includes('vuedraggable')) {
             return 'utils-lazy'
           }
           if (id.includes('/pages/Dashboard.vue')) {

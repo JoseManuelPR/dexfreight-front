@@ -9,6 +9,8 @@
     ]"
     @click="onClick"
     :disabled="disabled"
+    :aria-label="ariaLabel"
+    :title="title"
   >
     <span v-if="startIcon" class="flex items-center">
       <component :is="startIcon" />
@@ -21,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 
 interface ButtonProps {
   size?: 'sm' | 'md'
@@ -31,6 +32,8 @@ interface ButtonProps {
   onClick?: () => void
   className?: string
   disabled?: boolean
+  ariaLabel?: string
+  title?: string
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {

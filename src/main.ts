@@ -16,9 +16,6 @@ app.mount('#app')
 const loadNonCriticalDeps = async () => {
   try {
     await Promise.all([
-      import('swiper/css' as any),
-      import('swiper/css/navigation' as any), 
-      import('swiper/css/pagination' as any),
       import('jsvectormap/dist/jsvectormap.css' as any),
       import('flatpickr/dist/flatpickr.css' as any)
     ])
