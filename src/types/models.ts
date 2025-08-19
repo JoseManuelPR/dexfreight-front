@@ -109,7 +109,7 @@ export interface RoutePoint {
 export interface DashboardStats {
   totalShipments: number
   activeShipments: number
-  deliveredToday: number
+  deliveredShipments: number
   pendingShipments: number
   totalRevenue: number
   activeVehicles: number

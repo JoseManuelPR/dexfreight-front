@@ -332,14 +332,14 @@ function getPriorityLabel(priority: string) {
 }
 
 function formatCurrency(value: number) {
-  return new Intl.NumberFormat('es-MX', {
+  return new Intl.NumberFormat('es-PE', {
     style: 'currency',
-    currency: 'MXN'
+    currency: 'PEN'
   }).format(value)
 }
 
 function formatDate(dateString: string) {
-  return new Intl.DateTimeFormat('es-MX', {
+  return new Intl.DateTimeFormat('es-PE', {
     day: 'numeric',
     month: 'short',
     year: 'numeric'

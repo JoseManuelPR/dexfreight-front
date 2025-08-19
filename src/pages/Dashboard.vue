@@ -39,8 +39,8 @@
           color="green"
         />
         <StatsCard
-          title="Entregados Hoy"
-          :value="stats?.deliveredToday || 0"
+          title="Entregados"
+          :value="stats?.deliveredShipments || 0"
           icon="CheckIcon"
           color="purple"
         />
@@ -153,7 +153,7 @@
               <div class="flex items-center justify-between">
                 <span class="text-sm text-gray-600 dark:text-gray-400">Disponibles</span>
                 <Badge color="success" variant="light" size="sm">
-                  {{ stats?.availableDrivers || 0 }}
+                  {{ driversStore.availableDrivers.length }}
                 </Badge>
               </div>
               <div class="flex items-center justify-between">
@@ -246,14 +246,14 @@ function getStatusLabel(status: string) {
 }
 
 function formatCurrency(value: number) {
-  return new Intl.NumberFormat('es-MX', {
+  return new Intl.NumberFormat('es-PE', {
     style: 'currency',
-    currency: 'MXN'
+    currency: 'PEN'
   }).format(value)
 }
 
 function formatDate(dateString: string) {
-  return new Intl.DateTimeFormat('es-MX', {
+  return new Intl.DateTimeFormat('es-PE', {
     day: 'numeric',
     month: 'short',
     year: 'numeric'

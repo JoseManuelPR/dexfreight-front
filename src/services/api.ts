@@ -49,17 +49,17 @@ function initializeDefaultData() {
       trackingNumber: 'TN202501001',
       origin: {
         street: 'Av. Insurgentes 123',
-        city: 'Ciudad de México',
-        state: 'CDMX',
+        city: 'Lima',
+        state: 'Lima',
         zipCode: '01000',
-        country: 'México'
+        country: 'Perú'
       },
       destination: {
-        street: 'Blvd. Kukulcán 45',
-        city: 'Cancún',
-        state: 'Quintana Roo',
-        zipCode: '77500',
-        country: 'México'
+        street: 'Av. Tacna 258',
+        city: 'Tacna',  
+        state: 'Tacna',
+        zipCode: '23001',
+        country: 'Perú'
       },
       status: 'in_transit',
       priority: 'high',
@@ -70,7 +70,7 @@ function initializeDefaultData() {
       weight: 150.5,
       volume: 2.3,
       value: 15000,
-      currency: 'MXN',
+      currency: 'PEN',
       goods: [
         {
           id: 'ITEM001',
@@ -90,14 +90,14 @@ function initializeDefaultData() {
         id: 'CU001',
         name: 'Juan Pérez',
         email: 'juan.perez@email.com',
-        phone: '+52 555 123 4567',
+        phone: '+51 555 123 4567',
         company: 'Tech Solutions SA',
         address: {
           street: 'Av. Insurgentes 123',
-          city: 'Ciudad de México',
-          state: 'CDMX',
+          city: 'Lima',
+          state: 'Lima',
           zipCode: '01000',
-          country: 'México'
+          country: 'Perú'
         },
         accountType: 'business'
       },
@@ -137,7 +137,7 @@ function initializeDefaultData() {
       id: 'DR001',
       name: 'Carlos González',
       license: 'LIC123456789',
-      phone: '+52 555 987 6543',
+      phone: '+51 555 987 6543',
       email: 'carlos.gonzalez@transport.com',
       status: 'on-delivery',
       currentVehicle: 'VH001',
@@ -271,10 +271,7 @@ export const api = {
     const stats: DashboardStats = {
       totalShipments: mockShipments.length,
       activeShipments: mockShipments.filter(s => s.status === 'in_transit').length,
-      deliveredToday: mockShipments.filter(s => {
-        const today = new Date().toISOString().split('T')[0]
-        return s.actualDelivery?.startsWith(today)
-      }).length,
+      deliveredShipments: mockShipments.filter(s => s.status === 'delivered').length,
       pendingShipments: mockShipments.filter(s => s.status === 'pending').length,
       totalRevenue: mockShipments.reduce((total, s) => total + s.value, 0),
       activeVehicles: mockVehicles.filter(v => ['available', 'in-use'].includes(v.status)).length,

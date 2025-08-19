@@ -49,6 +49,10 @@ export const useShipmentsStore = defineStore('shipments', () => {
     shipments.value.filter(s => s.status === 'pending')
   )
 
+  const deliveredShipments = computed(() => 
+    shipments.value.filter(s => s.status === 'delivered')
+  )
+
   // Actions
   async function fetchShipments() {
     loading.value = true
@@ -120,6 +124,7 @@ export const useShipmentsStore = defineStore('shipments', () => {
     filteredShipments,
     activeShipments,
     pendingShipments,
+    deliveredShipments,
     // Actions
     fetchShipments,
     createShipment,
@@ -199,9 +204,7 @@ export const useDriversStore = defineStore('drivers', () => {
   )
 
   const availableDrivers = computed(() => {
-    const vehicleStore = useVehiclesStore()
-    const busyDriverIds = vehicleStore.vehiclesInTransit.map(v => v.currentDriverId).filter(Boolean)
-    return activeDrivers.value.filter(d => !busyDriverIds.includes(d.id))
+    return drivers.value.filter(d => d.status === 'available')
   })
 
   async function fetchDrivers() {
@@ -259,10 +262,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
     return {
       totalShipments: shipmentsStore.shipments.length,
       activeShipments: shipmentsStore.activeShipments.length,
-      deliveredToday: shipmentsStore.shipments.filter(s => {
-        const today = new Date().toISOString().split('T')[0]
-        return s.actualDelivery?.startsWith(today)
-      }).length,
+      deliveredShipments: shipmentsStore.deliveredShipments.length,
       pendingShipments: shipmentsStore.pendingShipments.length,
       totalRevenue: shipmentsStore.shipments.reduce((total, s) => total + s.value, 0),
       activeVehicles: vehiclesStore.availableVehicles.length + vehiclesStore.vehiclesInTransit.length,
