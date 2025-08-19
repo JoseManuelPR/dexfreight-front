@@ -1,7 +1,6 @@
 <template>
   <admin-layout>
     <div class="space-y-6">
-      <!-- Page Header -->
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-title-md font-semibold text-gray-900 dark:text-white">
@@ -24,9 +23,7 @@
         </div>
       </div>
   
-      <!-- Fleet Overview -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Total Fleet Card -->
         <div class="lg:col-span-1">
           <div class="rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 text-white shadow-lg">
             <div class="flex items-center justify-between">
@@ -42,7 +39,6 @@
           </div>
         </div>
 
-        <!-- Status Breakdown -->
         <div class="lg:col-span-2">
           <div class="grid grid-cols-2 gap-4">
             <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
@@ -96,7 +92,6 @@
         </div>
       </div>
   
-      <!-- Filters -->
       <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
@@ -145,7 +140,6 @@
         </div>
       </div>
   
-      <!-- Vehicles Grid -->
       <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div v-for="i in 6" :key="i" class="animate-pulse">
           <div class="h-64 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
@@ -232,7 +226,6 @@
       </div>
     </div>
 
-    <!-- Vehicle Detail Modal -->
     <VehicleDetailModal
       v-if="showDetailModal && selectedVehicle"
       :vehicle="selectedVehicle"
@@ -256,25 +249,18 @@ import BoxIcon from '@/icons/BoxIcon.vue'
 import CheckIcon from '@/icons/CheckIcon.vue'
 import WarningIcon from '@/icons/WarningIcon.vue'
 
-// Stores
 const vehiclesStore = useVehiclesStore()
 const driversStore = useDriversStore()
 
-// Reactive state
 const searchTerm = ref('')
 const statusFilter = ref('')
 const typeFilter = ref('')
 
-// Modal state
 const showDetailModal = ref(false)
 const selectedVehicle = ref<Vehicle | null>(null)
 
-// Computed
 const loading = computed(() => vehiclesStore.loading)
 const vehicles = computed(() => vehiclesStore.vehicles)
-const availableVehicles = computed(() => vehiclesStore.availableVehicles)
-const vehiclesInTransit = computed(() => vehiclesStore.vehiclesInTransit)
-const vehiclesInMaintenance = computed(() => vehiclesStore.vehiclesInMaintenance)
 const drivers = computed(() => driversStore.drivers)
 
 const filteredVehicles = computed(() => {
@@ -300,7 +286,6 @@ const filteredVehicles = computed(() => {
   return filtered
 })
 
-// Methods
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
     available: 'success',
@@ -345,7 +330,6 @@ async function refreshVehicles() {
   await vehiclesStore.fetchVehicles()
 }
 
-// Modal functions
 function showVehicleDetails(vehicle: Vehicle) {
   selectedVehicle.value = vehicle
   showDetailModal.value = true
@@ -362,13 +346,11 @@ function editVehicle(vehicle: Vehicle) {
   closeVehicleDetail()
 }
 
-// Lifecycle
 onMounted(() => {
   vehiclesStore.fetchVehicles()
   driversStore.fetchDrivers()
 })
 
-// Export component options
 defineComponent({
   components: {
     AdminLayout

@@ -1,7 +1,6 @@
 <template>
   <admin-layout>
     <div class="space-y-6">
-      <!-- Page Header -->
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-title-md font-semibold text-gray-900 dark:text-white">
@@ -24,9 +23,7 @@
         </div>
       </div>
   
-      <!-- Team Overview -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Total Drivers Card -->
         <div class="lg:col-span-1">
           <div class="rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 text-white shadow-lg">
             <div class="flex items-center justify-between">
@@ -42,7 +39,6 @@
           </div>
         </div>
 
-        <!-- Status Breakdown -->
         <div class="lg:col-span-2">
           <div class="grid grid-cols-2 gap-4">
             <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
@@ -96,7 +92,6 @@
         </div>
       </div>
   
-      <!-- Filters -->
       <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -129,7 +124,6 @@
         </div>
       </div>
   
-      <!-- Drivers Table -->
       <div class="rounded-lg bg-white dark:bg-gray-800 shadow-theme-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white">
@@ -233,7 +227,6 @@
       </div>
     </div>
 
-    <!-- Driver Detail Modal -->
     <DriverDetailModal
       v-if="showDetailModal && selectedDriver"
       :driver="selectedDriver"
@@ -257,23 +250,17 @@ import UserGroupIcon from '@/icons/UserGroupIcon.vue'
 import UserCircleIcon from '@/icons/UserCircleIcon.vue'
 import CheckIcon from '@/icons/CheckIcon.vue'
 
-// Stores
 const driversStore = useDriversStore()
 const vehiclesStore = useVehiclesStore()
 
-// Reactive state
 const searchTerm = ref('')
 const statusFilter = ref('')
 
-// Modal state
 const showDetailModal = ref(false)
 const selectedDriver = ref<Driver | null>(null)
 
-// Computed
 const loading = computed(() => driversStore.loading)
 const drivers = computed(() => driversStore.drivers)
-const activeDrivers = computed(() => driversStore.activeDrivers)
-const availableDrivers = computed(() => driversStore.availableDrivers)
 const vehicles = computed(() => vehiclesStore.vehicles)
 
 const filteredDrivers = computed(() => {
@@ -296,7 +283,6 @@ const filteredDrivers = computed(() => {
   return filtered
 })
 
-// Methods
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
     available: 'success',
@@ -330,7 +316,6 @@ async function refreshDrivers() {
   await driversStore.fetchDrivers()
 }
 
-// Modal functions
 function showDriverDetails(driver: Driver) {
   selectedDriver.value = driver
   showDetailModal.value = true
@@ -347,13 +332,12 @@ function editDriver(driver: Driver) {
   closeDriverDetail()
 }
 
-// Lifecycle
 onMounted(() => {
   driversStore.fetchDrivers()
   vehiclesStore.fetchVehicles()
 })
 
-// Export component options
+
 defineComponent({
   components: {
     AdminLayout

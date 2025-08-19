@@ -1,7 +1,6 @@
 <template>
   <admin-layout>
     <div class="space-y-6">
-      <!-- Page Header -->
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-title-md font-semibold text-gray-900 dark:text-white">
@@ -24,9 +23,7 @@
         </div>
       </div>
   
-      <!-- Shipments Overview -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Total Shipments Card -->
         <div class="lg:col-span-1">
           <div class="rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 text-white shadow-lg">
             <div class="flex items-center justify-between">
@@ -42,7 +39,6 @@
           </div>
         </div>
 
-        <!-- Status Breakdown -->
         <div class="lg:col-span-2">
           <div class="grid grid-cols-2 gap-4">
             <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
@@ -96,10 +92,8 @@
         </div>
       </div>
   
-      <!-- Filters -->
       <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <!-- Search -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Buscar
@@ -112,7 +106,6 @@
             />
           </div>
   
-          <!-- Status Filter -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Estado
@@ -130,7 +123,6 @@
             </select>
           </div>
   
-          <!-- Priority Filter -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Prioridad
@@ -147,7 +139,6 @@
             </select>
           </div>
   
-          <!-- Clear Filters -->
           <div class="flex items-end">
             <Button 
               variant="outline" 
@@ -161,7 +152,6 @@
         </div>
       </div>
   
-      <!-- Shipments Table -->
       <div class="rounded-lg bg-white dark:bg-gray-800 shadow-theme-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white">
@@ -282,7 +272,6 @@
       </div>
     </div>
 
-    <!-- Shipment Detail Modal -->
     <ShipmentDetailModal
       v-if="showDetailModal && selectedShipment"
       :shipment="selectedShipment"
@@ -307,21 +296,17 @@ import PlusIcon from '@/icons/PlusIcon.vue'
 import BoxIcon from '@/icons/BoxIcon.vue'
 import CheckIcon from '@/icons/CheckIcon.vue'
 
-// Stores
 const shipmentsStore = useShipmentsStore()
 const driversStore = useDriversStore()
 const vehiclesStore = useVehiclesStore()
 
-// Reactive state
 const searchTerm = ref('')
 const statusFilter = ref('')
 const priorityFilter = ref('')
 
-// Modal state
 const showDetailModal = ref(false)
 const selectedShipment = ref<Shipment | null>(null)
 
-// Computed
 const loading = computed(() => shipmentsStore.loading)
 const shipments = computed(() => shipmentsStore.shipments)
 const drivers = computed(() => driversStore.drivers)
@@ -352,7 +337,6 @@ const filteredShipments = computed(() => {
   return filtered
 })
 
-// Methods
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
     pending: 'warning',
@@ -417,7 +401,6 @@ async function refreshShipments() {
   ])
 }
 
-// Modal functions
 function openShipmentDetail(shipment: Shipment) {
   selectedShipment.value = shipment
   showDetailModal.value = true
@@ -434,7 +417,6 @@ function editShipment(shipment: Shipment) {
   closeShipmentDetail()
 }
 
-// Watchers
 watch([searchTerm, statusFilter, priorityFilter], () => {
   shipmentsStore.updateFilters({
     searchTerm: searchTerm.value,
@@ -443,12 +425,10 @@ watch([searchTerm, statusFilter, priorityFilter], () => {
   })
 })
 
-// Lifecycle
 onMounted(() => {
   refreshShipments()
 })
 
-// Export component options
 defineComponent({
   components: {
     AdminLayout

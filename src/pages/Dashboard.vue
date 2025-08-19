@@ -1,7 +1,6 @@
 <template>
   <admin-layout>
     <div class="space-y-6">
-      <!-- Page Header -->
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-title-md font-semibold text-gray-900 dark:text-white">
@@ -23,8 +22,7 @@
           </Button>
         </div>
       </div>
-  
-      <!-- Stats Cards -->
+
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatsCard
           title="Total Envíos"
@@ -53,7 +51,6 @@
       </div>
   
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <!-- Recent Shipments -->
         <div class="lg:col-span-2">
           <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
             <div class="mb-6 flex items-center justify-between">
@@ -115,9 +112,7 @@
           </div>
         </div>
   
-        <!-- Quick Stats -->
         <div class="space-y-6">
-          <!-- Vehicle Status -->
           <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
             <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
               Estado de Vehículos
@@ -150,7 +145,6 @@
             </div>
           </div>
   
-          <!-- Driver Status -->
           <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
             <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
               Estado de Conductores
@@ -174,7 +168,6 @@
       </div>
     </div>
 
-    <!-- Shipment Detail Modal -->
     <ShipmentDetailModal
       v-if="showDetailModal && selectedShipment"
       :shipment="selectedShipment"
@@ -200,17 +193,14 @@ import { useDashboardStore } from '@/store'
 import type { Shipment } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
 
-// Stores
 const shipmentsStore = useShipmentsStore()
 const vehiclesStore = useVehiclesStore()
 const driversStore = useDriversStore()
 const dashboardStore = useDashboardStore()
 
-// Modal state
 const showDetailModal = ref(false)
 const selectedShipment = ref<Shipment | null>(null)
 
-// Computed
 const stats = computed(() => dashboardStore.stats || dashboardStore.computedStats)
 const loading = computed(() => dashboardStore.loading)
 const shipmentsLoading = computed(() => shipmentsStore.loading)
@@ -226,7 +216,6 @@ const recentShipments = computed(() =>
 
 const activeDrivers = computed(() => driversStore.activeDrivers.length)
 
-// Methods
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
     pending: 'warning',
@@ -273,7 +262,6 @@ async function refreshData() {
   ])
 }
 
-// Modal functions
 function openShipmentDetail(shipment: Shipment) {
   selectedShipment.value = shipment
   showDetailModal.value = true
@@ -290,12 +278,10 @@ function editShipment(shipment: Shipment) {
   closeShipmentDetail()
 }
 
-// Lifecycle
 onMounted(() => {
   refreshData()
 })
 
-// Export component options
 defineComponent({
   components: {
     AdminLayout
