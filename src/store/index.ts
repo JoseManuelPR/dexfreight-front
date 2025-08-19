@@ -7,7 +7,7 @@ import type {
   DashboardStats,
   FilterOptions
 } from '@/types/models'
-import { api } from '@/services/api'
+import { api, handleApiError } from '@/services/api'
 
 // Main store for shipments
 export const useShipmentsStore = defineStore('shipments', () => {
@@ -70,7 +70,7 @@ export const useShipmentsStore = defineStore('shipments', () => {
       const response = await api.getShipments()
       shipments.value = response.data
     } catch (err) {
-      error.value = 'Error al cargar envíos'
+      error.value = handleApiError(err)
       console.error('Error fetching shipments:', err)
     } finally {
       loading.value = false
@@ -86,7 +86,7 @@ export const useShipmentsStore = defineStore('shipments', () => {
       shipments.value.push(response.data)
       return response.data
     } catch (err) {
-      error.value = 'Error al crear envío'
+      error.value = handleApiError(err)
       console.error('Error creating shipment:', err)
       throw err
     } finally {
@@ -106,7 +106,7 @@ export const useShipmentsStore = defineStore('shipments', () => {
       }
       return response.data
     } catch (err) {
-      error.value = 'Error al actualizar envío'
+      error.value = handleApiError(err)
       console.error('Error updating shipment:', err)
       throw err
     } finally {
@@ -177,7 +177,7 @@ export const useVehiclesStore = defineStore('vehicles', () => {
       const response = await api.getVehicles()
       vehicles.value = response.data
     } catch (err) {
-      error.value = 'Error al cargar vehículos'
+      error.value = handleApiError(err)
       console.error('Error fetching vehicles:', err)
     } finally {
       loading.value = false
@@ -192,7 +192,7 @@ export const useVehiclesStore = defineStore('vehicles', () => {
         vehicles.value[index] = response.data
       }
     } catch (err) {
-      error.value = 'Error al actualizar estado del vehículo'
+      error.value = handleApiError(err)
       console.error('Error updating vehicle status:', err)
       throw err
     }
@@ -246,7 +246,7 @@ export const useDriversStore = defineStore('drivers', () => {
       const response = await api.getDrivers()
       drivers.value = response.data
     } catch (err) {
-      error.value = 'Error al cargar conductores'
+      error.value = handleApiError(err)
       console.error('Error fetching drivers:', err)
     } finally {
       loading.value = false
@@ -280,7 +280,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
       const response = await api.getDashboardStats()
       stats.value = response.data
     } catch (err) {
-      error.value = 'Error al cargar estadísticas'
+      error.value = handleApiError(err)
       console.error('Error fetching dashboard stats:', err)
     } finally {
       loading.value = false
