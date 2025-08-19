@@ -5,6 +5,7 @@ import type {
   DashboardStats,
   ApiResponse
 } from '@/types/models'
+import { apiCache, CacheService } from './cache'
 
 // Network delay simulation
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
@@ -155,6 +156,15 @@ loadMockData()
 export const api = {
   // Shipments
   async getShipments(filters?: any): Promise<ApiResponse<Shipment[]>> {
+    // Create cache key based on filters
+    const cacheKey = CacheService.createKey('shipments', filters)
+    
+    // Check cache first
+    const cached = apiCache.get<Shipment[]>(cacheKey)
+    if (cached) {
+      return createApiResponse(cached)
+    }
+    
     await delay(500) // Simulate network latency
     
     let filtered = [...mockShipments]
@@ -166,6 +176,9 @@ export const api = {
     if (filters?.priority) {
       filtered = filtered.filter(s => filters.priority.includes(s.priority))
     }
+    
+    // Save to cache
+    apiCache.set(cacheKey, filtered)
     
     return createApiResponse(filtered)
   },
@@ -187,6 +200,11 @@ export const api = {
     }
     
     mockShipments.push(newShipment)
+    
+    // Invalidate related cache
+    apiCache.invalidatePattern('shipments')
+    apiCache.invalidatePattern('dashboard-stats')
+    
     return createApiResponse(newShipment, true, 'Envío creado exitosamente')
   },
 
@@ -199,6 +217,11 @@ export const api = {
     }
     
     mockShipments[index] = { ...mockShipments[index], ...data }
+    
+    // Invalidate related cache
+    apiCache.invalidatePattern('shipments')
+    apiCache.invalidatePattern('dashboard-stats')
+    
     return createApiResponse(mockShipments[index], true, 'Envío actualizado exitosamente')
   },
 
@@ -211,13 +234,32 @@ export const api = {
     }
     
     mockShipments.splice(index, 1)
+    
+    // Invalidate related cache
+    apiCache.invalidatePattern('shipments')
+    apiCache.invalidatePattern('dashboard-stats')
+    
     return createApiResponse(true, true, 'Envío eliminado exitosamente')
   },
 
   // Vehicles
   async getVehicles(): Promise<ApiResponse<Vehicle[]>> {
+    const cacheKey = 'vehicles'
+    
+    // Check cache first
+    const cached = apiCache.get<Vehicle[]>(cacheKey)
+    if (cached) {
+      return createApiResponse(cached)
+    }
+    
     await delay(400)
-    return createApiResponse([...mockVehicles])
+    
+    const vehicles = [...mockVehicles]
+    
+    // Save to cache
+    apiCache.set(cacheKey, vehicles)
+    
+    return createApiResponse(vehicles)
   },
 
   async getVehicle(id: string): Promise<ApiResponse<Vehicle | null>> {
@@ -236,13 +278,32 @@ export const api = {
     }
     
     mockVehicles[index] = { ...mockVehicles[index], ...data }
+    
+    // Invalidate related cache
+    apiCache.invalidatePattern('vehicles')
+    apiCache.invalidatePattern('dashboard-stats')
+    
     return createApiResponse(mockVehicles[index], true, 'Vehículo actualizado exitosamente')
   },
 
   // Drivers
   async getDrivers(): Promise<ApiResponse<Driver[]>> {
+    const cacheKey = 'drivers'
+    
+    // Check cache first
+    const cached = apiCache.get<Driver[]>(cacheKey)
+    if (cached) {
+      return createApiResponse(cached)
+    }
+    
     await delay(350)
-    return createApiResponse([...mockDrivers])
+    
+    const drivers = [...mockDrivers]
+    
+    // Save to cache
+    apiCache.set(cacheKey, drivers)
+    
+    return createApiResponse(drivers)
   },
 
   async getDriver(id: string): Promise<ApiResponse<Driver | null>> {
@@ -261,6 +322,11 @@ export const api = {
     }
     
     mockDrivers[index] = { ...mockDrivers[index], ...data }
+    
+    // Invalidate related cache
+    apiCache.invalidatePattern('drivers')
+    apiCache.invalidatePattern('dashboard-stats')
+    
     return createApiResponse(mockDrivers[index], true, 'Conductor actualizado exitosamente')
   },
 
@@ -292,4 +358,13 @@ export function handleApiError(error: any): string {
     return error.message
   }
   return 'Ha ocurrido un error inesperado'
+}
+
+// Export cache utilities for manual cache management
+export const cacheUtils = {
+  clear: () => apiCache.clear(),
+  clearPattern: (pattern: string) => apiCache.invalidatePattern(pattern),
+  size: () => apiCache.getStats().size,
+  keys: () => apiCache.getStats().keys,
+  stats: () => apiCache.getStats()
 }
