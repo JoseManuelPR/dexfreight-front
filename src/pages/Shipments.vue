@@ -200,7 +200,11 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <div class="flex items-center justify-end gap-2">
-                    <Button variant="outline" size="sm">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      @click="openShipmentDetail(shipment)"
+                    >
                       Ver
                     </Button>
                     <Button variant="outline" size="sm">
@@ -214,6 +218,16 @@
         </div>
       </div>
     </div>
+
+    <!-- Shipment Detail Modal -->
+    <ShipmentDetailModal
+      v-if="showDetailModal && selectedShipment"
+      :shipment="selectedShipment"
+      :drivers="drivers"
+      :vehicles="vehicles"
+      @close="closeShipmentDetail"
+      @edit="editShipment"
+    />
   </admin-layout>
 </template>
 
@@ -222,22 +236,32 @@ import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
-import { useShipmentsStore } from '@/store'
+import ShipmentDetailModal from '@/components/shipments/ShipmentDetailModal.vue'
+import { useShipmentsStore, useDriversStore, useVehiclesStore } from '@/store'
+import type { Shipment } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
 import PlusIcon from '@/icons/PlusIcon.vue'
 import BoxIcon from '@/icons/BoxIcon.vue'
 
-// Store
+// Stores
 const shipmentsStore = useShipmentsStore()
+const driversStore = useDriversStore()
+const vehiclesStore = useVehiclesStore()
 
 // Reactive state
 const searchTerm = ref('')
 const statusFilter = ref('')
 const priorityFilter = ref('')
 
+// Modal state
+const showDetailModal = ref(false)
+const selectedShipment = ref<Shipment | null>(null)
+
 // Computed
 const loading = computed(() => shipmentsStore.loading)
 const shipments = computed(() => shipmentsStore.shipments)
+const drivers = computed(() => driversStore.drivers)
+const vehicles = computed(() => vehiclesStore.vehicles)
 
 const filteredShipments = computed(() => {
   let filtered = shipments.value
@@ -329,7 +353,28 @@ function clearFilters() {
 }
 
 async function refreshShipments() {
-  await shipmentsStore.fetchShipments()
+  await Promise.all([
+    shipmentsStore.fetchShipments(),
+    driversStore.fetchDrivers(),
+    vehiclesStore.fetchVehicles()
+  ])
+}
+
+// Modal functions
+function openShipmentDetail(shipment: Shipment) {
+  selectedShipment.value = shipment
+  showDetailModal.value = true
+}
+
+function closeShipmentDetail() {
+  showDetailModal.value = false
+  selectedShipment.value = null
+}
+
+function editShipment(shipment: Shipment) {
+  // TODO: Implement edit functionality
+  console.log('Edit shipment:', shipment.id)
+  closeShipmentDetail()
 }
 
 // Watchers
@@ -343,7 +388,7 @@ watch([searchTerm, statusFilter, priorityFilter], () => {
 
 // Lifecycle
 onMounted(() => {
-  shipmentsStore.fetchShipments()
+  refreshShipments()
 })
 
 // Export component options

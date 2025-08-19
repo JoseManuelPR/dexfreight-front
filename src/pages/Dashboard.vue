@@ -82,7 +82,8 @@
               <div 
                 v-for="shipment in recentShipments" 
                 :key="shipment.id"
-                class="flex items-center justify-between p-4 rounded-lg border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                class="flex items-center justify-between p-4 rounded-lg border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer"
+                @click="openShipmentDetail(shipment)"
               >
                 <div class="flex-1">
                   <div class="flex items-center gap-2">
@@ -166,19 +167,31 @@
         </div>
       </div>
     </div>
+
+    <!-- Shipment Detail Modal -->
+    <ShipmentDetailModal
+      v-if="showDetailModal && selectedShipment"
+      :shipment="selectedShipment"
+      :drivers="drivers"
+      :vehicles="vehicles"
+      @close="closeShipmentDetail"
+      @edit="editShipment"
+    />
   </admin-layout>
 </template>
 
 <script setup lang="ts">
-import { computed, defineComponent, onMounted } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
 import StatsCard from '@/components/dashboard/StatsCard.vue'
+import ShipmentDetailModal from '@/components/shipments/ShipmentDetailModal.vue'
 import { useShipmentsStore } from '@/store'
 import { useVehiclesStore } from '@/store'
 import { useDriversStore } from '@/store'
 import { useDashboardStore } from '@/store'
+import type { Shipment } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
 
 // Stores
@@ -187,10 +200,16 @@ const vehiclesStore = useVehiclesStore()
 const driversStore = useDriversStore()
 const dashboardStore = useDashboardStore()
 
+// Modal state
+const showDetailModal = ref(false)
+const selectedShipment = ref<Shipment | null>(null)
+
 // Computed
 const stats = computed(() => dashboardStore.stats || dashboardStore.computedStats)
 const loading = computed(() => dashboardStore.loading)
 const shipmentsLoading = computed(() => shipmentsStore.loading)
+const drivers = computed(() => driversStore.drivers)
+const vehicles = computed(() => vehiclesStore.vehicles)
 
 const recentShipments = computed(() => 
   shipmentsStore.shipments
@@ -248,6 +267,23 @@ async function refreshData() {
     driversStore.fetchDrivers(),
     dashboardStore.fetchDashboardStats()
   ])
+}
+
+// Modal functions
+function openShipmentDetail(shipment: Shipment) {
+  selectedShipment.value = shipment
+  showDetailModal.value = true
+}
+
+function closeShipmentDetail() {
+  showDetailModal.value = false
+  selectedShipment.value = null
+}
+
+function editShipment(shipment: Shipment) {
+  // TODO: Implement edit functionality
+  console.log('Edit shipment:', shipment.id)
+  closeShipmentDetail()
 }
 
 // Lifecycle
