@@ -7,7 +7,6 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import compression from 'vite-plugin-compression'
 import { visualizer } from 'rollup-plugin-visualizer'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
@@ -49,7 +48,7 @@ export default defineConfig({
             '@fullcalendar/list',
             '@fullcalendar/interaction'
           ],
-          'utils-vendor': ['jsvectormap', 'vuevectormap', 'swiper', 'vuedraggable', 'vue-kanban']
+          'utils-vendor': ['jsvectormap', 'vuevectormap', 'swiper', 'vuedraggable']
         },
       },
     },
