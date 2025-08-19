@@ -2,7 +2,6 @@
   <Modal :full-screen-backdrop="true" @close="$emit('close')">
     <template #body>
       <div class="relative mx-auto max-w-4xl bg-white dark:bg-gray-800 rounded-lg shadow-xl">
-        <!-- Header -->
         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
           <div>
             <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
@@ -31,14 +30,9 @@
           </div>
         </div>
 
-        <!-- Content -->
         <div class="p-6 max-h-[70vh] overflow-y-auto">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            
-            <!-- Left Column -->
             <div class="space-y-6">
-              
-              <!-- Basic Information -->
               <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Información General
@@ -73,13 +67,11 @@
                 </div>
               </div>
 
-              <!-- Route Information -->
               <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Información de Ruta
                 </h3>
                 <div class="space-y-4">
-                  <!-- Origin -->
                   <div>
                     <p class="text-sm font-medium text-gray-900 dark:text-white mb-1">Origen</p>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
@@ -89,7 +81,6 @@
                     </p>
                   </div>
                   
-                  <!-- Route Stats -->
                   <div class="flex items-center justify-center py-2">
                     <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                       <div class="flex items-center gap-1">
@@ -107,7 +98,6 @@
                     </div>
                   </div>
 
-                  <!-- Destination -->
                   <div>
                     <p class="text-sm font-medium text-gray-900 dark:text-white mb-1">Destino</p>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
@@ -119,7 +109,6 @@
                 </div>
               </div>
 
-              <!-- Timeline -->
               <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Cronología
@@ -150,10 +139,7 @@
 
             </div>
 
-            <!-- Right Column -->
             <div class="space-y-6">
-              
-              <!-- Customer Information -->
               <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Información del Cliente
@@ -177,7 +163,6 @@
                 </div>
               </div>
 
-              <!-- Driver Information -->
               <div v-if="assignedDriver" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Conductor Asignado
@@ -224,7 +209,6 @@
                 </div>
               </div>
 
-              <!-- Vehicle Information -->
               <div v-if="assignedVehicle" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Vehículo Asignado
@@ -251,7 +235,6 @@
                 </div>
               </div>
 
-              <!-- Cargo Information -->
               <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Mercancía
@@ -275,7 +258,6 @@
                 </div>
               </div>
 
-              <!-- Notes -->
               <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Notas
@@ -298,7 +280,6 @@
           </div>
         </div>
 
-        <!-- Footer -->
         <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
           <Button variant="outline" size="sm" @click="$emit('close')">
             Cerrar
@@ -329,7 +310,6 @@ const props = defineProps<Props>()
 
 defineEmits(['close', 'edit'])
 
-// Computed properties
 const assignedDriver = computed(() => {
   if (!props.shipment.driverId || !props.drivers) return null
   return props.drivers.find(d => d.id === props.shipment.driverId) || null
@@ -340,7 +320,7 @@ const assignedVehicle = computed(() => {
   return props.vehicles.find(v => v.id === props.shipment.vehicleId) || null
 })
 
-// Helper functions
+
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
     pending: 'warning',

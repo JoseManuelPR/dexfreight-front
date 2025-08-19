@@ -221,7 +221,7 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <div class="flex items-center justify-end gap-2">
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" @click="showDriverDetails(driver)">
                       Ver
                     </Button>
                   </div>
@@ -232,6 +232,15 @@
         </div>
       </div>
     </div>
+
+    <!-- Driver Detail Modal -->
+    <DriverDetailModal
+      v-if="showDetailModal && selectedDriver"
+      :driver="selectedDriver"
+      :vehicles="vehicles"
+      @close="closeDriverDetail"
+      @edit="editDriver"
+    />
   </admin-layout>
 </template>
 
@@ -240,24 +249,32 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
-import { useDriversStore } from '@/store'
+import DriverDetailModal from '@/components/drivers/DriverDetailModal.vue'
+import { useDriversStore, useVehiclesStore } from '@/store'
+import type { Driver } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
 import UserGroupIcon from '@/icons/UserGroupIcon.vue'
 import UserCircleIcon from '@/icons/UserCircleIcon.vue'
 import CheckIcon from '@/icons/CheckIcon.vue'
 
-// Store
+// Stores
 const driversStore = useDriversStore()
+const vehiclesStore = useVehiclesStore()
 
 // Reactive state
 const searchTerm = ref('')
 const statusFilter = ref('')
+
+// Modal state
+const showDetailModal = ref(false)
+const selectedDriver = ref<Driver | null>(null)
 
 // Computed
 const loading = computed(() => driversStore.loading)
 const drivers = computed(() => driversStore.drivers)
 const activeDrivers = computed(() => driversStore.activeDrivers)
 const availableDrivers = computed(() => driversStore.availableDrivers)
+const vehicles = computed(() => vehiclesStore.vehicles)
 
 const filteredDrivers = computed(() => {
   let filtered = drivers.value
@@ -313,9 +330,27 @@ async function refreshDrivers() {
   await driversStore.fetchDrivers()
 }
 
+// Modal functions
+function showDriverDetails(driver: Driver) {
+  selectedDriver.value = driver
+  showDetailModal.value = true
+}
+
+function closeDriverDetail() {
+  showDetailModal.value = false
+  selectedDriver.value = null
+}
+
+function editDriver(driver: Driver) {
+  // TODO: Implement edit functionality
+  console.log('Edit driver:', driver)
+  closeDriverDetail()
+}
+
 // Lifecycle
 onMounted(() => {
   driversStore.fetchDrivers()
+  vehiclesStore.fetchVehicles()
 })
 
 // Export component options
