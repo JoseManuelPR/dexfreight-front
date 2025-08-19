@@ -1,0 +1,305 @@
+import type {
+  Shipment,
+  Vehicle,
+  Driver,
+  DashboardStats,
+  ApiResponse
+} from '@/types/models'
+
+// Network delay simulation
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+// Helper function to simulate API responses
+function createApiResponse<T>(data: T, success = true, message = 'Success'): ApiResponse<T> {
+  return {
+    data,
+    success,
+    message
+  }
+}
+
+// Mock data - in production this would come from your backend
+let mockShipments: Shipment[] = []
+let mockVehicles: Vehicle[] = []
+let mockDrivers: Driver[] = []
+
+// Load mock data on initialization
+async function loadMockData() {
+  try {
+    // Import static JSON data
+    const shipmentsData = await import('@/mock/shipments.json')
+    const vehiclesData = await import('@/mock/vehicles.json')
+    const driversData = await import('@/mock/drivers.json')
+    
+    mockShipments = shipmentsData.default || []
+    mockVehicles = vehiclesData.default || []
+    mockDrivers = driversData.default || []
+  } catch (error) {
+    console.warn('No se pudieron cargar los datos mock:', error)
+    // Use default data if JSON files cannot be loaded
+    initializeDefaultData()
+  }
+}
+
+// Default data if JSON files cannot be loaded
+function initializeDefaultData() {
+  mockShipments = [
+    {
+      id: 'SH001',
+      trackingNumber: 'TN202501001',
+      origin: {
+        street: 'Av. Insurgentes 123',
+        city: 'Ciudad de México',
+        state: 'CDMX',
+        zipCode: '01000',
+        country: 'México'
+      },
+      destination: {
+        street: 'Blvd. Kukulcán 45',
+        city: 'Cancún',
+        state: 'Quintana Roo',
+        zipCode: '77500',
+        country: 'México'
+      },
+      status: 'in_transit',
+      priority: 'high',
+      createdAt: '2025-01-18T10:00:00.000Z',
+      scheduledPickup: '2025-01-18T14:00:00.000Z',
+      actualPickup: '2025-01-18T14:15:00.000Z',
+      estimatedDelivery: '2025-01-20T16:00:00.000Z',
+      weight: 150.5,
+      volume: 2.3,
+      value: 15000,
+      currency: 'MXN',
+      goods: [
+        {
+          id: 'ITEM001',
+          description: 'Equipos electrónicos',
+          quantity: 5,
+          unit: 'pcs',
+          weight: 150.5,
+          value: 15000,
+          category: 'Electronics',
+          fragile: true,
+          hazardous: false
+        }
+      ],
+      driverId: 'DR001',
+      vehicleId: 'VH001',
+      customer: {
+        id: 'CU001',
+        name: 'Juan Pérez',
+        email: 'juan.perez@email.com',
+        phone: '+52 555 123 4567',
+        company: 'Tech Solutions SA',
+        address: {
+          street: 'Av. Insurgentes 123',
+          city: 'Ciudad de México',
+          state: 'CDMX',
+          zipCode: '01000',
+          country: 'México'
+        },
+        accountType: 'business'
+      },
+      distance: 1650,
+      estimatedDuration: 1200
+    }
+  ]
+
+  mockVehicles = [
+    {
+      id: 'VH001',
+      licensePlate: 'ABC-123',
+      model: 'Actros',
+      brand: 'Mercedes-Benz',
+      year: 2022,
+      type: 'truck',
+      capacity: 5000,
+      fuelType: 'diesel',
+      status: 'in_transit',
+      mileage: 45000,
+      lastMaintenance: '2024-12-15T00:00:00.000Z',
+      nextMaintenance: '2025-03-15T00:00:00.000Z',
+      registrationExpiry: '2025-12-31T00:00:00.000Z',
+      insuranceExpiry: '2025-06-30T00:00:00.000Z',
+      currentDriverId: 'DR001',
+      gpsEnabled: true
+    }
+  ]
+
+  mockDrivers = [
+    {
+      id: 'DR001',
+      firstName: 'Carlos',
+      lastName: 'González',
+      email: 'carlos.gonzalez@transport.com',
+      phone: '+52 555 987 6543',
+      licenseNumber: 'LIC123456789',
+      licenseExpiry: '2026-08-15T00:00:00.000Z',
+      status: 'active',
+      dateOfBirth: '1985-03-20T00:00:00.000Z',
+      hireDate: '2020-01-15T00:00:00.000Z',
+      address: {
+        street: 'Calle Principal 456',
+        city: 'Guadalajara',
+        state: 'Jalisco',
+        zipCode: '44100',
+        country: 'México'
+      },
+      emergencyContact: {
+        name: 'María González',
+        relationship: 'Esposa',
+        phone: '+52 555 456 7890'
+      }
+    }
+  ]
+}
+
+// Initialize data when loading the module
+loadMockData()
+
+// API Service
+export const api = {
+  // Shipments
+  async getShipments(filters?: any): Promise<ApiResponse<Shipment[]>> {
+    await delay(500) // Simulate network latency
+    
+    let filtered = [...mockShipments]
+    
+    if (filters?.status) {
+      filtered = filtered.filter(s => filters.status.includes(s.status))
+    }
+    
+    if (filters?.priority) {
+      filtered = filtered.filter(s => filters.priority.includes(s.priority))
+    }
+    
+    return createApiResponse(filtered)
+  },
+
+  async getShipment(id: string): Promise<ApiResponse<Shipment | null>> {
+    await delay(300)
+    
+    const shipment = mockShipments.find(s => s.id === id)
+    return createApiResponse(shipment || null)
+  },
+
+  async createShipment(shipmentData: Omit<Shipment, 'id' | 'createdAt'>): Promise<ApiResponse<Shipment>> {
+    await delay(700)
+    
+    const newShipment: Shipment = {
+      ...shipmentData,
+      id: `SH${String(mockShipments.length + 1).padStart(3, '0')}`,
+      createdAt: new Date().toISOString()
+    }
+    
+    mockShipments.push(newShipment)
+    return createApiResponse(newShipment, true, 'Envío creado exitosamente')
+  },
+
+  async updateShipment(id: string, data: Partial<Shipment>): Promise<ApiResponse<Shipment>> {
+    await delay(500)
+    
+    const index = mockShipments.findIndex(s => s.id === id)
+    if (index === -1) {
+      throw new Error('Envío no encontrado')
+    }
+    
+    mockShipments[index] = { ...mockShipments[index], ...data }
+    return createApiResponse(mockShipments[index], true, 'Envío actualizado exitosamente')
+  },
+
+  async deleteShipment(id: string): Promise<ApiResponse<boolean>> {
+    await delay(400)
+    
+    const index = mockShipments.findIndex(s => s.id === id)
+    if (index === -1) {
+      throw new Error('Envío no encontrado')
+    }
+    
+    mockShipments.splice(index, 1)
+    return createApiResponse(true, true, 'Envío eliminado exitosamente')
+  },
+
+  // Vehicles
+  async getVehicles(): Promise<ApiResponse<Vehicle[]>> {
+    await delay(400)
+    return createApiResponse([...mockVehicles])
+  },
+
+  async getVehicle(id: string): Promise<ApiResponse<Vehicle | null>> {
+    await delay(300)
+    
+    const vehicle = mockVehicles.find(v => v.id === id)
+    return createApiResponse(vehicle || null)
+  },
+
+  async updateVehicle(id: string, data: Partial<Vehicle>): Promise<ApiResponse<Vehicle>> {
+    await delay(500)
+    
+    const index = mockVehicles.findIndex(v => v.id === id)
+    if (index === -1) {
+      throw new Error('Vehículo no encontrado')
+    }
+    
+    mockVehicles[index] = { ...mockVehicles[index], ...data }
+    return createApiResponse(mockVehicles[index], true, 'Vehículo actualizado exitosamente')
+  },
+
+  // Drivers
+  async getDrivers(): Promise<ApiResponse<Driver[]>> {
+    await delay(350)
+    return createApiResponse([...mockDrivers])
+  },
+
+  async getDriver(id: string): Promise<ApiResponse<Driver | null>> {
+    await delay(300)
+    
+    const driver = mockDrivers.find(d => d.id === id)
+    return createApiResponse(driver || null)
+  },
+
+  async updateDriver(id: string, data: Partial<Driver>): Promise<ApiResponse<Driver>> {
+    await delay(500)
+    
+    const index = mockDrivers.findIndex(d => d.id === id)
+    if (index === -1) {
+      throw new Error('Conductor no encontrado')
+    }
+    
+    mockDrivers[index] = { ...mockDrivers[index], ...data }
+    return createApiResponse(mockDrivers[index], true, 'Conductor actualizado exitosamente')
+  },
+
+  // Dashboard
+  async getDashboardStats(): Promise<ApiResponse<DashboardStats>> {
+    await delay(600)
+    
+    const stats: DashboardStats = {
+      totalShipments: mockShipments.length,
+      activeShipments: mockShipments.filter(s => s.status === 'in_transit').length,
+      deliveredToday: mockShipments.filter(s => {
+        const today = new Date().toISOString().split('T')[0]
+        return s.actualDelivery?.startsWith(today)
+      }).length,
+      pendingShipments: mockShipments.filter(s => s.status === 'pending').length,
+      totalRevenue: mockShipments.reduce((total, s) => total + s.value, 0),
+      activeVehicles: mockVehicles.filter(v => ['available', 'in_transit'].includes(v.status)).length,
+      availableDrivers: mockDrivers.filter(d => d.status === 'active').length,
+      maintenanceVehicles: mockVehicles.filter(v => v.status === 'maintenance').length
+    }
+    
+    return createApiResponse(stats)
+  }
+}
+
+// Helper to handle API errors
+export function handleApiError(error: any): string {
+  if (error.response?.data?.message) {
+    return error.response.data.message
+  }
+  if (error.message) {
+    return error.message
+  }
+  return 'Ha ocurrido un error inesperado'
+}

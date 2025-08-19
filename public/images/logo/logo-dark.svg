@@ -1,0 +1,11 @@
+<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo icon dots -->
+  <circle cx="8" cy="16" r="2" fill="#fd853a"/>
+  <circle cx="14" cy="16" r="2" fill="#fd853a"/>
+  <circle cx="8" cy="22" r="2" fill="#fd853a"/>
+  <circle cx="14" cy="22" r="2" fill="#fd853a"/>
+  <!-- Logo text -->
+  <text x="24" y="28" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#ffffff">
+    dex<tspan fill="#fd853a">Freight</tspan>
+  </text>
+</svg>

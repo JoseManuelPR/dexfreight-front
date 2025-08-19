@@ -1,0 +1,275 @@
+[
+  {
+    "id": "SH001",
+    "trackingNumber": "TN202501001",
+    "origin": {
+      "street": "Av. Insurgentes 123",
+      "city": "Ciudad de México",
+      "state": "CDMX",
+      "zipCode": "01000",
+      "country": "México",
+      "coordinates": {
+        "latitude": 19.4326,
+        "longitude": -99.1332
+      }
+    },
+    "destination": {
+      "street": "Blvd. Kukulcán 45",
+      "city": "Cancún",
+      "state": "Quintana Roo",
+      "zipCode": "77500",
+      "country": "México",
+      "coordinates": {
+        "latitude": 21.1619,
+        "longitude": -86.8515
+      }
+    },
+    "status": "in_transit",
+    "priority": "high",
+    "createdAt": "2025-01-18T10:00:00.000Z",
+    "scheduledPickup": "2025-01-18T14:00:00.000Z",
+    "actualPickup": "2025-01-18T14:15:00.000Z",
+    "estimatedDelivery": "2025-01-20T16:00:00.000Z",
+    "weight": 150.5,
+    "volume": 2.3,
+    "value": 15000,
+    "currency": "MXN",
+    "goods": [
+      {
+        "id": "ITEM001",
+        "description": "Equipos electrónicos",
+        "quantity": 5,
+        "unit": "pcs",
+        "weight": 150.5,
+        "value": 15000,
+        "category": "Electronics",
+        "fragile": true,
+        "hazardous": false
+      }
+    ],
+    "driverId": "DR001",
+    "vehicleId": "VH001",
+    "customer": {
+      "id": "CU001",
+      "name": "Juan Pérez",
+      "email": "juan.perez@email.com",
+      "phone": "+52 555 123 4567",
+      "company": "Tech Solutions SA",
+      "address": {
+        "street": "Av. Insurgentes 123",
+        "city": "Ciudad de México",
+        "state": "CDMX",
+        "zipCode": "01000",
+        "country": "México"
+      },
+      "accountType": "business"
+    },
+    "notes": "Entrega en horario de oficina únicamente",
+    "distance": 1650,
+    "estimatedDuration": 1200
+  },
+  {
+    "id": "SH002",
+    "trackingNumber": "TN202501002",
+    "origin": {
+      "street": "Av. Universidad 456",
+      "city": "Guadalajara",
+      "state": "Jalisco",
+      "zipCode": "44100",
+      "country": "México",
+      "coordinates": {
+        "latitude": 20.6597,
+        "longitude": -103.3496
+      }
+    },
+    "destination": {
+      "street": "Blvd. Díaz Ordaz 789",
+      "city": "Tijuana",
+      "state": "Baja California",
+      "zipCode": "22000",
+      "country": "México",
+      "coordinates": {
+        "latitude": 32.5149,
+        "longitude": -117.0382
+      }
+    },
+    "status": "pending",
+    "priority": "medium",
+    "createdAt": "2025-01-18T08:30:00.000Z",
+    "scheduledPickup": "2025-01-19T09:00:00.000Z",
+    "estimatedDelivery": "2025-01-21T18:00:00.000Z",
+    "weight": 75.2,
+    "volume": 1.8,
+    "value": 8500,
+    "currency": "MXN",
+    "goods": [
+      {
+        "id": "ITEM002",
+        "description": "Productos farmacéuticos",
+        "quantity": 50,
+        "unit": "boxes",
+        "weight": 75.2,
+        "value": 8500,
+        "category": "Pharmaceuticals",
+        "fragile": false,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU002",
+      "name": "María González",
+      "email": "maria.gonzalez@pharma.com",
+      "phone": "+52 333 456 7890",
+      "company": "Farmacia Central",
+      "address": {
+        "street": "Av. Universidad 456",
+        "city": "Guadalajara",
+        "state": "Jalisco",
+        "zipCode": "44100",
+        "country": "México"
+      },
+      "accountType": "business"
+    },
+    "notes": "Mantener cadena de frío",
+    "distance": 2100,
+    "estimatedDuration": 1800
+  },
+  {
+    "id": "SH003",
+    "trackingNumber": "TN202501003",
+    "origin": {
+      "street": "Av. Monterrey 321",
+      "city": "Monterrey",
+      "state": "Nuevo León",
+      "zipCode": "64000",
+      "country": "México",
+      "coordinates": {
+        "latitude": 25.6866,
+        "longitude": -100.3161
+      }
+    },
+    "destination": {
+      "street": "Calle 5 de Mayo 654",
+      "city": "Puebla",
+      "state": "Puebla",
+      "zipCode": "72000",
+      "country": "México",
+      "coordinates": {
+        "latitude": 19.0414,
+        "longitude": -98.2063
+      }
+    },
+    "status": "delivered",
+    "priority": "low",
+    "createdAt": "2025-01-17T12:00:00.000Z",
+    "scheduledPickup": "2025-01-17T16:00:00.000Z",
+    "actualPickup": "2025-01-17T16:30:00.000Z",
+    "estimatedDelivery": "2025-01-18T20:00:00.000Z",
+    "actualDelivery": "2025-01-18T19:45:00.000Z",
+    "weight": 120.0,
+    "volume": 3.5,
+    "value": 12000,
+    "currency": "MXN",
+    "goods": [
+      {
+        "id": "ITEM003",
+        "description": "Muebles de oficina",
+        "quantity": 15,
+        "unit": "pieces",
+        "weight": 120.0,
+        "value": 12000,
+        "category": "Furniture",
+        "fragile": true,
+        "hazardous": false
+      }
+    ],
+    "driverId": "DR002",
+    "vehicleId": "VH002",
+    "customer": {
+      "id": "CU003",
+      "name": "Carlos Ruiz",
+      "email": "carlos.ruiz@office.com",
+      "phone": "+52 222 789 0123",
+      "company": "Oficinas Modernas",
+      "address": {
+        "street": "Av. Monterrey 321",
+        "city": "Monterrey",
+        "state": "Nuevo León",
+        "zipCode": "64000",
+        "country": "México"
+      },
+      "accountType": "business"
+    },
+    "distance": 920,
+    "estimatedDuration": 780
+  },
+  {
+    "id": "SH004",
+    "trackingNumber": "TN202501004",
+    "origin": {
+      "street": "Av. Revolución 147",
+      "city": "Mérida",
+      "state": "Yucatán",
+      "zipCode": "97000",
+      "country": "México",
+      "coordinates": {
+        "latitude": 20.9674,
+        "longitude": -89.5926
+      }
+    },
+    "destination": {
+      "street": "Calle Madero 258",
+      "city": "Veracruz",
+      "state": "Veracruz",
+      "zipCode": "91700",
+      "country": "México",
+      "coordinates": {
+        "latitude": 19.1738,
+        "longitude": -96.1342
+      }
+    },
+    "status": "delayed",
+    "priority": "urgent",
+    "createdAt": "2025-01-18T06:00:00.000Z",
+    "scheduledPickup": "2025-01-18T10:00:00.000Z",
+    "actualPickup": "2025-01-18T12:30:00.000Z",
+    "estimatedDelivery": "2025-01-19T14:00:00.000Z",
+    "weight": 200.8,
+    "volume": 4.2,
+    "value": 25000,
+    "currency": "MXN",
+    "goods": [
+      {
+        "id": "ITEM004",
+        "description": "Equipos médicos",
+        "quantity": 3,
+        "unit": "units",
+        "weight": 200.8,
+        "value": 25000,
+        "category": "Medical",
+        "fragile": true,
+        "hazardous": false
+      }
+    ],
+    "driverId": "DR003",
+    "vehicleId": "VH003",
+    "customer": {
+      "id": "CU004",
+      "name": "Ana López",
+      "email": "ana.lopez@hospital.com",
+      "phone": "+52 229 345 6789",
+      "company": "Hospital Regional",
+      "address": {
+        "street": "Av. Revolución 147",
+        "city": "Mérida",
+        "state": "Yucatán",
+        "zipCode": "97000",
+        "country": "México"
+      },
+      "accountType": "business"
+    },
+    "notes": "Entrega urgente - Equipo crítico",
+    "distance": 650,
+    "estimatedDuration": 480
+  }
+]
