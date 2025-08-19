@@ -3,37 +3,37 @@
     "id": "SH001",
     "trackingNumber": "TN202501001",
     "origin": {
-      "street": "Av. Insurgentes 123",
-      "city": "Ciudad de México",
-      "state": "CDMX",
-      "zipCode": "01000",
-      "country": "México",
+      "street": "Av. Javier Prado Este 456",
+      "city": "Lima",
+      "state": "Lima",
+      "zipCode": "15023",
+      "country": "Perú",
       "coordinates": {
-        "latitude": 19.4326,
-        "longitude": -99.1332
+        "latitude": -12.0464,
+        "longitude": -77.0428
       }
     },
     "destination": {
-      "street": "Blvd. Kukulcán 45",
-      "city": "Cancún",
-      "state": "Quintana Roo",
-      "zipCode": "77500",
-      "country": "México",
+      "street": "Av. Bolognesi 234",
+      "city": "Arequipa",
+      "state": "Arequipa",
+      "zipCode": "04001",
+      "country": "Perú",
       "coordinates": {
-        "latitude": 21.1619,
-        "longitude": -86.8515
+        "latitude": -16.4090,
+        "longitude": -71.5375
       }
     },
     "status": "in_transit",
     "priority": "high",
-    "createdAt": "2025-01-18T10:00:00.000Z",
-    "scheduledPickup": "2025-01-18T14:00:00.000Z",
-    "actualPickup": "2025-01-18T14:15:00.000Z",
-    "estimatedDelivery": "2025-01-20T16:00:00.000Z",
+    "createdAt": "2025-08-18T10:00:00.000Z",
+    "scheduledPickup": "2025-08-18T14:00:00.000Z",
+    "actualPickup": "2025-08-18T14:15:00.000Z",
+    "estimatedDelivery": "2025-08-20T16:00:00.000Z",
     "weight": 150.5,
     "volume": 2.3,
-    "value": 15000,
-    "currency": "MXN",
+    "value": 1500,
+    "currency": "PEN",
     "goods": [
       {
         "id": "ITEM001",
@@ -41,8 +41,8 @@
         "quantity": 5,
         "unit": "pcs",
         "weight": 150.5,
-        "value": 15000,
-        "category": "Electronics",
+        "value": 1500,
+        "category": "Electrónicos",
         "fragile": true,
         "hazardous": false
       }
@@ -51,22 +51,22 @@
     "vehicleId": "VH001",
     "customer": {
       "id": "CU001",
-      "name": "Juan Pérez",
-      "email": "juan.perez@email.com",
-      "phone": "+52 555 123 4567",
-      "company": "Tech Solutions SA",
+      "name": "Juan Pérez Mendoza",
+      "email": "juan.perez@techsoluciones.pe",
+      "phone": "+51 987 654 321",
+      "company": "Tech Soluciones SAC",
       "address": {
-        "street": "Av. Insurgentes 123",
-        "city": "Ciudad de México",
-        "state": "CDMX",
-        "zipCode": "01000",
-        "country": "México"
+        "street": "Av. Javier Prado Este 456",
+        "city": "Lima",
+        "state": "Lima",
+        "zipCode": "15023",
+        "country": "Perú"
       },
       "accountType": "business"
     },
     "route": {
-      "distance": 1650,
-      "estimatedTime": 1200
+      "distance": 1010,
+      "estimatedTime": 780
     },
     "notes": [
       "Entrega en horario de oficina únicamente",
@@ -77,36 +77,36 @@
     "id": "SH002",
     "trackingNumber": "TN202501002",
     "origin": {
-      "street": "Av. Universidad 456",
-      "city": "Guadalajara",
-      "state": "Jalisco",
-      "zipCode": "44100",
-      "country": "México",
+      "street": "Av. América Norte 567",
+      "city": "Trujillo",
+      "state": "La Libertad",
+      "zipCode": "13001",
+      "country": "Perú",
       "coordinates": {
-        "latitude": 20.6597,
-        "longitude": -103.3496
+        "latitude": -8.1116,
+        "longitude": -79.0288
       }
     },
     "destination": {
-      "street": "Blvd. Díaz Ordaz 789",
-      "city": "Tijuana",
-      "state": "Baja California",
-      "zipCode": "22000",
-      "country": "México",
+      "street": "Av. Balta 890",
+      "city": "Chiclayo",
+      "state": "Lambayeque",
+      "zipCode": "14001",
+      "country": "Perú",
       "coordinates": {
-        "latitude": 32.5149,
-        "longitude": -117.0382
+        "latitude": -6.7714,
+        "longitude": -79.8431
       }
     },
     "status": "pending",
     "priority": "medium",
-    "createdAt": "2025-01-18T08:30:00.000Z",
-    "scheduledPickup": "2025-01-19T09:00:00.000Z",
-    "estimatedDelivery": "2025-01-21T18:00:00.000Z",
+    "createdAt": "2025-08-18T08:30:00.000Z",
+    "scheduledPickup": "2025-08-19T09:00:00.000Z",
+    "estimatedDelivery": "2025-08-21T18:00:00.000Z",
     "weight": 75.2,
     "volume": 1.8,
-    "value": 8500,
-    "currency": "MXN",
+    "value": 850,
+    "currency": "PEN",
     "goods": [
       {
         "id": "ITEM002",
@@ -114,30 +114,30 @@
         "quantity": 50,
         "unit": "boxes",
         "weight": 75.2,
-        "value": 8500,
-        "category": "Pharmaceuticals",
+        "value": 850,
+        "category": "Farmacéuticos",
         "fragile": false,
         "hazardous": false
       }
     ],
     "customer": {
       "id": "CU002",
-      "name": "María González",
-      "email": "maria.gonzalez@pharma.com",
-      "phone": "+52 333 456 7890",
-      "company": "Farmacia Central",
+      "name": "María González Herrera",
+      "email": "maria.gonzalez@farmacianorte.pe",
+      "phone": "+51 944 123 456",
+      "company": "Farmacia Norte SAC",
       "address": {
-        "street": "Av. Universidad 456",
-        "city": "Guadalajara",
-        "state": "Jalisco",
-        "zipCode": "44100",
-        "country": "México"
+        "street": "Av. América Norte 567",
+        "city": "Trujillo",
+        "state": "La Libertad",
+        "zipCode": "13001",
+        "country": "Perú"
       },
       "accountType": "business"
     },
     "route": {
-      "distance": 2100,
-      "estimatedTime": 1800
+      "distance": 208,
+      "estimatedTime": 240
     },
     "notes": [
       "Mantener cadena de frío",
@@ -148,38 +148,38 @@
     "id": "SH003",
     "trackingNumber": "TN202501003",
     "origin": {
-      "street": "Av. Monterrey 321",
-      "city": "Monterrey",
-      "state": "Nuevo León",
-      "zipCode": "64000",
-      "country": "México",
+      "street": "Av. El Sol 321",
+      "city": "Cusco",
+      "state": "Cusco",
+      "zipCode": "08001",
+      "country": "Perú",
       "coordinates": {
-        "latitude": 25.6866,
-        "longitude": -100.3161
+        "latitude": -13.5319,
+        "longitude": -71.9675
       }
     },
     "destination": {
-      "street": "Calle 5 de Mayo 654",
-      "city": "Puebla",
-      "state": "Puebla",
-      "zipCode": "72000",
-      "country": "México",
+      "street": "Jr. Real 654",
+      "city": "Huancayo",
+      "state": "Junín",
+      "zipCode": "12001",
+      "country": "Perú",
       "coordinates": {
-        "latitude": 19.0414,
-        "longitude": -98.2063
+        "latitude": -12.0653,
+        "longitude": -75.2049
       }
     },
     "status": "delivered",
     "priority": "low",
-    "createdAt": "2025-01-17T12:00:00.000Z",
-    "scheduledPickup": "2025-01-17T16:00:00.000Z",
-    "actualPickup": "2025-01-17T16:30:00.000Z",
-    "estimatedDelivery": "2025-01-18T20:00:00.000Z",
-    "actualDelivery": "2025-01-18T19:45:00.000Z",
+    "createdAt": "2025-08-17T12:00:00.000Z",
+    "scheduledPickup": "2025-08-17T16:00:00.000Z",
+    "actualPickup": "2025-08-17T16:30:00.000Z",
+    "estimatedDelivery": "2025-08-18T20:00:00.000Z",
+    "actualDelivery": "2025-08-18T19:45:00.000Z",
     "weight": 120.0,
     "volume": 3.5,
-    "value": 12000,
-    "currency": "MXN",
+    "value": 1200,
+    "currency": "PEN",
     "goods": [
       {
         "id": "ITEM003",
@@ -187,8 +187,8 @@
         "quantity": 15,
         "unit": "pieces",
         "weight": 120.0,
-        "value": 12000,
-        "category": "Furniture",
+        "value": 1200,
+        "category": "Muebles",
         "fragile": true,
         "hazardous": false
       }
@@ -197,22 +197,22 @@
     "vehicleId": "VH002",
     "customer": {
       "id": "CU003",
-      "name": "Carlos Ruiz",
-      "email": "carlos.ruiz@office.com",
-      "phone": "+52 222 789 0123",
-      "company": "Oficinas Modernas",
+      "name": "Carlos Ruiz Quispe",
+      "email": "carlos.ruiz@oficinasandinas.pe",
+      "phone": "+51 984 567 890",
+      "company": "Oficinas Andinas EIRL",
       "address": {
-        "street": "Av. Monterrey 321",
-        "city": "Monterrey",
-        "state": "Nuevo León",
-        "zipCode": "64000",
-        "country": "México"
+        "street": "Av. El Sol 321",
+        "city": "Cusco",
+        "state": "Cusco",
+        "zipCode": "08001",
+        "country": "Perú"
       },
       "accountType": "business"
     },
     "route": {
-      "distance": 920,
-      "estimatedTime": 780
+      "distance": 315,
+      "estimatedTime": 480
     },
     "notes": [
       "Mercancía frágil - manejar con cuidado"
@@ -222,37 +222,37 @@
     "id": "SH004",
     "trackingNumber": "TN202501004",
     "origin": {
-      "street": "Av. Revolución 147",
-      "city": "Mérida",
-      "state": "Yucatán",
-      "zipCode": "97000",
-      "country": "México",
+      "street": "Av. Grau 147",
+      "city": "Iquitos",
+      "state": "Loreto",
+      "zipCode": "16001",
+      "country": "Perú",
       "coordinates": {
-        "latitude": 20.9674,
-        "longitude": -89.5926
+        "latitude": -3.7437,
+        "longitude": -73.2516
       }
     },
     "destination": {
-      "street": "Calle Madero 258",
-      "city": "Veracruz",
-      "state": "Veracruz",
-      "zipCode": "91700",
-      "country": "México",
+      "street": "Av. Tacna 258",
+      "city": "Tacna",
+      "state": "Tacna",
+      "zipCode": "23001",
+      "country": "Perú",
       "coordinates": {
-        "latitude": 19.1738,
-        "longitude": -96.1342
+        "latitude": -18.0147,
+        "longitude": -70.2533
       }
     },
     "status": "delayed",
     "priority": "urgent",
-    "createdAt": "2025-01-18T06:00:00.000Z",
-    "scheduledPickup": "2025-01-18T10:00:00.000Z",
-    "actualPickup": "2025-01-18T12:30:00.000Z",
-    "estimatedDelivery": "2025-01-19T14:00:00.000Z",
+    "createdAt": "2025-08-18T06:00:00.000Z",
+    "scheduledPickup": "2025-08-18T10:00:00.000Z",
+    "actualPickup": "2025-08-18T12:30:00.000Z",
+    "estimatedDelivery": "2025-08-19T14:00:00.000Z",
     "weight": 200.8,
     "volume": 4.2,
-    "value": 25000,
-    "currency": "MXN",
+    "value": 2500,
+    "currency": "PEN",
     "goods": [
       {
         "id": "ITEM004",
@@ -260,8 +260,8 @@
         "quantity": 3,
         "unit": "units",
         "weight": 200.8,
-        "value": 25000,
-        "category": "Medical",
+        "value": 2500,
+        "category": "Médicos",
         "fragile": true,
         "hazardous": false
       }
@@ -270,27 +270,1186 @@
     "vehicleId": "VH003",
     "customer": {
       "id": "CU004",
-      "name": "Ana López",
-      "email": "ana.lopez@hospital.com",
-      "phone": "+52 229 345 6789",
-      "company": "Hospital Regional",
+      "name": "Ana López Vargas",
+      "email": "ana.lopez@hospitalloreto.pe",
+      "phone": "+51 965 123 456",
+      "company": "Hospital Regional de Loreto",
       "address": {
-        "street": "Av. Revolución 147",
-        "city": "Mérida",
-        "state": "Yucatán",
-        "zipCode": "97000",
-        "country": "México"
+        "street": "Av. Grau 147",
+        "city": "Iquitos",
+        "state": "Loreto",
+        "zipCode": "16001",
+        "country": "Perú"
       },
       "accountType": "business"
     },
     "route": {
-      "distance": 650,
-      "estimatedTime": 480
+      "distance": 2800,
+      "estimatedTime": 2880
     },
     "notes": [
       "Entrega urgente - Equipo crítico",
       "Prioridad máxima",
       "Contactar al responsable médico al llegar"
+    ]
+  },
+  {
+    "id": "SH005",
+    "trackingNumber": "TN202501005",
+    "origin": {
+      "street": "Jr. Ayacucho 789",
+      "city": "Ayacucho",
+      "state": "Ayacucho",
+      "zipCode": "05001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -13.1586,
+        "longitude": -74.2236
+      }
+    },
+    "destination": {
+      "street": "Av. Universidad 456",
+      "city": "Huancayo",
+      "state": "Junín",
+      "zipCode": "12001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -12.0653,
+        "longitude": -75.2049
+      }
+    },
+    "status": "pending",
+    "priority": "medium",
+    "createdAt": "2025-08-18T15:30:00.000Z",
+    "scheduledPickup": "2025-08-19T08:00:00.000Z",
+    "estimatedDelivery": "2025-08-21T12:00:00.000Z",
+    "weight": 85.3,
+    "volume": 1.2,
+    "value": 650,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM005",
+        "description": "Artesanías tradicionales ayacuchanas",
+        "quantity": 25,
+        "unit": "pieces",
+        "weight": 85.3,
+        "value": 650,
+        "category": "Artesanías",
+        "fragile": true,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU005",
+      "name": "Roberto Sánchez Huamán",
+      "email": "roberto.sanchez@artesaniasayacucho.pe",
+      "phone": "+51 966 789 123",
+      "company": "Artesanías Ayacucho SAC",
+      "address": {
+        "street": "Jr. Ayacucho 789",
+        "city": "Ayacucho",
+        "state": "Ayacucho",
+        "zipCode": "05001",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 320,
+      "estimatedTime": 390
+    },
+    "notes": [
+      "Manejo cuidadoso - artesanías delicadas"
+    ]
+  },
+  {
+    "id": "SH006",
+    "trackingNumber": "TN202501006",
+    "origin": {
+      "street": "Puerto Muelle 234",
+      "city": "Callao",
+      "state": "Lima",
+      "zipCode": "07001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -12.0566,
+        "longitude": -77.1181
+      }
+    },
+    "destination": {
+      "street": "Zona Industrial 567",
+      "city": "Huánuco",
+      "state": "Huánuco",
+      "zipCode": "10001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -9.9306,
+        "longitude": -76.2422
+      }
+    },
+    "status": "cancelled",
+    "priority": "low",
+    "createdAt": "2025-08-17T09:15:00.000Z",
+    "scheduledPickup": "2025-08-18T06:00:00.000Z",
+    "estimatedDelivery": "2025-08-20T14:00:00.000Z",
+    "weight": 340.8,
+    "volume": 6.2,
+    "value": 2800,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM006",
+        "description": "Materiales de construcción",
+        "quantity": 100,
+        "unit": "bags",
+        "weight": 340.8,
+        "value": 2800,
+        "category": "Construcción",
+        "fragile": false,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU006",
+      "name": "Construcciones Andinas EIRL",
+      "email": "pedidos@construccionesandinas.pe",
+      "phone": "+51 962 345 678",
+      "company": "Construcciones Andinas EIRL",
+      "address": {
+        "street": "Puerto Muelle 234",
+        "city": "Callao",
+        "state": "Lima",
+        "zipCode": "07001",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 410,
+      "estimatedTime": 480
+    },
+    "notes": [
+      "Cancelado por cliente",
+      "Problemas de financiamiento"
+    ]
+  },
+  {
+    "id": "SH007",
+    "trackingNumber": "TN202501007",
+    "origin": {
+      "street": "Av. Industrial 890",
+      "city": "Piura",
+      "state": "Piura",
+      "zipCode": "20001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -5.1945,
+        "longitude": -80.6328
+      }
+    },
+    "destination": {
+      "street": "Parque Industrial 123",
+      "city": "Chimbote",
+      "state": "Áncash",
+      "zipCode": "02801",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -9.0853,
+        "longitude": -78.5784
+      }
+    },
+    "status": "in_transit",
+    "priority": "high",
+    "createdAt": "2025-08-18T11:20:00.000Z",
+    "scheduledPickup": "2025-08-18T15:00:00.000Z",
+    "actualPickup": "2025-08-18T15:10:00.000Z",
+    "estimatedDelivery": "2025-08-19T22:00:00.000Z",
+    "weight": 180.5,
+    "volume": 3.8,
+    "value": 2200,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM007",
+        "description": "Componentes automotrices",
+        "quantity": 50,
+        "unit": "units",
+        "weight": 180.5,
+        "value": 2200,
+        "category": "Automotriz",
+        "fragile": false,
+        "hazardous": false
+      }
+    ],
+    "driverId": "DR002",
+    "vehicleId": "VH002",
+    "customer": {
+      "id": "CU007",
+      "name": "AutoPartes del Norte SAC",
+      "email": "ventas@autopartesnorte.pe",
+      "phone": "+51 973 567 890",
+      "company": "AutoPartes del Norte SAC",
+      "address": {
+        "street": "Av. Industrial 890",
+        "city": "Piura",
+        "state": "Piura",
+        "zipCode": "20001",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 630,
+      "estimatedTime": 600
+    },
+    "notes": [
+      "Entrega directa en planta",
+      "Verificar componentes al recibir"
+    ]
+  },
+  {
+    "id": "SH008",
+    "trackingNumber": "TN202501008",
+    "origin": {
+      "street": "Centro Logístico 456",
+      "city": "Pucallpa",
+      "state": "Ucayali",
+      "zipCode": "25001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -8.3791,
+        "longitude": -74.5539
+      }
+    },
+    "destination": {
+      "street": "Zona Comercial 789",
+      "city": "Paracas",
+      "state": "Ica",
+      "zipCode": "11550",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -13.8608,
+        "longitude": -76.2679
+      }
+    },
+    "status": "in_transit",
+    "priority": "medium",
+    "createdAt": "2025-08-18T07:45:00.000Z",
+    "scheduledPickup": "2025-08-18T12:00:00.000Z",
+    "actualPickup": "2025-08-18T11:55:00.000Z",
+    "estimatedDelivery": "2025-08-20T08:00:00.000Z",
+    "weight": 95.7,
+    "volume": 2.1,
+    "value": 1850,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM008",
+        "description": "Productos turísticos amazónicos",
+        "quantity": 150,
+        "unit": "items",
+        "weight": 95.7,
+        "value": 1850,
+        "category": "Turismo",
+        "fragile": true,
+        "hazardous": false
+      }
+    ],
+    "driverId": "DR005",
+    "vehicleId": "VH004",
+    "customer": {
+      "id": "CU008",
+      "name": "Souvenirs Amazonia Perú EIRL",
+      "email": "pedidos@amazoniasouvenirs.pe",
+      "phone": "+51 961 567 890",
+      "company": "Souvenirs Amazonia Perú EIRL",
+      "address": {
+        "street": "Centro Logístico 456",
+        "city": "Pucallpa",
+        "state": "Ucayali",
+        "zipCode": "25001",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 850,
+      "estimatedTime": 780
+    },
+    "notes": [
+      "Entrega en temporada alta",
+      "Coordinar con recepción del hotel"
+    ]
+  },
+  {
+    "id": "SH009",
+    "trackingNumber": "TN202501009",
+    "origin": {
+      "street": "Puerto Matarani 234",
+      "city": "Matarani",
+      "state": "Arequipa",
+      "zipCode": "04874",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -17.0006,
+        "longitude": -72.1061
+      }
+    },
+    "destination": {
+      "street": "Zona Industrial Norte 567",
+      "city": "Cajamarca",
+      "state": "Cajamarca",
+      "zipCode": "06001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -7.1611,
+        "longitude": -78.5126
+      }
+    },
+    "status": "in_transit",
+    "priority": "urgent",
+    "createdAt": "2025-08-17T16:30:00.000Z",
+    "scheduledPickup": "2025-08-18T08:00:00.000Z",
+    "actualPickup": "2025-08-18T08:20:00.000Z",
+    "estimatedDelivery": "2025-08-19T18:00:00.000Z",
+    "weight": 450.2,
+    "volume": 8.5,
+    "value": 6500,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM009",
+        "description": "Maquinaria industrial minera",
+        "quantity": 3,
+        "unit": "machines",
+        "weight": 450.2,
+        "value": 6500,
+        "category": "Maquinaria",
+        "fragile": false,
+        "hazardous": false
+      }
+    ],
+    "driverId": "DR004",
+    "vehicleId": "VH006",
+    "customer": {
+      "id": "CU009",
+      "name": "Industrias Mineras del Norte SAC",
+      "email": "compras@industriasmineras.pe",
+      "phone": "+51 976 789 012",
+      "company": "Industrias Mineras del Norte SAC",
+      "address": {
+        "street": "Puerto Matarani 234",
+        "city": "Matarani",
+        "state": "Arequipa",
+        "zipCode": "04874",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 1150,
+      "estimatedTime": 960
+    },
+    "notes": [
+      "Carga pesada - verificar capacidad",
+      "Requiere grúa para descarga",
+      "Entrega urgente para producción"
+    ]
+  },
+  {
+    "id": "SH010",
+    "trackingNumber": "TN202501010",
+    "origin": {
+      "street": "Mercado Central 345",
+      "city": "Ica",
+      "state": "Ica",
+      "zipCode": "11001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -14.0678,
+        "longitude": -75.7286
+      }
+    },
+    "destination": {
+      "street": "Av. Universidad 678",
+      "city": "Puno",
+      "state": "Puno",
+      "zipCode": "21001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -15.8402,
+        "longitude": -70.0219
+      }
+    },
+    "status": "in_transit",
+    "priority": "medium",
+    "createdAt": "2025-08-18T13:15:00.000Z",
+    "scheduledPickup": "2025-08-18T17:00:00.000Z",
+    "actualPickup": "2025-08-18T16:45:00.000Z",
+    "estimatedDelivery": "2025-08-19T14:30:00.000Z",
+    "weight": 125.8,
+    "volume": 2.8,
+    "value": 950,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM010",
+        "description": "Productos agrícolas orgánicos",
+        "quantity": 200,
+        "unit": "kg",
+        "weight": 125.8,
+        "value": 950,
+        "category": "Agricultura",
+        "fragile": false,
+        "hazardous": false
+      }
+    ],
+    "driverId": "DR006",
+    "vehicleId": "VH007",
+    "customer": {
+      "id": "CU010",
+      "name": "Orgánicos de la Sierra Peruana SAC",
+      "email": "ventas@organicossierra.pe",
+      "phone": "+51 956 234 567",
+      "company": "Orgánicos de la Sierra Peruana SAC",
+      "address": {
+        "street": "Mercado Central 345",
+        "city": "Ica",
+        "state": "Ica",
+        "zipCode": "11001",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 580,
+      "estimatedTime": 540
+    },
+    "notes": [
+      "Productos perecederos",
+      "Mantener refrigeración"
+    ]
+  },
+  {
+    "id": "SH011",
+    "trackingNumber": "TN202501011",
+    "origin": {
+      "street": "Polígono Industrial 789",
+      "city": "Juliaca",
+      "state": "Puno",
+      "zipCode": "21104",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -15.5000,
+        "longitude": -70.1500
+      }
+    },
+    "destination": {
+      "street": "Zona Metropolitana 123",
+      "city": "Huacho",
+      "state": "Lima",
+      "zipCode": "15201",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -11.1063,
+        "longitude": -77.6050
+      }
+    },
+    "status": "in_transit",
+    "priority": "low",
+    "createdAt": "2025-08-18T09:00:00.000Z",
+    "scheduledPickup": "2025-08-18T13:30:00.000Z",
+    "actualPickup": "2025-08-18T13:25:00.000Z",
+    "estimatedDelivery": "2025-08-19T16:00:00.000Z",
+    "weight": 75.4,
+    "volume": 1.9,
+    "value": 520,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM011",
+        "description": "Textiles y confección",
+        "quantity": 80,
+        "unit": "pieces",
+        "weight": 75.4,
+        "value": 520,
+        "category": "Textiles",
+        "fragile": false,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU011",
+      "name": "María Elena Castro",
+      "email": "maria.castro@textilescentrales.com",
+      "phone": "+51 449 678 9012",
+      "company": "Textiles Centrales",
+      "address": {
+        "street": "Polígono Industrial 789",
+        "city": "Juliaca",
+      "state": "Puno",
+        "zipCode": "20000",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 280,
+      "estimatedTime": 210
+    },
+    "notes": [
+      "Verificar calidad al recibir"
+    ]
+  },
+  {
+    "id": "SH012",
+    "trackingNumber": "TN202501012",
+    "origin": {
+      "street": "Centro de Distribución 456",
+      "city": "Chincha",
+      "state": "Ica",
+      "zipCode": "11701",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -13.4167,
+        "longitude": -76.1333
+      }
+    },
+    "destination": {
+      "street": "Av. Central 789",
+      "city": "Tingo María",
+      "state": "Huánuco",
+      "zipCode": "10131",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -9.2945,
+        "longitude": -75.9969
+      }
+    },
+    "status": "delivered",
+    "priority": "medium",
+    "createdAt": "2025-08-16T10:00:00.000Z",
+    "scheduledPickup": "2025-08-16T14:00:00.000Z",
+    "actualPickup": "2025-08-16T13:50:00.000Z",
+    "estimatedDelivery": "2025-08-18T16:00:00.000Z",
+    "actualDelivery": "2025-08-18T15:30:00.000Z",
+    "weight": 165.3,
+    "volume": 3.2,
+    "value": 1450,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM012",
+        "description": "Libros y material educativo",
+        "quantity": 500,
+        "unit": "books",
+        "weight": 165.3,
+        "value": 1450,
+        "category": "Educación",
+        "fragile": false,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU012",
+      "name": "Editorial Amazonia SAC",
+      "email": "distribucion@editorialamazonia.pe",
+      "phone": "+51 956 789 012",
+      "company": "Editorial Amazonia SAC",
+      "address": {
+        "street": "Centro de Distribución 456",
+        "city": "Chincha",
+        "state": "Ica",
+        "zipCode": "11701",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 520,
+      "estimatedTime": 480
+    },
+    "notes": [
+      "Entrega completada exitosamente",
+      "Material educativo para el ciclo escolar"
+    ]
+  },
+  {
+    "id": "SH013",
+    "trackingNumber": "TN202501013",
+    "origin": {
+      "street": "Parque Tecnológico 123",
+      "city": "Lambayeque",
+      "state": "Lambayeque",
+      "zipCode": "14012",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -6.7014,
+        "longitude": -79.9106
+      }
+    },
+    "destination": {
+      "street": "Zona Rosa 456",
+      "city": "San Isidro",
+      "state": "Lima",
+      "zipCode": "15036",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -12.0931,
+        "longitude": -77.0465
+      }
+    },
+    "status": "delivered",
+    "priority": "high",
+    "createdAt": "2025-08-17T08:30:00.000Z",
+    "scheduledPickup": "2025-08-17T12:00:00.000Z",
+    "actualPickup": "2025-08-17T11:45:00.000Z",
+    "estimatedDelivery": "2025-08-18T10:00:00.000Z",
+    "actualDelivery": "2025-08-18T09:15:00.000Z",
+    "weight": 45.8,
+    "volume": 0.8,
+    "value": 3500,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM013",
+        "description": "Software y licencias",
+        "quantity": 10,
+        "unit": "licenses",
+        "weight": 45.8,
+        "value": 3500,
+        "category": "Software",
+        "fragile": true,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU013",
+      "name": "TechSolutions Lima SAC",
+      "email": "compras@techsolutionslima.pe",
+      "phone": "+51 941 234 567",
+      "company": "TechSolutions Lima SAC",
+      "address": {
+        "street": "Zona Rosa 456",
+        "city": "San Isidro",
+        "state": "Lima",
+        "zipCode": "15036",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 764,
+      "estimatedTime": 600
+    },
+    "notes": [
+      "Entrega anticipada",
+      "Cliente muy satisfecho"
+    ]
+  },
+  {
+    "id": "SH014",
+    "trackingNumber": "TN202501014",
+    "origin": {
+      "street": "Muelle Fiscal 789",
+      "city": "Chimbote",
+      "state": "Áncash",
+      "zipCode": "02801",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -9.0853,
+        "longitude": -78.5784
+      }
+    },
+    "destination": {
+      "street": "Mercado de Mariscos 234",
+      "city": "Mollendo",
+      "state": "Arequipa",
+      "zipCode": "04610",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -17.0231,
+        "longitude": -72.0147
+      }
+    },
+    "status": "delivered",
+    "priority": "urgent",
+    "createdAt": "2025-08-16T05:00:00.000Z",
+    "scheduledPickup": "2025-08-16T08:00:00.000Z",
+    "actualPickup": "2025-08-16T07:45:00.000Z",
+    "estimatedDelivery": "2025-08-17T18:00:00.000Z",
+    "actualDelivery": "2025-08-17T17:20:00.000Z",
+    "weight": 280.7,
+    "volume": 4.5,
+    "value": 4200,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM014",
+        "description": "Productos del mar frescos",
+        "quantity": 150,
+        "unit": "kg",
+        "weight": 280.7,
+        "value": 4200,
+        "category": "Mariscos",
+        "fragile": false,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU014",
+      "name": "Distribuidora Marina SAC",
+      "email": "ventas@marinadelpacificoperu.pe",
+      "phone": "+51 932 567 890",
+      "company": "Distribuidora Marina SAC",
+      "address": {
+        "street": "Muelle Fiscal 789",
+        "city": "Chimbote",
+        "state": "Áncash",
+        "zipCode": "02801",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 890,
+      "estimatedTime": 720
+    },
+    "notes": [
+      "Entrega urgente cumplida",
+      "Producto fresco conservado",
+      "Cadena de frío mantenida"
+    ]
+  },
+  {
+    "id": "SH015",
+    "trackingNumber": "TN202501015",
+    "origin": {
+      "street": "Zona Universitaria 567",
+      "city": "Huamanga",
+      "state": "Ayacucho",
+      "zipCode": "05003",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -13.1631,
+        "longitude": -74.2236
+      }
+    },
+    "destination": {
+      "street": "Centro Histórico 890",
+      "city": "Abancay",
+      "state": "Apurímac",
+      "zipCode": "03001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -13.6336,
+        "longitude": -72.8814
+      }
+    },
+    "status": "delivered",
+    "priority": "low",
+    "createdAt": "2025-08-15T14:20:00.000Z",
+    "scheduledPickup": "2025-08-16T09:00:00.000Z",
+    "actualPickup": "2025-08-16T09:10:00.000Z",
+    "estimatedDelivery": "2025-08-17T15:00:00.000Z",
+    "actualDelivery": "2025-08-17T14:45:00.000Z",
+    "weight": 98.2,
+    "volume": 2.1,
+    "value": 780,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM015",
+        "description": "Artículos de papelería",
+        "quantity": 300,
+        "unit": "items",
+        "weight": 98.2,
+        "value": 780,
+        "category": "Oficina",
+        "fragile": false,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU015",
+      "name": "Papelería Andina EIRL",
+      "email": "pedidos@papeleriaandina.pe",
+      "phone": "+51 966 789 012",
+      "company": "Papelería Andina EIRL",
+      "address": {
+        "street": "Centro Histórico 890",
+        "city": "Abancay",
+        "state": "Apurímac",
+        "zipCode": "03001",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 240,
+      "estimatedTime": 300
+    },
+    "notes": [
+      "Entrega puntual",
+      "Buen servicio"
+    ]
+  },
+  {
+    "id": "SH016",
+    "trackingNumber": "TN202501016",
+    "origin": {
+      "street": "Boulevard Industrial 123",
+      "city": "Sullana",
+      "state": "Piura",
+      "zipCode": "20103",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -4.9037,
+        "longitude": -80.6850
+      }
+    },
+    "destination": {
+      "street": "Av. Reforma 456",
+      "city": "Nazca",
+      "state": "Ica",
+      "zipCode": "11401",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -14.8270,
+        "longitude": -74.9381
+      }
+    },
+    "status": "pending",
+    "priority": "medium",
+    "createdAt": "2025-08-18T16:45:00.000Z",
+    "scheduledPickup": "2025-08-19T10:00:00.000Z",
+    "estimatedDelivery": "2025-08-21T14:00:00.000Z",
+    "weight": 320.5,
+    "volume": 5.8,
+    "value": 2850,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM016",
+        "description": "Equipos de refrigeración",
+        "quantity": 8,
+        "unit": "units",
+        "weight": 320.5,
+        "value": 2850,
+        "category": "Electrodomésticos",
+        "fragile": true,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU016",
+      "name": "Refrigeración del Sur EIRL",
+      "email": "ventas@refrigeracionsur.pe",
+      "phone": "+51 945 678 901",
+      "company": "Refrigeración del Sur EIRL",
+      "address": {
+        "street": "Av. Reforma 456",
+        "city": "Nazca",
+        "state": "Ica",
+        "zipCode": "11401",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 1100,
+      "estimatedTime": 840
+    },
+    "notes": [
+      "Verificar voltaje antes de instalar",
+      "Requiere instalación especializada"
+    ]
+  },
+  {
+    "id": "SH017",
+    "trackingNumber": "TN202501017",
+    "origin": {
+      "street": "Fraccionamiento Industrial 789",
+      "city": "Tumbes",
+      "state": "Tumbes",
+      "zipCode": "24001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -3.5669,
+        "longitude": -80.4515
+      }
+    },
+    "destination": {
+      "street": "Zona Centro 123",
+      "city": "Moyobamba",
+      "state": "San Martín",
+      "zipCode": "22001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -6.0342,
+        "longitude": -76.9711
+      }
+    },
+    "status": "pending",
+    "priority": "high",
+    "createdAt": "2025-08-18T18:30:00.000Z",
+    "scheduledPickup": "2025-08-19T07:00:00.000Z",
+    "estimatedDelivery": "2025-08-20T16:00:00.000Z",
+    "weight": 140.8,
+    "volume": 2.9,
+    "value": 1950,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM017",
+        "description": "Herramientas agrícolas",
+        "quantity": 75,
+        "unit": "tools",
+        "weight": 140.8,
+        "value": 1950,
+        "category": "Agricultura",
+        "fragile": false,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU017",
+      "name": "Agro Implementos del Norte SAC",
+      "email": "compras@agroimplementosnorte.pe",
+      "phone": "+51 942 345 678",
+      "company": "Agro Implementos del Norte SAC",
+      "address": {
+        "street": "Zona Centro 123",
+        "city": "Moyobamba",
+        "state": "San Martín",
+        "zipCode": "22001",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 450,
+      "estimatedTime": 420
+    },
+    "notes": [
+      "Temporada de siembra",
+      "Entrega prioritaria"
+    ]
+  },
+  {
+    "id": "SH018",
+    "trackingNumber": "TN202501018",
+    "origin": {
+      "street": "Puerto Industrial 456",
+      "city": "Salaverry",
+      "state": "La Libertad",
+      "zipCode": "13014",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -8.2225,
+        "longitude": -78.9739
+      }
+    },
+    "destination": {
+      "street": "Av. López Mateos 789",
+      "city": "Cerro de Pasco",
+      "state": "Pasco",
+      "zipCode": "19001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -10.6742,
+        "longitude": -76.2561
+      }
+    },
+    "status": "pending",
+    "priority": "low",
+    "createdAt": "2025-08-18T20:15:00.000Z",
+    "scheduledPickup": "2025-08-19T12:00:00.000Z",
+    "estimatedDelivery": "2025-08-21T10:00:00.000Z",
+    "weight": 210.3,
+    "volume": 4.2,
+    "value": 1680,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM018",
+        "description": "Materiales de plomería",
+        "quantity": 120,
+        "unit": "pieces",
+        "weight": 210.3,
+        "value": 1680,
+        "category": "Construcción",
+        "fragile": false,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU018",
+      "name": "Construcciones Mineras del Centro SAC",
+      "email": "material@construccionesmineras.pe",
+      "phone": "+51 963 456 789",
+      "company": "Construcciones Mineras del Centro SAC",
+      "address": {
+        "street": "Av. López Mateos 789",
+        "city": "Cerro de Pasco",
+        "state": "Pasco",
+        "zipCode": "19001",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 320,
+      "estimatedTime": 360
+    },
+    "notes": [
+      "Verificar inventario al recibir"
+    ]
+  },
+  {
+    "id": "SH019",
+    "trackingNumber": "TN202501019",
+    "origin": {
+      "street": "Centro Logístico 234",
+      "city": "Huancavelica",
+      "state": "Huancavelica",
+      "zipCode": "09001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -12.7869,
+        "longitude": -74.9733
+      }
+    },
+    "destination": {
+      "street": "Zona Comercial 567",
+      "city": "Puerto Maldonado",
+      "state": "Madre de Dios",
+      "zipCode": "17001",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -12.5931,
+        "longitude": -69.1892
+      }
+    },
+    "status": "delayed",
+    "priority": "urgent",
+    "createdAt": "2025-08-17T11:30:00.000Z",
+    "scheduledPickup": "2025-08-17T15:00:00.000Z",
+    "actualPickup": "2025-08-17T16:30:00.000Z",
+    "estimatedDelivery": "2025-08-18T20:00:00.000Z",
+    "weight": 385.9,
+    "volume": 7.2,
+    "value": 4800,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM019",
+        "description": "Productos químicos industriales",
+        "quantity": 25,
+        "unit": "containers",
+        "weight": 385.9,
+        "value": 4800,
+        "category": "Químicos",
+        "fragile": false,
+        "hazardous": true
+      }
+    ],
+    "customer": {
+      "id": "CU019",
+      "name": "Química Amazónica SAC",
+      "email": "operaciones@quimicaamazonica.pe",
+      "phone": "+51 982 345 678",
+      "company": "Química Amazónica SAC",
+      "address": {
+        "street": "Zona Comercial 567",
+        "city": "Puerto Maldonado",
+        "state": "Madre de Dios",
+        "zipCode": "17001",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 680,
+      "estimatedTime": 600
+    },
+    "notes": [
+      "RETRASADO - Problemas con documentación",
+      "Material peligroso - requiere permisos especiales",
+      "Reprogramar entrega ASAP"
+    ]
+  },
+  {
+    "id": "SH020",
+    "trackingNumber": "TN202501020",
+    "origin": {
+      "street": "Parque Industrial Fronterizo 890",
+      "city": "Paita",
+      "state": "Piura",
+      "zipCode": "20701",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -5.0892,
+        "longitude": -81.1144
+      }
+    },
+    "destination": {
+      "street": "Zona Metropolitana 345",
+      "city": "Miraflores",
+      "state": "Lima",
+      "zipCode": "15074",
+      "country": "Perú",
+      "coordinates": {
+        "latitude": -12.1196,
+        "longitude": -77.0286
+      }
+    },
+    "status": "cancelled",
+    "priority": "medium",
+    "createdAt": "2025-08-16T13:45:00.000Z",
+    "scheduledPickup": "2025-08-17T09:00:00.000Z",
+    "estimatedDelivery": "2025-08-19T17:00:00.000Z",
+    "weight": 560.4,
+    "volume": 12.5,
+    "value": 7500,
+    "currency": "PEN",
+    "goods": [
+      {
+        "id": "ITEM020",
+        "description": "Maquinaria textil importada",
+        "quantity": 5,
+        "unit": "machines",
+        "weight": 560.4,
+        "value": 7500,
+        "category": "Maquinaria",
+        "fragile": true,
+        "hazardous": false
+      }
+    ],
+    "customer": {
+      "id": "CU020",
+      "name": "Textiles Peruanos del Sur SAC",
+      "email": "importaciones@textilesperu.pe",
+      "phone": "+51 981 678 901",
+      "company": "Textiles Peruanos del Sur SAC",
+      "address": {
+        "street": "Zona Metropolitana 345",
+        "city": "Miraflores",
+        "state": "Lima",
+        "zipCode": "15074",
+        "country": "Perú"
+      },
+      "accountType": "business"
+    },
+    "route": {
+      "distance": 1020,
+      "estimatedTime": 780
+    },
+    "notes": [
+      "CANCELADO - Problemas aduanales",
+      "Mercancía retenida en frontera",
+      "Cliente solicitó cancelación definitiva"
     ]
   }
 ]
