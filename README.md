@@ -206,6 +206,23 @@ For detailed performance analysis and optimization insights, see [`performance-r
 ### Bundle Analysis Report
 For comprehensive bundle size analysis and optimization recommendations, see [`bundle-analysis-report.pdf`](./bundle-analysis-report.pdf).
 
----
+### Images
 
+<img width="1511" height="782" alt="Screenshot 2025-08-20 at 1 39 16 PM" src="https://github.com/user-attachments/assets/93f46d39-7d8e-4b2c-8813-d0913895e17d" />
+
+<img width="1512" height="781" alt="Screenshot 2025-08-20 at 1 39 25 PM" src="https://github.com/user-attachments/assets/439e3165-d78b-4397-a709-c983b152ce01" />
+
+<img width="827" height="740" alt="Screenshot 2025-08-20 at 1 39 37 PM" src="https://github.com/user-attachments/assets/0be3a0a7-b57c-4c27-9deb-267bdf57a8d2" />
+
+<img width="1510" height="781" alt="Screenshot 2025-08-20 at 1 39 51 PM" src="https://github.com/user-attachments/assets/c6158103-aab6-4672-893f-7f0f1094b9d4" />
+
+<img width="662" height="738" alt="Screenshot 2025-08-20 at 1 41 10 PM" src="https://github.com/user-attachments/assets/d1353c9e-ce72-426d-8c04-f3ef1f76260b" />
+
+<img width="1512" height="779" alt="Screenshot 2025-08-20 at 1 41 32 PM" src="https://github.com/user-attachments/assets/899c74fb-2f1d-47c4-9e7e-e1a42b2157e4" />
+
+<img width="935" height="728" alt="Screenshot 2025-08-20 at 1 41 50 PM" src="https://github.com/user-attachments/assets/8c16dc7c-7b11-43d2-9b4c-36cf83408c7d" />
+
+<img width="1511" height="780" alt="Screenshot 2025-08-20 at 1 42 16 PM" src="https://github.com/user-attachments/assets/146d67db-a18a-4b73-9639-853e98b9d022" />
+
+---
 **Built with ❤️ for modern transport logistics by Josema http://instagram.com/josemanuelpr23**
