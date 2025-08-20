@@ -134,6 +134,15 @@ npm run analyze         # Bundle size analysis
 npm run build:stats     # Build with detailed stats
 ```
 
+## 🔄 Continuous Integration (CI/CD)
+
+We have implemented a comprehensive CI/CD pipeline using GitHub Actions to ensure code quality and reliability. The workflow is configured in [`.github/workflows/main-ci.yml`](.github/workflows/main-ci.yml) and automatically runs on every push to the main branch.
+
+### View CI Status
+
+You can monitor the CI/CD pipeline status and view detailed logs at:
+**[GitHub Actions - DexFreight Frontend](https://github.com/JoseManuelPR/dexfreight-front/actions)**
+
 ## 📁 Project Structure
 
 ```
