@@ -1,42 +1,43 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { createPinia, setActivePinia } from 'pinia'
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import VehicleDetailModal from '@/components/vehicles/VehicleDetailModal.vue'
+import type { Vehicle } from '@/types/models'
 
-describe('VehicleDetailModal Logic', () => {
-  const mockVehicle = {
-    id: 'VH001',
-    licensePlate: 'APV-123',
-    brand: 'Mercedes-Benz',
-    model: 'Actros',
-    year: 2020,
-    type: 'truck',
-    capacity: 5000,
-    mileage: 125000,
-    fuelType: 'diesel',
-    status: 'available',
-    gpsEnabled: true,
-    lastMaintenance: '2024-12-01T00:00:00Z',
-    nextMaintenance: '2025-03-01T00:00:00Z',
-    registrationExpiry: '2025-12-31T00:00:00Z',
-    insuranceExpiry: '2025-06-30T00:00:00Z',
-    currentDriverId: 'DR001'
-  }
+// Mock data
+const mockVehicle: Vehicle = {
+  id: 'V001',
+  licensePlate: 'ABC123',
+  model: 'Freightliner',
+  brand: 'Mercedes',
+  year: 2020,
+  type: 'truck',
+  capacity: 5000,
+  fuelType: 'diesel',
+  status: 'available',
+  mileage: 50000,
+  lastMaintenance: '2024-01-15',
+  nextMaintenance: '2024-04-15',
+  registrationExpiry: '2025-01-01',
+  insuranceExpiry: '2024-12-31',
+  gpsEnabled: true
+}
 
-  const mockDriver = {
-    id: 'DR001',
-    name: 'Carlos González',
-    email: 'carlos@test.com',
-    phone: '+51 987 654 321',
-    license: 'Q12345678',
-    status: 'on-delivery',
-    rating: 4.8
-  }
+describe('VehicleDetailModal.vue', () => {
+  it('renders vehicle details correctly', () => {
+    const wrapper = mount(VehicleDetailModal, {
+      props: {
+        vehicle: mockVehicle,
+        isOpen: true
+      }
+    })
 
-  beforeEach(() => {
-    setActivePinia(createPinia())
+    expect(wrapper.text()).toContain('ABC123')
+    expect(wrapper.text()).toContain('Freightliner')
+    expect(wrapper.text()).toContain('Mercedes')
   })
 
-  it('should return correct vehicle status colors', () => {
-    const getStatusColor = (status: string) => {
+  it('returns correct vehicle status colors', () => {
+    const getStatusColor = (status: string): string => {
       const colors: Record<string, string> = {
         available: 'success',
         'in-use': 'primary',
@@ -53,8 +54,8 @@ describe('VehicleDetailModal Logic', () => {
     expect(getStatusColor('unknown')).toBe('light')
   })
 
-  it('should return correct vehicle status labels in Spanish', () => {
-    const getStatusLabel = (status: string) => {
+  it('returns correct vehicle status labels', () => {
+    const getStatusLabel = (status: string): string => {
       const labels: Record<string, string> = {
         available: 'Disponible',
         'in-use': 'En Uso',
@@ -70,8 +71,8 @@ describe('VehicleDetailModal Logic', () => {
     expect(getStatusLabel('offline')).toBe('Fuera de Línea')
   })
 
-  it('should return correct vehicle type labels in Spanish', () => {
-    const getTypeLabel = (type: string) => {
+  it('returns correct vehicle type labels', () => {
+    const getTypeLabel = (type: string): string => {
       const labels: Record<string, string> = {
         truck: 'Camión',
         van: 'Camioneta',
@@ -87,8 +88,8 @@ describe('VehicleDetailModal Logic', () => {
     expect(getTypeLabel('pickup')).toBe('Pickup')
   })
 
-  it('should return correct fuel type labels in Spanish', () => {
-    const getFuelTypeLabel = (fuelType: string) => {
+  it('returns correct fuel type labels', () => {
+    const getFuelTypeLabel = (fuelType: string): string => {
       const labels: Record<string, string> = {
         diesel: 'Diésel',
         gasoline: 'Gasolina',
@@ -104,8 +105,8 @@ describe('VehicleDetailModal Logic', () => {
     expect(getFuelTypeLabel('hybrid')).toBe('Híbrido')
   })
 
-  it('should return correct driver status colors', () => {
-    const getDriverStatusColor = (status: string) => {
+  it('returns correct driver status colors', () => {
+    const getDriverStatusColor = (status: string): string => {
       const colors: Record<string, string> = {
         available: 'success',
         'on-delivery': 'primary',
@@ -121,9 +122,9 @@ describe('VehicleDetailModal Logic', () => {
     expect(getDriverStatusColor('suspended')).toBe('error')
   })
 
-  it('should format dates correctly for Peru', () => {
-    const formatDate = (dateString: string) => {
-      return new Intl.DateTimeFormat('es-PE', {
+  it('formats dates correctly', () => {
+    const formatDate = (dateString: string): string => {
+      return new Intl.DateTimeFormat('es-ES', {
         day: 'numeric',
         month: 'short',
         year: 'numeric'
@@ -135,8 +136,8 @@ describe('VehicleDetailModal Logic', () => {
     expect(typeof result).toBe('string')
   })
 
-  it('should calculate days until maintenance correctly', () => {
-    const getDaysUntilMaintenance = (nextMaintenanceDate: string) => {
+  it('calculates days until maintenance correctly', () => {
+    const getDaysUntilMaintenance = (nextMaintenanceDate: string): number => {
       const nextMaintenance = new Date(nextMaintenanceDate)
       const today = new Date()
       const diffTime = nextMaintenance.getTime() - today.getTime()
@@ -160,8 +161,8 @@ describe('VehicleDetailModal Logic', () => {
     expect(pastResult).toBeLessThan(0)
   })
 
-  it('should determine expiration status correctly', () => {
-    const getExpirationStatus = (dateString: string) => {
+  it('determines expiration status correctly', () => {
+    const getExpirationStatus = (dateString: string): string => {
       const expiryDate = new Date(dateString)
       const today = new Date()
       const diffTime = expiryDate.getTime() - today.getTime()
@@ -185,8 +186,8 @@ describe('VehicleDetailModal Logic', () => {
     expect(getExpirationStatus(validDate.toISOString())).toBe('valid')
   })
 
-  it('should calculate vehicle age correctly', () => {
-    const getVehicleAge = (year: number) => {
+  it('calculates vehicle age correctly', () => {
+    const getVehicleAge = (year: number): number => {
       const currentYear = new Date().getFullYear()
       return currentYear - year
     }
@@ -197,8 +198,8 @@ describe('VehicleDetailModal Logic', () => {
     expect(getVehicleAge(currentYear)).toBe(0)
   })
 
-  it('should calculate average kilometers per year correctly', () => {
-    const getAverageKmPerYear = (mileage: number, year: number) => {
+  it('calculates average kilometers per year correctly', () => {
+    const getAverageKmPerYear = (mileage: number, year: number): number => {
       const currentYear = new Date().getFullYear()
       const age = currentYear - year
       if (age === 0) return mileage
@@ -210,8 +211,8 @@ describe('VehicleDetailModal Logic', () => {
     expect(getAverageKmPerYear(0, 2020)).toBe(0)
   })
 
-  it('should return correct efficiency colors based on average km per year', () => {
-    const getEfficiencyColor = (avgKmPerYear: number) => {
+  it('returns correct efficiency colors based on average km per year', () => {
+    const getEfficiencyColor = (avgKmPerYear: number): string => {
       if (avgKmPerYear < 20000) return 'success'
       if (avgKmPerYear < 40000) return 'warning'
       return 'error'
@@ -224,8 +225,8 @@ describe('VehicleDetailModal Logic', () => {
     expect(getEfficiencyColor(20000)).toBe('warning')
   })
 
-  it('should return correct efficiency labels', () => {
-    const getEfficiencyLabel = (avgKmPerYear: number) => {
+  it('returns correct efficiency labels', () => {
+    const getEfficiencyLabel = (avgKmPerYear: number): string => {
       if (avgKmPerYear < 20000) return 'Excelente'
       if (avgKmPerYear < 40000) return 'Buena'
       return 'Intensiva'
@@ -236,7 +237,7 @@ describe('VehicleDetailModal Logic', () => {
     expect(getEfficiencyLabel(45000)).toBe('Intensiva')
   })
 
-  it('should validate vehicle specifications', () => {
+  it('validates vehicle specifications', () => {
     expect(mockVehicle.capacity).toBeGreaterThan(0)
     expect(mockVehicle.mileage).toBeGreaterThanOrEqual(0)
     expect(mockVehicle.year).toBeGreaterThan(1900)
@@ -246,35 +247,37 @@ describe('VehicleDetailModal Logic', () => {
     expect(mockVehicle.model).toBeDefined()
   })
 
-  it('should handle GPS status correctly', () => {
+  it('handles GPS status correctly', () => {
     expect(mockVehicle.gpsEnabled).toBe(true)
 
     const vehicleWithoutGPS = { ...mockVehicle, gpsEnabled: false }
     expect(vehicleWithoutGPS.gpsEnabled).toBe(false)
   })
 
-  it('should validate maintenance dates logic', () => {
+  it('validates maintenance dates logic', () => {
     const lastMaintenance = new Date(mockVehicle.lastMaintenance)
     const nextMaintenance = new Date(mockVehicle.nextMaintenance)
 
     expect(nextMaintenance.getTime()).toBeGreaterThan(lastMaintenance.getTime())
   })
 
-  it('should validate legal document expiry dates', () => {
+  it('validates legal document expiry dates', () => {
     const registrationExpiry = new Date(mockVehicle.registrationExpiry)
     const insuranceExpiry = new Date(mockVehicle.insuranceExpiry)
 
     expect(registrationExpiry).toBeInstanceOf(Date)
     expect(insuranceExpiry).toBeInstanceOf(Date)
-    expect(registrationExpiry.getFullYear()).toBeGreaterThanOrEqual(2025)
-    expect(insuranceExpiry.getFullYear()).toBeGreaterThanOrEqual(2025)
+    expect(registrationExpiry.getFullYear()).toBeGreaterThanOrEqual(2024)
+    expect(insuranceExpiry.getFullYear()).toBeGreaterThanOrEqual(2024)
+    expect(registrationExpiry.getFullYear()).toBeLessThanOrEqual(2026)
+    expect(insuranceExpiry.getFullYear()).toBeLessThanOrEqual(2026)
   })
 
-  it('should handle assigned driver relationship', () => {
-    expect(mockVehicle.currentDriverId).toBe('DR001')
-    expect(mockDriver.id).toBe('DR001')
+  it('handles assigned driver relationship', () => {
+    const vehicleWithDriver = { ...mockVehicle, currentDriverId: 'D001' }
+    expect(vehicleWithDriver.currentDriverId).toBe('D001')
 
-    const unassignedVehicle = { ...mockVehicle, currentDriverId: null }
-    expect(unassignedVehicle.currentDriverId).toBeNull()
+    const unassignedVehicle = { ...mockVehicle, currentDriverId: undefined }
+    expect(unassignedVehicle.currentDriverId).toBeUndefined()
   })
 })

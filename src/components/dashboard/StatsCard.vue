@@ -27,33 +27,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, type Component } from 'vue'
 import BoxIcon from '@/icons/BoxIcon.vue'
 import HomeIcon from '@/icons/HomeIcon.vue'
 import CheckIcon from '@/icons/CheckIcon.vue'
 import UserGroupIcon from '@/icons/UserGroupIcon.vue'
+import type { StatsCardProps, IconName } from '@/types/models'
 
 // Props
-interface StatsCardProps {
-  title: string
-  value: string | number
-  icon: string
-  color: 'blue' | 'green' | 'purple' | 'orange' | 'red'
-  trend?: string
-  trendType?: 'up' | 'down'
-}
-
 const props = withDefaults(defineProps<StatsCardProps>(), {
   color: 'blue'
 })
 
-// Icon mapping
-const iconMap: Record<string, any> = {
+// Icon mapping with proper typing
+const iconMap: Record<IconName, Component> = {
   BoxIcon,
   TruckIcon: BoxIcon, // Using BoxIcon as placeholder for truck
   CheckIcon,
   CurrencyIcon: HomeIcon, // Using HomeIcon as placeholder for currency
-  UserGroupIcon
+  UserGroupIcon,
+  HomeIcon
 }
 
 // Computed

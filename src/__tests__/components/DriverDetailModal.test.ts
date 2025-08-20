@@ -1,50 +1,48 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { createPinia, setActivePinia } from 'pinia'
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import DriverDetailModal from '@/components/drivers/DriverDetailModal.vue'
+import type { Driver } from '@/types/models'
 
-describe('DriverDetailModal Logic', () => {
-  const mockDriver = {
-    id: 'DR001',
-    name: 'Carlos González Pérez',
-    email: 'carlos@test.com',
-    phone: '+51 987 654 321',
-    license: 'Q12345678',
-    status: 'available',
-    rating: 4.8,
-    totalDeliveries: 145,
-    onTimeDeliveries: 138,
-    currentVehicle: 'VH001'
-  }
+// Mock data
+const mockDriver: Driver = {
+  id: 'D001',
+  name: 'John Smith',
+  license: 'DL123456',
+  phone: '+34 123 456 789',
+  email: 'john@example.com',
+  status: 'available',
+  rating: 4.5,
+  totalDeliveries: 150,
+  onTimeDeliveries: 142
+}
 
-  const mockVehicle = {
-    id: 'VH001',
-    brand: 'Mercedes-Benz',
-    model: 'Actros',
-    licensePlate: 'APV-123',
-    year: 2022,
-    type: 'truck',
-    capacity: 5000,
-    status: 'in-use',
-    mileage: 45000,
-    nextMaintenance: '2025-02-15T00:00:00Z'
-  }
+describe('DriverDetailModal.vue', () => {
+  it('renders driver details correctly', () => {
+    const wrapper = mount(DriverDetailModal, {
+      props: {
+        driver: mockDriver,
+        isOpen: true
+      }
+    })
 
-  beforeEach(() => {
-    setActivePinia(createPinia())
+    expect(wrapper.text()).toContain('John Smith')
+    expect(wrapper.text()).toContain('DL123456')
+    expect(wrapper.text()).toContain('john@example.com')
   })
 
-  it('should extract initials correctly', () => {
-    const getInitials = (name: string) => {
+  it('extracts driver initials correctly', () => {
+    const getInitials = (name: string): string => {
       return name.split(' ').map(n => n.charAt(0)).join('').substring(0, 2).toUpperCase()
     }
 
-    expect(getInitials('Carlos González')).toBe('CG')
-    expect(getInitials('Ana María Rodríguez Pérez')).toBe('AM')
+    expect(getInitials('John Smith')).toBe('JS')
+    expect(getInitials('Ana Maria Rodriguez Perez')).toBe('AM')
     expect(getInitials('Miguel')).toBe('M')
     expect(getInitials('')).toBe('')
   })
 
-  it('should return correct driver status colors', () => {
-    const getStatusColor = (status: string) => {
+  it('returns correct driver status colors', () => {
+    const getStatusColor = (status: string): string => {
       const colors: Record<string, string> = {
         available: 'success',
         'on-delivery': 'primary',
@@ -61,8 +59,8 @@ describe('DriverDetailModal Logic', () => {
     expect(getStatusColor('unknown')).toBe('light')
   })
 
-  it('should return correct driver status labels in Spanish', () => {
-    const getStatusLabel = (status: string) => {
+  it('returns correct driver status labels', () => {
+    const getStatusLabel = (status: string): string => {
       const labels: Record<string, string> = {
         available: 'Disponible',
         'on-delivery': 'En Entrega',
@@ -78,40 +76,40 @@ describe('DriverDetailModal Logic', () => {
     expect(getStatusLabel('suspended')).toBe('Suspendido')
   })
 
-  it('should calculate late deliveries correctly', () => {
-    const getLateDeliveries = (driver: any) => {
+  it('calculates late deliveries correctly', () => {
+    const getLateDeliveries = (driver: Driver): number => {
       return driver.totalDeliveries - driver.onTimeDeliveries
     }
 
-    expect(getLateDeliveries(mockDriver)).toBe(7) // 145 - 138
+    expect(getLateDeliveries(mockDriver)).toBe(8)
     
-    const perfectDriver = { totalDeliveries: 50, onTimeDeliveries: 50 }
+    const perfectDriver = { totalDeliveries: 50, onTimeDeliveries: 50 } as Driver
     expect(getLateDeliveries(perfectDriver)).toBe(0)
 
-    const newDriver = { totalDeliveries: 0, onTimeDeliveries: 0 }
+    const newDriver = { totalDeliveries: 0, onTimeDeliveries: 0 } as Driver
     expect(getLateDeliveries(newDriver)).toBe(0)
   })
 
-  it('should calculate on-time percentage correctly', () => {
-    const getOnTimePercentage = (driver: any) => {
+  it('calculates on-time percentage correctly', () => {
+    const getOnTimePercentage = (driver: Driver): number => {
       if (driver.totalDeliveries === 0) return 0
       return Math.round((driver.onTimeDeliveries / driver.totalDeliveries) * 100)
     }
 
-    expect(getOnTimePercentage(mockDriver)).toBe(95) // 138/145 ≈ 95%
+    expect(getOnTimePercentage(mockDriver)).toBe(95)
     
-    const perfectDriver = { totalDeliveries: 50, onTimeDeliveries: 50 }
+    const perfectDriver = { totalDeliveries: 50, onTimeDeliveries: 50 } as Driver
     expect(getOnTimePercentage(perfectDriver)).toBe(100)
 
-    const newDriver = { totalDeliveries: 0, onTimeDeliveries: 0 }
+    const newDriver = { totalDeliveries: 0, onTimeDeliveries: 0 } as Driver
     expect(getOnTimePercentage(newDriver)).toBe(0)
 
-    const poorDriver = { totalDeliveries: 100, onTimeDeliveries: 75 }
+    const poorDriver = { totalDeliveries: 100, onTimeDeliveries: 75 } as Driver
     expect(getOnTimePercentage(poorDriver)).toBe(75)
   })
 
-  it('should return correct performance colors based on rating', () => {
-    const getPerformanceColor = (rating: number) => {
+  it('returns correct performance colors based on rating', () => {
+    const getPerformanceColor = (rating: number): string => {
       if (rating >= 4.5) return 'success'
       if (rating >= 4.0) return 'primary'
       if (rating >= 3.5) return 'warning'
@@ -126,8 +124,8 @@ describe('DriverDetailModal Logic', () => {
     expect(getPerformanceColor(3.0)).toBe('error')
   })
 
-  it('should return correct performance levels', () => {
-    const getPerformanceLevel = (rating: number) => {
+  it('returns correct performance levels', () => {
+    const getPerformanceLevel = (rating: number): string => {
       if (rating >= 4.8) return 'Excepcional'
       if (rating >= 4.5) return 'Excelente'
       if (rating >= 4.0) return 'Muy Bueno'
@@ -143,8 +141,8 @@ describe('DriverDetailModal Logic', () => {
     expect(getPerformanceLevel(3.0)).toBe('Necesita Mejora')
   })
 
-  it('should return correct punctuality colors based on percentage', () => {
-    const getPunctualityColor = (percentage: number) => {
+  it('returns correct punctuality colors based on percentage', () => {
+    const getPunctualityColor = (percentage: number): string => {
       if (percentage >= 95) return 'success'
       if (percentage >= 90) return 'primary'
       if (percentage >= 80) return 'warning'
@@ -158,8 +156,8 @@ describe('DriverDetailModal Logic', () => {
     expect(getPunctualityColor(75)).toBe('error')
   })
 
-  it('should return correct punctuality labels', () => {
-    const getPunctualityLabel = (percentage: number) => {
+  it('returns correct punctuality labels', () => {
+    const getPunctualityLabel = (percentage: number): string => {
       if (percentage >= 95) return 'Excelente'
       if (percentage >= 90) return 'Muy Bueno'
       if (percentage >= 80) return 'Bueno'
@@ -172,8 +170,8 @@ describe('DriverDetailModal Logic', () => {
     expect(getPunctualityLabel(75)).toBe('Mejorable')
   })
 
-  it('should return correct availability labels', () => {
-    const getAvailabilityLabel = (status: string) => {
+  it('returns correct availability labels', () => {
+    const getAvailabilityLabel = (status: string): string => {
       switch (status) {
         case 'available': return 'Listo para asignación'
         case 'on-delivery': return 'Ocupado en entrega'
@@ -190,8 +188,8 @@ describe('DriverDetailModal Logic', () => {
     expect(getAvailabilityLabel('unknown')).toBe('Estado desconocido')
   })
 
-  it('should calculate experience level based on total deliveries', () => {
-    const getExperienceLevel = (totalDeliveries: number) => {
+  it('calculates experience level based on total deliveries', () => {
+    const getExperienceLevel = (totalDeliveries: number): string => {
       if (totalDeliveries >= 200) return 'Experto (3+ años)'
       if (totalDeliveries >= 100) return 'Experimentado (2+ años)'
       if (totalDeliveries >= 50) return 'Intermedio (1+ año)'
@@ -204,8 +202,8 @@ describe('DriverDetailModal Logic', () => {
     expect(getExperienceLevel(25)).toBe('Principiante (<1 año)')
   })
 
-  it('should calculate monthly deliveries average', () => {
-    const getMonthlyDeliveries = (totalDeliveries: number) => {
+  it('calculates monthly deliveries average', () => {
+    const getMonthlyDeliveries = (totalDeliveries: number): string => {
       const monthlyAvg = Math.round(totalDeliveries / 12)
       return `~${monthlyAvg} entregas/mes`
     }
@@ -216,25 +214,8 @@ describe('DriverDetailModal Logic', () => {
     expect(getMonthlyDeliveries(0)).toBe('~0 entregas/mes')
   })
 
-  it('should return correct vehicle status colors', () => {
-    const getVehicleStatusColor = (status: string) => {
-      const colors: Record<string, string> = {
-        available: 'success',
-        'in-use': 'primary',
-        maintenance: 'warning',
-        offline: 'error'
-      }
-      return colors[status] || 'light'
-    }
-
-    expect(getVehicleStatusColor('available')).toBe('success')
-    expect(getVehicleStatusColor('in-use')).toBe('primary')
-    expect(getVehicleStatusColor('maintenance')).toBe('warning')
-    expect(getVehicleStatusColor('offline')).toBe('error')
-  })
-
-  it('should return correct vehicle type labels', () => {
-    const getVehicleTypeLabel = (type: string) => {
+  it('returns correct vehicle type labels', () => {
+    const getVehicleTypeLabel = (type: string): string => {
       const labels: Record<string, string> = {
         truck: 'Camión',
         van: 'Camioneta',

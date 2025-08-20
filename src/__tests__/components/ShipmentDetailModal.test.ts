@@ -1,73 +1,85 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { createPinia, setActivePinia } from 'pinia'
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import ShipmentDetailModal from '@/components/shipments/ShipmentDetailModal.vue'
+import type { Shipment } from '@/types/models'
 
-describe('ShipmentDetailModal Logic', () => {
-  const mockShipment = {
-    id: 'SH001',
-    trackingNumber: 'TN001',
-    status: 'in_transit',
-    priority: 'high',
-    weight: 1500,
-    volume: 2.5,
-    value: 5000,
-    origin: {
-      street: 'Av. Arequipa 123',
-      city: 'Lima',
-      state: 'Lima',
-      zipCode: '15046',
-      country: 'Perú'
+// Mock data
+const mockShipment: Shipment = {
+  id: 'S001',
+  trackingNumber: 'TRK001',
+  origin: {
+    street: '123 Main St',
+    city: 'Madrid',
+    state: 'Madrid',
+    zipCode: '28001',
+    country: 'Spain'
+  },
+  destination: {
+    street: '456 Oak Ave',
+    city: 'Barcelona',
+    state: 'Barcelona',
+    zipCode: '08001',
+    country: 'Spain'
+  },
+  status: 'pending',
+  priority: 'medium',
+  createdAt: '2024-01-01T10:00:00Z',
+  scheduledPickup: '2024-01-02T09:00:00Z',
+  estimatedDelivery: '2024-01-03T17:00:00Z',
+  weight: 500,
+  volume: 2.5,
+  value: 1500,
+  currency: 'EUR',
+  goods: [
+    {
+      id: 'G001',
+      description: 'Electronics',
+      quantity: 10,
+      unit: 'pieces',
+      weight: 500,
+      value: 1500,
+      category: 'Electronics',
+      fragile: true,
+      hazardous: false
+    }
+  ],
+  customer: {
+    id: 'C001',
+    name: 'John Doe',
+    email: 'john@example.com',
+    phone: '+34 123 456 789',
+    address: {
+      street: '123 Main St',
+      city: 'Madrid',
+      state: 'Madrid',
+      zipCode: '28001',
+      country: 'Spain'
     },
-    destination: {
-      street: 'Calle Real 456',
-      city: 'Arequipa',
-      state: 'Arequipa',
-      zipCode: '04001',
-      country: 'Perú'
-    },
-    route: {
-      distance: 1013,
-      estimatedTime: 900
-    },
-    customer: {
-      name: 'Juan Pérez',
-      company: 'Test Corp',
-      email: 'juan@test.com',
-      phone: '+51 987 654 321',
-      address: {
-        street: 'Av. Arequipa 123',
-        city: 'Lima',
-        state: 'Lima',
-        zipCode: '15046',
-        country: 'Perú'
-      }
-    },
-    goods: [
-      {
-        id: 'G001',
-        description: 'Electrodomésticos',
-        quantity: 5,
-        unit: 'pcs',
-        weight: 1500,
-        category: 'Electrónicos',
-        value: 5000,
-        fragile: true,
-        hazardous: false
-      }
-    ],
-    notes: ['Entregar en horario de oficina', 'Fragil - Manejar con cuidado'],
-    createdAt: '2025-01-18T10:00:00Z',
-    scheduledPickup: '2025-01-18T14:00:00Z',
-    estimatedDelivery: '2025-01-19T10:00:00Z',
-    driverId: 'DR001',
-    vehicleId: 'VH001'
-  }
+    accountType: 'individual'
+  },
+  route: {
+    distance: 500,
+    estimatedTime: 8
+  },
+  notes: ['Handle with care']
+}
 
-  beforeEach(() => {
-    setActivePinia(createPinia())
+describe('ShipmentDetailModal.vue', () => {
+  it('renders shipment details correctly', () => {
+    const wrapper = mount(ShipmentDetailModal, {
+      props: {
+        shipment: mockShipment,
+        isOpen: true
+      }
+    })
+
+    expect(wrapper.text()).toContain('TRK001')
+    expect(wrapper.text()).toContain('Madrid')
+    expect(wrapper.text()).toContain('Barcelona')
   })
 
-  it('should return correct shipment status colors', () => {
-    const getStatusColor = (status: string) => {
+  it('returns correct shipment status colors', () => {
+    const getStatusColor = (status: string): string => {
       const colors: Record<string, string> = {
         pending: 'warning',
         in_transit: 'primary',
@@ -86,8 +98,8 @@ describe('ShipmentDetailModal Logic', () => {
     expect(getStatusColor('unknown')).toBe('light')
   })
 
-  it('should return correct shipment status labels in Spanish', () => {
-    const getStatusLabel = (status: string) => {
+  it('returns correct shipment status labels', () => {
+    const getStatusLabel = (status: string): string => {
       const labels: Record<string, string> = {
         pending: 'Pendiente',
         in_transit: 'En Tránsito',
@@ -105,8 +117,8 @@ describe('ShipmentDetailModal Logic', () => {
     expect(getStatusLabel('delayed')).toBe('Retrasado')
   })
 
-  it('should return correct priority colors', () => {
-    const getPriorityColor = (priority: string) => {
+  it('returns correct priority colors', () => {
+    const getPriorityColor = (priority: string): string => {
       const colors: Record<string, string> = {
         low: 'light',
         medium: 'primary',
@@ -123,8 +135,8 @@ describe('ShipmentDetailModal Logic', () => {
     expect(getPriorityColor('unknown')).toBe('light')
   })
 
-  it('should return correct priority labels in Spanish', () => {
-    const getPriorityLabel = (priority: string) => {
+  it('returns correct priority labels', () => {
+    const getPriorityLabel = (priority: string): string => {
       const labels: Record<string, string> = {
         low: 'Baja',
         medium: 'Media',
@@ -140,8 +152,8 @@ describe('ShipmentDetailModal Logic', () => {
     expect(getPriorityLabel('urgent')).toBe('Urgente')
   })
 
-  it('should return correct vehicle type labels in Spanish', () => {
-    const getVehicleTypeLabel = (type: string) => {
+  it('returns correct vehicle type labels', () => {
+    const getVehicleTypeLabel = (type: string): string => {
       const labels: Record<string, string> = {
         truck: 'Camión',
         van: 'Camioneta',
@@ -157,8 +169,8 @@ describe('ShipmentDetailModal Logic', () => {
     expect(getVehicleTypeLabel('pickup')).toBe('Pickup')
   })
 
-  it('should return correct fuel type labels in Spanish', () => {
-    const getFuelTypeLabel = (fuelType: string) => {
+  it('returns correct fuel type labels', () => {
+    const getFuelTypeLabel = (fuelType: string): string => {
       const labels: Record<string, string> = {
         diesel: 'Diésel',
         gasoline: 'Gasolina',
@@ -174,25 +186,29 @@ describe('ShipmentDetailModal Logic', () => {
     expect(getFuelTypeLabel('hybrid')).toBe('Híbrido')
   })
 
-  it('should format currency correctly for Peru', () => {
-    const formatCurrency = (value: number) => {
-      return new Intl.NumberFormat('es-PE', {
+  it('formats currency correctly', () => {
+    const formatCurrency = (value: number, currency: string): string => {
+      return new Intl.NumberFormat('es-ES', {
         style: 'currency',
-        currency: 'PEN'
+        currency: currency
       }).format(value)
     }
 
-    const result1 = formatCurrency(5000)
-    expect(result1.includes('5,000') || result1.includes('5.000')).toBe(true)
-    expect(result1.includes('PEN') || result1.includes('S/')).toBe(true)
+    const result1 = formatCurrency(5000, 'EUR')
+    // Check for different possible formats based on locale
+    const hasCorrectNumber = result1.includes('5') && (result1.includes('000') || result1.includes(' 000'))
+    const hasCorrectCurrency = result1.includes('EUR') || result1.includes('€') || result1.includes('€')
+    expect(hasCorrectNumber).toBe(true)
+    expect(hasCorrectCurrency).toBe(true)
 
-    const result2 = formatCurrency(1500.50)
-    expect(result2.includes('1,500') || result2.includes('1.500')).toBe(true)
+    const result2 = formatCurrency(1500.50, 'EUR')
+    const hasCorrectNumber2 = result2.includes('1') && (result2.includes('500') || result2.includes(' 500'))
+    expect(hasCorrectNumber2).toBe(true)
   })
 
-  it('should format date and time correctly for Peru', () => {
-    const formatDateTime = (dateString: string) => {
-      return new Intl.DateTimeFormat('es-PE', {
+  it('formats date and time correctly', () => {
+    const formatDateTime = (dateString: string): string => {
+      return new Intl.DateTimeFormat('es-ES', {
         day: 'numeric',
         month: 'short',
         year: 'numeric',
@@ -201,14 +217,14 @@ describe('ShipmentDetailModal Logic', () => {
       }).format(new Date(dateString))
     }
 
-    const result = formatDateTime('2025-01-18T10:30:00Z')
+    const result = formatDateTime('2024-01-18T10:30:00Z')
     expect(result).toBeDefined()
     expect(typeof result).toBe('string')
     expect(result.length).toBeGreaterThan(10)
   })
 
-  it('should format duration correctly', () => {
-    const formatDuration = (minutes: number) => {
+  it('formats duration correctly', () => {
+    const formatDuration = (minutes: number): string => {
       const hours = Math.floor(minutes / 60)
       const mins = minutes % 60
       if (hours > 0) {
@@ -224,7 +240,7 @@ describe('ShipmentDetailModal Logic', () => {
     expect(formatDuration(0)).toBe('0m')
   })
 
-  it('should validate shipment data structure', () => {
+  it('validates shipment data structure', () => {
     expect(mockShipment.id).toBeDefined()
     expect(mockShipment.trackingNumber).toBeDefined()
     expect(mockShipment.status).toBeDefined()
@@ -235,15 +251,15 @@ describe('ShipmentDetailModal Logic', () => {
     expect(mockShipment.destination.city).toBeDefined()
     expect(mockShipment.customer.name).toBeDefined()
     expect(mockShipment.goods).toHaveLength(1)
-    expect(mockShipment.notes).toHaveLength(2)
+    expect(mockShipment.notes).toHaveLength(1)
   })
 
-  it('should calculate route information correctly', () => {
+  it('calculates route information correctly', () => {
     const route = mockShipment.route
-    expect(route.distance).toBe(1013)
-    expect(route.estimatedTime).toBe(900)
+    expect(route.distance).toBe(500)
+    expect(route.estimatedTime).toBe(8)
     
-    const formatDuration = (minutes: number) => {
+    const formatDuration = (minutes: number): string => {
       const hours = Math.floor(minutes / 60)
       const mins = minutes % 60
       if (hours > 0) {
@@ -252,21 +268,21 @@ describe('ShipmentDetailModal Logic', () => {
       return `${mins}m`
     }
     
-    expect(formatDuration(route.estimatedTime)).toBe('15h 0m')
+    expect(formatDuration(route.estimatedTime)).toBe('8m')
   })
 
-  it('should validate goods properties', () => {
+  it('validates goods properties', () => {
     const goods = mockShipment.goods[0]
     expect(goods.fragile).toBe(true)
     expect(goods.hazardous).toBe(false)
-    expect(goods.weight).toBe(1500)
-    expect(goods.quantity).toBe(5)
+    expect(goods.weight).toBe(500)
+    expect(goods.quantity).toBe(10)
     expect(goods.value).toBeGreaterThan(0)
     expect(goods.category).toBeDefined()
     expect(goods.description).toBeDefined()
   })
 
-  it('should handle missing optional fields gracefully', () => {
+  it('handles missing optional fields gracefully', () => {
     const shipmentWithMissingFields = {
       ...mockShipment,
       actualPickup: undefined,
@@ -282,8 +298,8 @@ describe('ShipmentDetailModal Logic', () => {
     expect(shipmentWithMissingFields.customer.company).toBeUndefined()
   })
 
-  it('should validate address format', () => {
-    const validateAddressFormat = (address: any) => {
+  it('validates address format', () => {
+    const validateAddressFormat = (address: Shipment['origin']): boolean => {
       return !!(address.street && address.city && address.state && address.zipCode && address.country)
     }
 

@@ -6,7 +6,8 @@ import type {
   Vehicle,
   Driver,
   DashboardStats,
-  ApiResponse
+  ApiResponse,
+  ShipmentFilters
 } from '@/types/models'
 import { apiCache, CacheService } from './cache'
 
@@ -159,7 +160,7 @@ loadMockData()
 // API Service
 export const api = {
   // Shipments
-  async getShipments(filters?: any): Promise<ApiResponse<Shipment[]>> {
+  async getShipments(filters?: ShipmentFilters): Promise<ApiResponse<Shipment[]>> {
     const cacheKey = CacheService.createKey('shipments', filters)
     
     // Check cache first
@@ -173,11 +174,11 @@ export const api = {
     let filtered = [...mockShipments]
     
     if (filters?.status) {
-      filtered = filtered.filter(s => filters.status.includes(s.status))
+      filtered = filtered.filter(s => filters.status?.includes(s.status))
     }
     
     if (filters?.priority) {
-      filtered = filtered.filter(s => filters.priority.includes(s.priority))
+      filtered = filtered.filter(s => filters.priority?.includes(s.priority))
     }
     
     // Save to cache
@@ -364,13 +365,25 @@ export const api = {
 }
 
 // Helper to handle API errors
-export function handleApiError(error: any): string {
-  if (error.response?.data?.message) {
-    return error.response.data.message
+export function handleApiError(error: unknown): string {
+  if (typeof error === 'object' && error !== null) {
+    const errorObj = error as Record<string, unknown>
+    
+    if (errorObj.response && typeof errorObj.response === 'object') {
+      const response = errorObj.response as Record<string, unknown>
+      if (response.data && typeof response.data === 'object') {
+        const data = response.data as Record<string, unknown>
+        if (typeof data.message === 'string') {
+          return data.message
+        }
+      }
+    }
+    
+    if (typeof errorObj.message === 'string') {
+      return errorObj.message
+    }
   }
-  if (error.message) {
-    return error.message
-  }
+  
   return 'Ha ocurrido un error inesperado'
 }
 

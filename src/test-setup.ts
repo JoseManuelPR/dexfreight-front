@@ -1,4 +1,9 @@
 import { config } from '@vue/test-utils'
+import { createPinia, setActivePinia } from 'pinia'
+
+// Set up Pinia for tests
+const pinia = createPinia()
+setActivePinia(pinia)
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -46,3 +51,6 @@ config.global.stubs = {
   RouterLink: true,
   AdminLayout: true
 }
+
+// Add Pinia to global plugins
+config.global.plugins = [pinia]

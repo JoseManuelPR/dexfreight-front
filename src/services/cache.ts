@@ -3,8 +3,8 @@
  * Provides caching functionality with TTL (Time To Live) support
  */
 
-interface CacheEntry {
-  data: any
+interface CacheEntry<T = unknown> {
+  data: T
   timestamp: number
 }
 
@@ -45,9 +45,8 @@ export class CacheService {
    * Set cache data with key
    * @param key Cache key
    * @param data Data to cache
-   * @param ttl Optional TTL override (in milliseconds)
    */
-  set(key: string, data: any, ttl?: number): void {
+  set<T>(key: string, data: T): void {
     this.cache.set(key, {
       data,
       timestamp: Date.now()
@@ -140,7 +139,7 @@ export class CacheService {
    * @param prefix Key prefix
    * @param params Object to serialize into key
    */
-  static createKey(prefix: string, params?: any): string {
+  static createKey(prefix: string, params?: unknown): string {
     if (!params) {
       return prefix
     }

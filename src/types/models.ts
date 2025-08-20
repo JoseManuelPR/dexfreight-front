@@ -136,3 +136,74 @@ export interface ApiResponse<T> {
   page?: number
   pageSize?: number
 }
+
+// Filter types for API calls
+export interface ShipmentFilters {
+  status?: Shipment['status'][]
+  priority?: Shipment['priority'][]
+  dateRange?: {
+    start: string
+    end: string
+  }
+  searchTerm?: string
+  driverId?: string
+  vehicleId?: string
+}
+
+export interface VehicleFilters {
+  status?: Vehicle['status'][]
+  type?: Vehicle['type'][]
+  fuelType?: Vehicle['fuelType'][]
+  searchTerm?: string
+  driverId?: string
+}
+
+export interface DriverFilters {
+  status?: Driver['status'][]
+  searchTerm?: string
+  vehicleId?: string
+}
+
+// Icon types for components
+export type IconName = 'BoxIcon' | 'TruckIcon' | 'CheckIcon' | 'CurrencyIcon' | 'UserGroupIcon' | 'HomeIcon'
+
+// Error types
+export interface ApiError {
+  message: string
+  code?: string
+  details?: Record<string, unknown>
+}
+
+export interface ValidationError {
+  field: string
+  message: string
+  value?: unknown
+}
+
+// Cache types
+export interface CacheParams {
+  [key: string]: string | number | boolean | undefined
+}
+
+// Component prop types
+export interface StatsCardProps {
+  title: string
+  value: string | number
+  icon: IconName
+  color: 'blue' | 'green' | 'purple' | 'orange' | 'red'
+  trend?: string
+  trendType?: 'up' | 'down'
+}
+
+// Test utility types
+export interface TestFilterFunction<T> {
+  (items: T[], filterValue: string): T[]
+}
+
+export interface TestSortFunction<T> {
+  (items: T[], ascending?: boolean): T[]
+}
+
+export interface TestCalculationFunction<T> {
+  (items: T[]): Record<string, number>
+}
