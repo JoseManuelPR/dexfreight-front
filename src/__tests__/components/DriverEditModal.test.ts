@@ -241,24 +241,4 @@ describe('DriverEditModal', () => {
     expect(options.length).toBeGreaterThanOrEqual(3)
     expect(options[0].text()).toBe('Sin asignar')
   })
-
-  it('calculates success percentage correctly', () => {
-    const wrapper = mount(DriverEditModal, {
-      props: {
-        driver: mockDriver,
-        vehicles: mockVehicles
-      },
-      global: {
-        stubs: {
-          Modal: {
-            template: '<div><slot name="body" /></div>'
-          }
-        }
-      }
-    })
-
-    // The success percentage should be calculated as (onTimeDeliveries / totalDeliveries) * 100
-    const expectedPercentage = Math.round((140 / 150) * 100) // 93%
-    expect(expectedPercentage).toBe(93)
-  })
 })

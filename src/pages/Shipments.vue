@@ -280,6 +280,22 @@
       @close="closeShipmentDetail"
       @edit="editShipment"
     />
+
+    <ShipmentEditModal
+      v-if="showEditModal && selectedShipment"
+      :shipment="selectedShipment"
+      :drivers="drivers"
+      :vehicles="vehicles"
+      @close="closeEditModal"
+      @saved="handleShipmentSaved"
+    />
+
+    <NotificationAlert
+      :show="showSuccessAlert"
+      variant="success"
+      title="¡Envío actualizado!"
+      message="El envío ha sido editado exitosamente."
+    />
   </admin-layout>
 </template>
 
@@ -288,6 +304,7 @@ import { computed, defineAsyncComponent, defineComponent, onMounted, ref, watch 
 import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
+import NotificationAlert from '@/components/ui/NotificationAlert.vue'
 
 import { useShipmentsStore, useDriversStore, useVehiclesStore } from '@/store'
 import type { Shipment } from '@/types/models'
@@ -299,6 +316,10 @@ const ShipmentDetailModal = defineAsyncComponent(() =>
   import('@/components/shipments/ShipmentDetailModal.vue')
 )
 
+const ShipmentEditModal = defineAsyncComponent(() => 
+  import('@/components/shipments/ShipmentEditModal.vue')
+)
+
 const shipmentsStore = useShipmentsStore()
 const driversStore = useDriversStore()
 const vehiclesStore = useVehiclesStore()
@@ -308,7 +329,9 @@ const statusFilter = ref('')
 const priorityFilter = ref('')
 
 const showDetailModal = ref(false)
+const showEditModal = ref(false)
 const selectedShipment = ref<Shipment | null>(null)
+const showSuccessAlert = ref(false)
 
 const loading = computed(() => shipmentsStore.loading)
 const shipments = computed(() => shipmentsStore.shipments)
@@ -415,9 +438,26 @@ function closeShipmentDetail() {
 }
 
 function editShipment(shipment: Shipment) {
-  // TODO: Implement edit functionality
-  console.log('Edit shipment:', shipment.id)
   closeShipmentDetail()
+  selectedShipment.value = shipment
+  showEditModal.value = true
+}
+
+function closeEditModal() {
+  showEditModal.value = false
+  selectedShipment.value = null
+}
+
+function handleShipmentSaved() {
+  shipmentsStore.fetchShipments()
+  
+  // Show success alert
+  showSuccessAlert.value = true
+  
+  // Hide alert after 3 seconds
+  setTimeout(() => {
+    showSuccessAlert.value = false
+  }, 3000)
 }
 
 watch([searchTerm, statusFilter, priorityFilter], () => {
