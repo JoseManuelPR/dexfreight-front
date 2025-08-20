@@ -58,7 +58,7 @@ export default defineConfig({
           if (id.includes('lucide-vue-next') || id.includes('/icons/')) {
             return 'ui-icons'
           }
-          if (id.includes('flatpickr') || id.includes('dropzone')) {
+          if (id.includes('dropzone')) {
             return 'forms-lazy'
           }
           if (id.includes('vuevectormap') || 
