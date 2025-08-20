@@ -12,6 +12,15 @@
         </div>
         <div class="flex items-center gap-3">
           <Button
+            variant="primary"
+            size="sm"
+            :start-icon="PlusIcon"
+            @click="showAddModal = true"
+            :disabled="loading"
+          >
+            Agregar Vehículo
+          </Button>
+          <Button
             variant="outline"
             size="sm"
             :start-icon="RefreshIcon"
@@ -293,11 +302,18 @@
       @saved="handleVehicleSaved"
     />
 
+    <VehicleAddModal
+      v-if="showAddModal"
+      :drivers="drivers"
+      @close="closeAddModal"
+      @saved="handleVehicleCreated"
+    />
+
     <NotificationAlert
       :show="showSuccessAlert"
       variant="success"
-      title="¡Vehículo actualizado!"
-      message="El vehículo ha sido editado exitosamente."
+      title="¡Operación exitosa!"
+      message="El vehículo ha sido procesado exitosamente."
     />
 
     <NotificationAlert
@@ -333,9 +349,11 @@ import NotificationAlert from '@/components/ui/NotificationAlert.vue'
 import Alert from '@/components/ui/Alert.vue'
 import VehicleDetailModal from '@/components/vehicles/VehicleDetailModal.vue'
 import VehicleEditModal from '@/components/vehicles/VehicleEditModal.vue'
+import VehicleAddModal from '@/components/vehicles/VehicleAddModal.vue'
 import { useVehiclesStore, useDriversStore, useShipmentsStore } from '@/store'
 import type { Vehicle } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
+import PlusIcon from '@/icons/PlusIcon.vue'
 import BoxIcon from '@/icons/BoxIcon.vue'
 import CheckIcon from '@/icons/CheckIcon.vue'
 import WarningIcon from '@/icons/WarningIcon.vue'
@@ -350,6 +368,7 @@ const typeFilter = ref('')
 
 const showDetailModal = ref(false)
 const showEditModal = ref(false)
+const showAddModal = ref(false)
 const selectedVehicle = ref<Vehicle | null>(null)
 const showSuccessAlert = ref(false)
 const showDeleteAlert = ref(false)
@@ -483,7 +502,21 @@ function closeEditModal() {
   selectedVehicle.value = null
 }
 
+function closeAddModal() {
+  showAddModal.value = false
+}
+
 function handleVehicleSaved() {
+  vehiclesStore.fetchVehicles()
+
+  showSuccessAlert.value = true
+
+  setTimeout(() => {
+    showSuccessAlert.value = false
+  }, 3000)
+}
+
+function handleVehicleCreated() {
   vehiclesStore.fetchVehicles()
 
   showSuccessAlert.value = true

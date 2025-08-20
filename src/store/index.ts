@@ -214,6 +214,25 @@ export const useVehiclesStore = defineStore('vehicles', () => {
     }
   }
 
+  async function createVehicle(vehicleData: Omit<Vehicle, 'id'>) {
+    loading.value = true
+    error.value = null
+
+    try {
+      const response = await api.createVehicle(vehicleData)
+
+      vehicles.value.push(response.data)
+
+      return response.data
+    } catch (err) {
+      error.value = handleApiError(err)
+      console.error('Error creating vehicle:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   async function updateVehicle(id: string, data: Partial<Vehicle>) {
     loading.value = true
     error.value = null
@@ -268,6 +287,7 @@ export const useVehiclesStore = defineStore('vehicles', () => {
     vehiclesOffline,
     vehiclesInTransit, // Legacy - alias for vehiclesInUse
     fetchVehicles,
+    createVehicle,
     updateVehicle,
     deleteVehicle
   }
@@ -310,6 +330,25 @@ export const useDriversStore = defineStore('drivers', () => {
     } catch (err) {
       error.value = handleApiError(err)
       console.error('Error fetching drivers:', err)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function createDriver(driverData: Omit<Driver, 'id'>) {
+    loading.value = true
+    error.value = null
+
+    try {
+      const response = await api.createDriver(driverData)
+
+      drivers.value.push(response.data)
+
+      return response.data
+    } catch (err) {
+      error.value = handleApiError(err)
+      console.error('Error creating driver:', err)
+      throw err
     } finally {
       loading.value = false
     }
@@ -369,6 +408,7 @@ export const useDriversStore = defineStore('drivers', () => {
     driversOffDuty,
     driversSuspended,
     fetchDrivers,
+    createDriver,
     updateDriver,
     deleteDriver
   }

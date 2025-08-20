@@ -12,6 +12,15 @@
         </div>
         <div class="flex items-center gap-3">
           <Button
+            variant="primary"
+            size="sm"
+            :start-icon="PlusIcon"
+            @click="showAddModal = true"
+            :disabled="loading"
+          >
+            Agregar Conductor
+          </Button>
+          <Button
             variant="outline"
             size="sm"
             :start-icon="RefreshIcon"
@@ -253,11 +262,18 @@
       @saved="handleDriverSaved"
     />
 
+    <DriverAddModal
+      v-if="showAddModal"
+      :vehicles="vehicles"
+      @close="closeAddModal"
+      @saved="handleDriverCreated"
+    />
+
     <NotificationAlert
       :show="showSuccessAlert"
       variant="success"
-      title="¡Conductor actualizado!"
-      message="El conductor ha sido editado exitosamente."
+      title="¡Operación exitosa!"
+      message="El conductor ha sido procesado exitosamente."
     />
 
     <NotificationAlert
@@ -294,9 +310,11 @@ import NotificationAlert from '@/components/ui/NotificationAlert.vue'
 import Alert from '@/components/ui/Alert.vue'
 import DriverDetailModal from '@/components/drivers/DriverDetailModal.vue'
 import DriverEditModal from '@/components/drivers/DriverEditModal.vue'
+import DriverAddModal from '@/components/drivers/DriverAddModal.vue'
 import { useDriversStore, useVehiclesStore, useShipmentsStore } from '@/store'
 import type { Driver } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
+import PlusIcon from '@/icons/PlusIcon.vue'
 import UserGroupIcon from '@/icons/UserGroupIcon.vue'
 import UserCircleIcon from '@/icons/UserCircleIcon.vue'
 import CheckIcon from '@/icons/CheckIcon.vue'
@@ -310,6 +328,7 @@ const statusFilter = ref('')
 
 const showDetailModal = ref(false)
 const showEditModal = ref(false)
+const showAddModal = ref(false)
 const selectedDriver = ref<Driver | null>(null)
 const showSuccessAlert = ref(false)
 const showDeleteAlert = ref(false)
@@ -400,7 +419,21 @@ function closeEditModal() {
   selectedDriver.value = null
 }
 
+function closeAddModal() {
+  showAddModal.value = false
+}
+
 function handleDriverSaved() {
+  driversStore.fetchDrivers()
+
+  showSuccessAlert.value = true
+
+  setTimeout(() => {
+    showSuccessAlert.value = false
+  }, 3000)
+}
+
+function handleDriverCreated() {
   driversStore.fetchDrivers()
 
   showSuccessAlert.value = true

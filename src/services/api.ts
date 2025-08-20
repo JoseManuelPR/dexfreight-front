@@ -270,6 +270,24 @@ export const api = {
     return createApiResponse(vehicle || null)
   },
 
+  async createVehicle(data: Omit<Vehicle, 'id'>): Promise<ApiResponse<Vehicle>> {
+    await delay(500)
+
+    const newId = `VH${String(mockVehicles.length + 1).padStart(3, '0')}`
+
+    const newVehicle: Vehicle = {
+      id: newId,
+      ...data
+    }
+
+    mockVehicles.push(newVehicle)
+
+    apiCache.invalidatePattern('vehicles')
+    apiCache.invalidatePattern('dashboard-stats')
+
+    return createApiResponse(newVehicle, true, 'Vehículo creado exitosamente')
+  },
+
   async updateVehicle(id: string, data: Partial<Vehicle>): Promise<ApiResponse<Vehicle>> {
     await delay(500)
 
@@ -329,6 +347,24 @@ export const api = {
     const driver = mockDrivers.find(d => d.id === id)
 
     return createApiResponse(driver || null)
+  },
+
+  async createDriver(data: Omit<Driver, 'id'>): Promise<ApiResponse<Driver>> {
+    await delay(500)
+
+    const newId = `DR${String(mockDrivers.length + 1).padStart(3, '0')}`
+
+    const newDriver: Driver = {
+      id: newId,
+      ...data
+    }
+
+    mockDrivers.push(newDriver)
+
+    apiCache.invalidatePattern('drivers')
+    apiCache.invalidatePattern('dashboard-stats')
+
+    return createApiResponse(newDriver, true, 'Conductor creado exitosamente')
   },
 
   async updateDriver(id: string, data: Partial<Driver>): Promise<ApiResponse<Driver>> {

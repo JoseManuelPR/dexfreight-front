@@ -12,6 +12,15 @@
         </div>
         <div class="flex items-center gap-3">
           <Button
+            variant="primary"
+            size="sm"
+            :start-icon="PlusIcon"
+            @click="showAddModal = true"
+            :disabled="loading"
+          >
+            Agregar Envío
+          </Button>
+          <Button
             variant="outline"
             size="sm"
             :start-icon="RefreshIcon"
@@ -300,11 +309,19 @@
       @saved="handleShipmentSaved"
     />
 
+    <ShipmentAddModal
+      v-if="showAddModal"
+      :drivers="drivers"
+      :vehicles="vehicles"
+      @close="closeAddModal"
+      @saved="handleShipmentCreated"
+    />
+
     <NotificationAlert
       :show="showSuccessAlert"
       variant="success"
-      title="¡Envío actualizado!"
-      message="El envío ha sido editado exitosamente."
+      title="¡Operación exitosa!"
+      message="El envío ha sido procesado exitosamente."
     />
 
     <NotificationAlert
@@ -342,6 +359,7 @@ import Alert from '@/components/ui/Alert.vue'
 import { useShipmentsStore, useDriversStore, useVehiclesStore } from '@/store'
 import type { Shipment } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
+import PlusIcon from '@/icons/PlusIcon.vue'
 import BoxIcon from '@/icons/BoxIcon.vue'
 import CheckIcon from '@/icons/CheckIcon.vue'
 
@@ -351,6 +369,10 @@ const ShipmentDetailModal = defineAsyncComponent(() =>
 
 const ShipmentEditModal = defineAsyncComponent(() =>
   import('@/components/shipments/ShipmentEditModal.vue')
+)
+
+const ShipmentAddModal = defineAsyncComponent(() =>
+  import('@/components/shipments/ShipmentAddModal.vue')
 )
 
 const shipmentsStore = useShipmentsStore()
@@ -363,6 +385,7 @@ const priorityFilter = ref('')
 
 const showDetailModal = ref(false)
 const showEditModal = ref(false)
+const showAddModal = ref(false)
 const selectedShipment = ref<Shipment | null>(null)
 const showSuccessAlert = ref(false)
 const showDeleteAlert = ref(false)
@@ -497,7 +520,21 @@ function closeEditModal() {
   selectedShipment.value = null
 }
 
+function closeAddModal() {
+  showAddModal.value = false
+}
+
 function handleShipmentSaved() {
+  shipmentsStore.fetchShipments()
+
+  showSuccessAlert.value = true
+
+  setTimeout(() => {
+    showSuccessAlert.value = false
+  }, 3000)
+}
+
+function handleShipmentCreated() {
   shipmentsStore.fetchShipments()
 
   showSuccessAlert.value = true
