@@ -60,7 +60,7 @@
 import { ref } from 'vue'
 import vClickOutside from './v-click-outside.vue'
 
-const props = defineProps({
+defineProps({
   menuItems: {
     type: Array,
     default: () => [],

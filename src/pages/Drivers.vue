@@ -303,14 +303,6 @@ function getStatusLabel(status: string) {
   return labels[status] || status
 }
 
-function formatDate(dateString: string | undefined) {
-  if (!dateString) return '-'
-  return new Intl.DateTimeFormat('es-PE', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric'
-  }).format(new Date(dateString))
-}
 
 async function refreshDrivers() {
   await driversStore.fetchDrivers()

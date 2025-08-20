@@ -25,8 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { SuccessIcon, ErrorIcon, WarningIcon, InfoCircleIcon } from '@/icons'
-import { computed } from 'vue'
+import { ErrorIcon, InfoCircleIcon, SuccessIcon, WarningIcon } from '@/icons'
 
 interface AlertProps {
   variant: 'success' | 'error' | 'warning' | 'info'
@@ -37,7 +36,7 @@ interface AlertProps {
   linkText?: string
 }
 
-const props = withDefaults(defineProps<AlertProps>(), {
+withDefaults(defineProps<AlertProps>(), {
   showLink: false,
   linkHref: '#',
   linkText: 'Learn more',
