@@ -1,5 +1,5 @@
 /**
- * Simple in-memory cache service
+ * Simple in-memory cache service with localStorage persistence
  * Provides caching functionality with TTL (Time To Live) support
  */
 
@@ -11,13 +11,60 @@ interface CacheEntry<T = unknown> {
 export class CacheService {
   private cache: Map<string, CacheEntry>
   private defaultTTL: number
+  private storageKey: string
+  private useLocalStorage: boolean
 
-  constructor(defaultTTL: number = 5 * 60 * 1000) { // 5 minutes default
+  constructor(defaultTTL: number = 60 * 60 * 1000, useLocalStorage = true) { // 60 minutes default
     this.cache = new Map()
     this.defaultTTL = defaultTTL
+    this.storageKey = 'dexfreight-api-cache'
+    this.useLocalStorage = useLocalStorage
+
+    if (useLocalStorage) {
+      this.loadFromStorage()
+    }
 
     // Start automatic cleanup
     this.startCleanupInterval()
+  }
+
+  /**
+   * Load cache data from localStorage
+   */
+  private loadFromStorage(): void {
+    try {
+      const stored = localStorage.getItem(this.storageKey)
+
+      if (stored) {
+        const data = JSON.parse(stored)
+        const now = Date.now()
+
+        for (const [key, entry] of Object.entries(data)) {
+          const cacheEntry = entry as CacheEntry
+
+          if (now - cacheEntry.timestamp < this.defaultTTL) {
+            this.cache.set(key, cacheEntry)
+          }
+        }
+      }
+    } catch (error) {
+      console.warn('Error loading cache from storage:', error)
+    }
+  }
+
+  /**
+   * Save cache data to localStorage
+   */
+  private saveToStorage(): void {
+    if (!this.useLocalStorage) return
+
+    try {
+      const data = Object.fromEntries(this.cache)
+
+      localStorage.setItem(this.storageKey, JSON.stringify(data))
+    } catch (error) {
+      console.warn('Error saving cache to storage:', error)
+    }
   }
 
   /**
@@ -35,6 +82,7 @@ export class CacheService {
     // Check if entry is expired
     if (Date.now() - entry.timestamp >= this.defaultTTL) {
       this.cache.delete(key)
+      this.saveToStorage()
 
       return null
     }
@@ -52,6 +100,7 @@ export class CacheService {
       data,
       timestamp: Date.now()
     })
+    this.saveToStorage()
   }
 
   /**
@@ -69,6 +118,7 @@ export class CacheService {
     // Check if expired
     if (Date.now() - entry.timestamp >= this.defaultTTL) {
       this.cache.delete(key)
+      this.saveToStorage()
 
       return false
     }
@@ -81,7 +131,13 @@ export class CacheService {
    * @param key Cache key to delete
    */
   delete(key: string): boolean {
-    return this.cache.delete(key)
+    const result = this.cache.delete(key)
+
+    if (result) {
+      this.saveToStorage()
+    }
+
+    return result
   }
 
   /**
@@ -89,10 +145,17 @@ export class CacheService {
    * @param pattern String pattern to match against keys
    */
   invalidatePattern(pattern: string): void {
+    let deletedCount = 0
+
     for (const key of this.cache.keys()) {
       if (key.includes(pattern)) {
         this.cache.delete(key)
+        deletedCount++
       }
+    }
+
+    if (deletedCount > 0) {
+      this.saveToStorage()
     }
   }
 
@@ -101,6 +164,9 @@ export class CacheService {
    */
   clear(): void {
     this.cache.clear()
+    if (this.useLocalStorage) {
+      localStorage.removeItem(this.storageKey)
+    }
   }
 
   /**
@@ -110,7 +176,8 @@ export class CacheService {
     return {
       size: this.cache.size,
       keys: Array.from(this.cache.keys()),
-      ttl: this.defaultTTL
+      ttl: this.defaultTTL,
+      useLocalStorage: this.useLocalStorage
     }
   }
 
@@ -119,11 +186,17 @@ export class CacheService {
    */
   clearExpired(): void {
     const now = Date.now()
+    let deletedCount = 0
 
     for (const [key, entry] of this.cache.entries()) {
       if (now - entry.timestamp >= this.defaultTTL) {
         this.cache.delete(key)
+        deletedCount++
       }
+    }
+
+    if (deletedCount > 0) {
+      this.saveToStorage()
     }
   }
 
@@ -131,10 +204,10 @@ export class CacheService {
    * Start automatic cleanup interval
    */
   private startCleanupInterval(): void {
-    // Run cleanup every 10 minutes
+    // Run cleanup every 60 minutes
     setInterval(() => {
       this.clearExpired()
-    }, 10 * 60 * 1000)
+    }, 60 * 60 * 1000)
   }
 
   /**

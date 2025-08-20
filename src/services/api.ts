@@ -31,20 +31,78 @@ let mockDrivers: Driver[] = []
 // Load mock data on initialization
 function loadMockData() {
   try {
-    mockShipments = shipmentsData as Shipment[] || []
-    mockVehicles = vehiclesData as Vehicle[] || []
-    mockDrivers = driversData as Driver[] || []
+    // Try to load from localStorage first
+    const storedShipments = localStorage.getItem('dexfreight-mock-shipments')
+    const storedVehicles = localStorage.getItem('dexfreight-mock-vehicles')
+    const storedDrivers = localStorage.getItem('dexfreight-mock-drivers')
 
-    console.log('Mock data loaded:', {
-      shipments: mockShipments.length,
-      vehicles: mockVehicles.length,
-      drivers: mockDrivers.length
-    })
+    if (storedShipments && storedVehicles && storedDrivers) {
+      mockShipments = JSON.parse(storedShipments)
+      mockVehicles = JSON.parse(storedVehicles)
+      mockDrivers = JSON.parse(storedDrivers)
+      console.log('Mock data loaded from localStorage:', {
+        shipments: mockShipments.length,
+        vehicles: mockVehicles.length,
+        drivers: mockDrivers.length
+      })
+    } else {
+      // Load from JSON files if no persistent data
+      mockShipments = shipmentsData as Shipment[] || []
+      mockVehicles = vehiclesData as Vehicle[] || []
+      mockDrivers = driversData as Driver[] || []
+
+      // Save to localStorage for future use
+      saveMockDataToStorage()
+
+      console.log('Mock data loaded from JSON files:', {
+        shipments: mockShipments.length,
+        vehicles: mockVehicles.length,
+        drivers: mockDrivers.length
+      })
+    }
   } catch (error) {
     console.warn('No se pudieron cargar los datos mock:', error)
     // Use default data if JSON files cannot be loaded
     initializeDefaultData()
+    saveMockDataToStorage()
   }
+}
+
+/**
+ * Save mock data to localStorage
+ */
+function saveMockDataToStorage(): void {
+  try {
+    localStorage.setItem('dexfreight-mock-shipments', JSON.stringify(mockShipments))
+    localStorage.setItem('dexfreight-mock-vehicles', JSON.stringify(mockVehicles))
+    localStorage.setItem('dexfreight-mock-drivers', JSON.stringify(mockDrivers))
+  } catch (error) {
+    console.warn('Error saving mock data to localStorage:', error)
+  }
+}
+
+/**
+ * Invalidate cache for shipments changes
+ */
+function invalidateShipmentsCache(): void {
+  apiCache.invalidatePattern('shipments')
+  apiCache.invalidatePattern('dashboard-stats')
+}
+
+/**
+ * Invalidate cache for vehicles changes
+ */
+function invalidateVehiclesCache(): void {
+  apiCache.invalidatePattern('vehicles')
+  apiCache.invalidatePattern('dashboard-stats')
+}
+
+/**
+ * Invalidate cache for drivers changes
+ */
+function invalidateDriversCache(): void {
+  apiCache.invalidatePattern('drivers')
+  apiCache.invalidatePattern('dashboard-stats')
 }
 
 // Default data if JSON files cannot be loaded
@@ -202,9 +260,8 @@ export const api = {
     }
 
     mockShipments.push(newShipment)
-
-    apiCache.invalidatePattern('shipments')
-    apiCache.invalidatePattern('dashboard-stats')
+    saveMockDataToStorage()
+    invalidateShipmentsCache()
 
     return createApiResponse(newShipment, true, 'Envío creado exitosamente')
   },
@@ -219,9 +276,8 @@ export const api = {
     }
 
     mockShipments[index] = { ...mockShipments[index], ...data }
-
-    apiCache.invalidatePattern('shipments')
-    apiCache.invalidatePattern('dashboard-stats')
+    saveMockDataToStorage()
+    invalidateShipmentsCache()
 
     return createApiResponse(mockShipments[index], true, 'Envío actualizado exitosamente')
   },
@@ -236,9 +292,8 @@ export const api = {
     }
 
     mockShipments.splice(index, 1)
-
-    apiCache.invalidatePattern('shipments')
-    apiCache.invalidatePattern('dashboard-stats')
+    saveMockDataToStorage()
+    invalidateShipmentsCache()
 
     return createApiResponse(true, true, 'Envío eliminado exitosamente')
   },
@@ -281,9 +336,8 @@ export const api = {
     }
 
     mockVehicles.push(newVehicle)
-
-    apiCache.invalidatePattern('vehicles')
-    apiCache.invalidatePattern('dashboard-stats')
+    saveMockDataToStorage()
+    invalidateVehiclesCache()
 
     return createApiResponse(newVehicle, true, 'Vehículo creado exitosamente')
   },
@@ -298,9 +352,8 @@ export const api = {
     }
 
     mockVehicles[index] = { ...mockVehicles[index], ...data }
-
-    apiCache.invalidatePattern('vehicles')
-    apiCache.invalidatePattern('dashboard-stats')
+    saveMockDataToStorage()
+    invalidateVehiclesCache()
 
     return createApiResponse(mockVehicles[index], true, 'Vehículo actualizado exitosamente')
   },
@@ -315,9 +368,8 @@ export const api = {
     }
 
     mockVehicles.splice(index, 1)
-
-    apiCache.invalidatePattern('vehicles')
-    apiCache.invalidatePattern('dashboard-stats')
+    saveMockDataToStorage()
+    invalidateVehiclesCache()
 
     return createApiResponse(true, true, 'Vehículo eliminado exitosamente')
   },
@@ -360,9 +412,8 @@ export const api = {
     }
 
     mockDrivers.push(newDriver)
-
-    apiCache.invalidatePattern('drivers')
-    apiCache.invalidatePattern('dashboard-stats')
+    saveMockDataToStorage()
+    invalidateDriversCache()
 
     return createApiResponse(newDriver, true, 'Conductor creado exitosamente')
   },
@@ -377,9 +428,8 @@ export const api = {
     }
 
     mockDrivers[index] = { ...mockDrivers[index], ...data }
-
-    apiCache.invalidatePattern('drivers')
-    apiCache.invalidatePattern('dashboard-stats')
+    saveMockDataToStorage()
+    invalidateDriversCache()
 
     return createApiResponse(mockDrivers[index], true, 'Conductor actualizado exitosamente')
   },
@@ -394,9 +444,8 @@ export const api = {
     }
 
     mockDrivers.splice(index, 1)
-
-    apiCache.invalidatePattern('drivers')
-    apiCache.invalidatePattern('dashboard-stats')
+    saveMockDataToStorage()
+    invalidateDriversCache()
 
     return createApiResponse(true, true, 'Conductor eliminado exitosamente')
   },
@@ -461,5 +510,18 @@ export const cacheUtils = {
   clearPattern: (pattern: string) => apiCache.invalidatePattern(pattern),
   size: () => apiCache.getStats().size,
   keys: () => apiCache.getStats().keys,
-  stats: () => apiCache.getStats()
+  stats: () => apiCache.getStats(),
+  resetMockData: () => {
+    mockShipments = shipmentsData as Shipment[] || []
+    mockVehicles = vehiclesData as Vehicle[] || []
+    mockDrivers = driversData as Driver[] || []
+
+    // Save reset data to localStorage
+    saveMockDataToStorage()
+
+    apiCache.invalidatePattern('shipments')
+    apiCache.invalidatePattern('vehicles')
+    apiCache.invalidatePattern('drivers')
+    apiCache.invalidatePattern('dashboard-stats')
+  }
 }
