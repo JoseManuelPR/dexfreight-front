@@ -20,7 +20,7 @@ DexFreight is a comprehensive transport management system designed for logistics
 - 👨‍💼 **Driver Management** - Performance tracking and assignment
 - 📱 **Responsive Design** - Mobile-first approach for all devices
 - 🌙 **Dark Mode** - Built-in theme switching
-- 🧪 **Comprehensive Testing** - 80+ unit tests with 100% pass rate
+- 🧪 **Comprehensive Testing** - 100+ unit tests with 100% pass rate
 - ⚡ **Performance Optimized** - Code splitting, lazy loading, and compression
 
 ## 🏗️ Tech Stack

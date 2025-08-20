@@ -184,17 +184,23 @@ export const useVehiclesStore = defineStore('vehicles', () => {
     }
   }
 
-  async function updateVehicleStatus(id: string, status: Vehicle['status']) {
+  async function updateVehicle(id: string, data: Partial<Vehicle>) {
+    loading.value = true
+    error.value = null
+
     try {
-      const response = await api.updateVehicle(id, { status })
+      const response = await api.updateVehicle(id, data)
       const index = vehicles.value.findIndex(v => v.id === id)
       if (index !== -1) {
         vehicles.value[index] = response.data
       }
+      return response.data
     } catch (err) {
       error.value = handleApiError(err)
-      console.error('Error updating vehicle status:', err)
+      console.error('Error updating vehicle:', err)
       throw err
+    } finally {
+      loading.value = false
     }
   }
 
@@ -208,7 +214,7 @@ export const useVehiclesStore = defineStore('vehicles', () => {
     vehiclesOffline,
     vehiclesInTransit, // Legacy - alias for vehiclesInUse
     fetchVehicles,
-    updateVehicleStatus
+    updateVehicle
   }
 })
 
@@ -253,6 +259,26 @@ export const useDriversStore = defineStore('drivers', () => {
     }
   }
 
+  async function updateDriver(id: string, data: Partial<Driver>) {
+    loading.value = true
+    error.value = null
+
+    try {
+      const response = await api.updateDriver(id, data)
+      const index = drivers.value.findIndex(d => d.id === id)
+      if (index !== -1) {
+        drivers.value[index] = response.data
+      }
+      return response.data
+    } catch (err) {
+      error.value = handleApiError(err)
+      console.error('Error updating driver:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   return {
     drivers,
     loading,
@@ -262,7 +288,8 @@ export const useDriversStore = defineStore('drivers', () => {
     driversOnDelivery,
     driversOffDuty,
     driversSuspended,
-    fetchDrivers
+    fetchDrivers,
+    updateDriver
   }
 })
 

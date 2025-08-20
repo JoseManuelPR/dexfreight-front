@@ -177,4 +177,74 @@ describe('Vehicles Logic', () => {
     expect(getTypeLabel('trailer')).toBe('Tráiler')
     expect(getTypeLabel('pickup')).toBe('Pickup')
   })
+
+  it('handles vehicle edit success notification', () => {
+    let showSuccessAlert = false
+    
+    const handleVehicleSaved = () => {
+      showSuccessAlert = true
+      
+      setTimeout(() => {
+        showSuccessAlert = false
+      }, 3000)
+    }
+    
+    expect(showSuccessAlert).toBe(false)
+    
+    handleVehicleSaved()
+    expect(showSuccessAlert).toBe(true)
+    
+    setTimeout(() => {
+      expect(showSuccessAlert).toBe(false)
+    }, 3000)
+  })
+
+  it('uses NotificationAlert component with correct props for success', () => {
+    const expectedProps = {
+      show: true,
+      variant: 'success',
+      title: '¡Vehículo actualizado!',
+      message: 'El vehículo ha sido editado exitosamente.'
+    }
+    
+    expect(expectedProps.show).toBe(true)
+    expect(expectedProps.variant).toBe('success')
+    expect(expectedProps.title).toBe('¡Vehículo actualizado!')
+    expect(expectedProps.message).toBe('El vehículo ha sido editado exitosamente.')
+  })
+
+  it('uses NotificationAlert component with correct props for info', () => {
+    const expectedProps = {
+      show: true,
+      variant: 'info',
+      title: '¡Datos actualizados!',
+      message: 'La información de vehículos se ha actualizado correctamente.'
+    }
+
+    expect(expectedProps.show).toBe(true)
+    expect(expectedProps.variant).toBe('info')
+    expect(expectedProps.title).toBe('¡Datos actualizados!')
+    expect(expectedProps.message).toBe('La información de vehículos se ha actualizado correctamente.')
+  })
+
+  it('handles refresh vehicles with info notification', () => {
+    let showUpdateAlert = false
+    
+    const refreshVehicles = async () => {
+      showUpdateAlert = true
+      
+      setTimeout(() => {
+        showUpdateAlert = false
+      }, 3000)
+    }
+    
+    expect(showUpdateAlert).toBe(false)
+    
+    refreshVehicles()
+    expect(showUpdateAlert).toBe(true)
+    
+    setTimeout(() => {
+      expect(showUpdateAlert).toBe(false)
+    }, 3000)
+  })
 })

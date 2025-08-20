@@ -234,6 +234,21 @@
       @close="closeDriverDetail"
       @edit="editDriver"
     />
+
+    <DriverEditModal
+      v-if="showEditModal && selectedDriver"
+      :driver="selectedDriver"
+      :vehicles="vehicles"
+      @close="closeEditModal"
+      @saved="handleDriverSaved"
+    />
+
+    <NotificationAlert
+      :show="showSuccessAlert"
+      variant="success"
+      title="¡Conductor actualizado!"
+      message="El conductor ha sido editado exitosamente."
+    />
   </admin-layout>
 </template>
 
@@ -242,7 +257,9 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
+import NotificationAlert from '@/components/ui/NotificationAlert.vue'
 import DriverDetailModal from '@/components/drivers/DriverDetailModal.vue'
+import DriverEditModal from '@/components/drivers/DriverEditModal.vue'
 import { useDriversStore, useVehiclesStore } from '@/store'
 import type { Driver } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
@@ -257,7 +274,9 @@ const searchTerm = ref('')
 const statusFilter = ref('')
 
 const showDetailModal = ref(false)
+const showEditModal = ref(false)
 const selectedDriver = ref<Driver | null>(null)
+const showSuccessAlert = ref(false)
 
 const loading = computed(() => driversStore.loading)
 const drivers = computed(() => driversStore.drivers)
@@ -319,9 +338,26 @@ function closeDriverDetail() {
 }
 
 function editDriver(driver: Driver) {
-  // TODO: Implement edit functionality
-  console.log('Edit driver:', driver)
   closeDriverDetail()
+  selectedDriver.value = driver
+  showEditModal.value = true
+}
+
+function closeEditModal() {
+  showEditModal.value = false
+  selectedDriver.value = null
+}
+
+function handleDriverSaved() {
+  driversStore.fetchDrivers()
+  
+  // Show success alert
+  showSuccessAlert.value = true
+  
+  // Hide alert after 3 seconds
+  setTimeout(() => {
+    showSuccessAlert.value = false
+  }, 3000)
 }
 
 onMounted(() => {

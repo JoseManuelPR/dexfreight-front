@@ -233,6 +233,21 @@
       @close="closeVehicleDetail"
       @edit="editVehicle"
     />
+
+    <VehicleEditModal
+      v-if="showEditModal && selectedVehicle"
+      :vehicle="selectedVehicle"
+      :drivers="drivers"
+      @close="closeEditModal"
+      @saved="handleVehicleSaved"
+    />
+
+    <NotificationAlert
+      :show="showSuccessAlert"
+      variant="success"
+      title="¡Vehículo actualizado!"
+      message="El vehículo ha sido editado exitosamente."
+    />
   </admin-layout>
 </template>
 
@@ -241,7 +256,9 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
+import NotificationAlert from '@/components/ui/NotificationAlert.vue'
 import VehicleDetailModal from '@/components/vehicles/VehicleDetailModal.vue'
+import VehicleEditModal from '@/components/vehicles/VehicleEditModal.vue'
 import { useVehiclesStore, useDriversStore } from '@/store'
 import type { Vehicle } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
@@ -257,7 +274,9 @@ const statusFilter = ref('')
 const typeFilter = ref('')
 
 const showDetailModal = ref(false)
+const showEditModal = ref(false)
 const selectedVehicle = ref<Vehicle | null>(null)
+const showSuccessAlert = ref(false)
 
 const loading = computed(() => vehiclesStore.loading)
 const vehicles = computed(() => vehiclesStore.vehicles)
@@ -341,9 +360,24 @@ function closeVehicleDetail() {
 }
 
 function editVehicle(vehicle: Vehicle) {
-  // TODO: Implement edit functionality
-  console.log('Edit vehicle:', vehicle)
   closeVehicleDetail()
+  selectedVehicle.value = vehicle
+  showEditModal.value = true
+}
+
+function closeEditModal() {
+  showEditModal.value = false
+  selectedVehicle.value = null
+}
+
+function handleVehicleSaved() {
+  vehiclesStore.fetchVehicles()
+  
+  showSuccessAlert.value = true
+  
+  setTimeout(() => {
+    showSuccessAlert.value = false
+  }, 3000)
 }
 
 onMounted(() => {
