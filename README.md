@@ -158,7 +158,7 @@ For detailed testing information, see [`src/__tests__/README.md`](src/__tests__/
 - **Code splitting** by route and feature
 - **Lazy loading** for all page components
 - **Bundle optimization** with manual chunks
-- **Compression** (Gzip + Brotli)
+- **Compression** Gzip
 - **CSS code splitting** for faster initial load
 
 ## 🎨 Design System

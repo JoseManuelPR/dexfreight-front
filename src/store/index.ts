@@ -273,7 +273,9 @@ export const useDashboardStore = defineStore('dashboard', () => {
   const error = ref<string | null>(null)
 
   async function fetchDashboardStats() {
-    loading.value = true
+    if (!stats.value) {
+      loading.value = true
+    }
     error.value = null
     
     try {

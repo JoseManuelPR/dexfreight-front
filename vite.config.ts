@@ -17,27 +17,16 @@ export default defineConfig({
       ext: '.gz',
       threshold: 1024,
       deleteOriginFile: false,
+      filter: /\.(js|css|html|svg)$/i,
       compressionOptions: {
         level: 9,
         chunkSize: 32 * 1024
       }
     }),
-    compression({
-      algorithm: 'brotliCompress',
-      ext: '.br',
-      threshold: 1024,
-      deleteOriginFile: false,
-      compressionOptions: {
-        params: {
-          [11]: 4
-        }
-      }
-    }),
     visualizer({
       filename: 'dist/stats.html',
       open: false,
-      gzipSize: true,
-      brotliSize: true
+      gzipSize: true
     })
   ],
   resolve: {

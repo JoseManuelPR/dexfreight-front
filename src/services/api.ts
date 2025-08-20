@@ -168,7 +168,7 @@ export const api = {
       return createApiResponse(cached)
     }
     
-    await delay(500)
+    await delay(200)
     
     let filtered = [...mockShipments]
     
@@ -187,7 +187,7 @@ export const api = {
   },
 
   async getShipment(id: string): Promise<ApiResponse<Shipment | null>> {
-    await delay(300)
+    await delay(200)
     
     const shipment = mockShipments.find(s => s.id === id)
     return createApiResponse(shipment || null)
@@ -255,7 +255,7 @@ export const api = {
       return createApiResponse(cached)
     }
     
-    await delay(400)
+    await delay(200)
     
     const vehicles = [...mockVehicles]
     
@@ -266,7 +266,7 @@ export const api = {
   },
 
   async getVehicle(id: string): Promise<ApiResponse<Vehicle | null>> {
-    await delay(300)
+    await delay(200)
     
     const vehicle = mockVehicles.find(v => v.id === id)
     return createApiResponse(vehicle || null)
@@ -299,7 +299,7 @@ export const api = {
       return createApiResponse(cached)
     }
     
-    await delay(350)
+    await delay(200)
     
     const drivers = [...mockDrivers]
     
@@ -310,7 +310,7 @@ export const api = {
   },
 
   async getDriver(id: string): Promise<ApiResponse<Driver | null>> {
-    await delay(300)
+    await delay(200)
     
     const driver = mockDrivers.find(d => d.id === id)
     return createApiResponse(driver || null)
@@ -343,7 +343,7 @@ export const api = {
       return createApiResponse(cached)
     }
     
-    await delay(600)
+    await delay(200)
     
     const stats: DashboardStats = {
       totalShipments: mockShipments.length,
