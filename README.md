@@ -44,6 +44,37 @@ DexFreight is a comprehensive transport management system designed for logistics
 ### UI Framework Base
 This project is built upon the **TailAdmin** free template, a modern admin dashboard template built with Tailwind CSS. For more information about TailAdmin features and documentation, visit: [https://tailadmin.com/docs](https://tailadmin.com/docs)
 
+
+## 🎨 Design System
+
+Built on **TailAdmin's** design foundation with:
+- **Consistent spacing** and typography scales
+- **Custom color palette** optimized for logistics
+- **Dark/light mode** support
+- **Responsive breakpoints** from mobile to desktop
+- **Accessible components** with proper ARIA labels
+
+## 🏗️ Architecture
+
+### State Management (Pinia)
+- **Modular stores** for each domain (shipments, vehicles, drivers, dashboard)
+- **Computed properties** for derived state
+- **Error handling** with user-friendly messages
+- **Caching layer** for API responses
+
+### API Layer
+- **Centralized API service** with consistent error handling
+- **Mock data integration** with realistic latency
+- **Response caching** for improved performance
+- **TypeScript interfaces** for all API responses
+
+### Performance Optimizations
+- **Code splitting** by route and feature
+- **Lazy loading** for all page components
+- **Bundle optimization** with manual chunks
+- **Compression** Gzip
+- **CSS code splitting** for faster initial load
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -146,44 +177,6 @@ The mock data is automatically loaded through the API service layer (`src/servic
 
 For detailed testing information, see [`src/__tests__/README.md`](src/__tests__/README.md).
 
-## 📊 Performance & Analysis Reports
-
-### Performance Report
-For detailed performance analysis and optimization insights, see [`performance-report.pdf`](./performance-report.pdf).
-
-### Bundle Analysis Report
-For comprehensive bundle size analysis and optimization recommendations, see [`bundle-analysis-report.pdf`](./bundle-analysis-report.pdf).
-
-## 🏗️ Architecture
-
-### State Management (Pinia)
-- **Modular stores** for each domain (shipments, vehicles, drivers, dashboard)
-- **Computed properties** for derived state
-- **Error handling** with user-friendly messages
-- **Caching layer** for API responses
-
-### API Layer
-- **Centralized API service** with consistent error handling
-- **Mock data integration** with realistic latency
-- **Response caching** for improved performance
-- **TypeScript interfaces** for all API responses
-
-### Performance Optimizations
-- **Code splitting** by route and feature
-- **Lazy loading** for all page components
-- **Bundle optimization** with manual chunks
-- **Compression** Gzip
-- **CSS code splitting** for faster initial load
-
-## 🎨 Design System
-
-Built on **TailAdmin's** design foundation with:
-- **Consistent spacing** and typography scales
-- **Custom color palette** optimized for logistics
-- **Dark/light mode** support
-- **Responsive breakpoints** from mobile to desktop
-- **Accessible components** with proper ARIA labels
-
 ## 📈 Performance
 
 ### Build Optimization
@@ -205,6 +198,14 @@ Built on **TailAdmin's** design foundation with:
 - Ensure **responsive design** compatibility
 - Follow **Vue 3 Composition API** patterns
 
+## 📊 Performance & Analysis Reports
+
+### Performance Report
+For detailed performance analysis and optimization insights, see [`performance-report.pdf`](./performance-report.pdf).
+
+### Bundle Analysis Report
+For comprehensive bundle size analysis and optimization recommendations, see [`bundle-analysis-report.pdf`](./bundle-analysis-report.pdf).
+
 ---
 
-**Built with ❤️ for modern transport logistics by Josema https://www.instagram.com**
+**Built with ❤️ for modern transport logistics by Josema http://instagram.com/josemanuelpr23**
