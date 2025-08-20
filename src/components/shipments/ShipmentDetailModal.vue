@@ -154,7 +154,7 @@
                     <p class="text-sm text-gray-600 dark:text-gray-400">{{ shipment.customer.phone }}</p>
                   </div>
                   <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <p v-if="shipment.customer.address.street" class="text-sm text-gray-600 dark:text-gray-400">
                       {{ shipment.customer.address.street }}<br>
                       {{ shipment.customer.address.city }}, {{ shipment.customer.address.state }}<br>
                       {{ shipment.customer.address.zipCode }}, {{ shipment.customer.address.country }}
@@ -235,7 +235,7 @@
                 </div>
               </div>
 
-              <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
+              <div v-if="shipment.goods.length > 0" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Mercancía
                 </h3>

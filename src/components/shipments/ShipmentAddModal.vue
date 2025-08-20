@@ -282,8 +282,52 @@
             </div>
           </div>
 
-          <!-- Direcciones -->
+          <!-- Notas -->
           <div class="mt-6 space-y-6">
+            <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                Notas
+              </h3>
+              <div class="space-y-4">
+                <div v-if="form.notes.length > 0" class="space-y-2">
+                  <div
+                    v-for="(note, index) in form.notes"
+                    :key="index"
+                    class="flex items-center gap-2 bg-white dark:bg-gray-800 p-3 rounded border border-gray-200 dark:border-gray-600"
+                  >
+                    <span class="flex-1 text-sm text-gray-700 dark:text-gray-300">{{ note }}</span>
+                    <button
+                      type="button"
+                      @click="removeNote(index)"
+                      class="p-1 text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors"
+                    >
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <input
+                    v-model="newNote"
+                    type="text"
+                    placeholder="Agregar una nota..."
+                    class="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                    @keyup.enter="addNote"
+                  />
+                  <button
+                    type="button"
+                    @click="addNote"
+                    :disabled="!newNote.trim()"
+                    class="px-4 py-2 bg-brand-500 text-white rounded-lg hover:bg-brand-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Agregar
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Direcciones -->
             <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
               <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                 Dirección de Origen *
@@ -466,6 +510,7 @@ const emit = defineEmits(['close', 'saved'])
 
 const shipmentsStore = useShipmentsStore()
 const saving = ref(false)
+const newNote = ref('')
 
 function getCurrentDateTimeLocal(): string {
   const now = new Date()
@@ -574,6 +619,17 @@ const isFormValid = computed(() => {
         form.value.volume > 0 &&
         form.value.value > 0
 })
+
+function addNote() {
+  if (newNote.value.trim()) {
+    form.value.notes.push(newNote.value.trim())
+    newNote.value = ''
+  }
+}
+
+function removeNote(index: number) {
+  form.value.notes.splice(index, 1)
+}
 
 async function handleSubmit() {
   if (!isFormValid.value) return
