@@ -60,7 +60,14 @@ Built on **TailAdmin's** design foundation with:
 - **Modular stores** for each domain (shipments, vehicles, drivers, dashboard)
 - **Computed properties** for derived state
 - **Error handling** with user-friendly messages
-- **Caching layer** for API responses
+- **Caching layer** for API responses with localStorage persistence
+
+### Local Storage Implementation
+The application uses **localStorage** for persistent caching to improve performance and reduce API calls:
+
+- **Storage Keys**: `dexfreight-api-cache`, `dexfreight-mock-shipments`, `dexfreight-mock-vehicles`, `dexfreight-mock-drivers`
+- **Purpose**: Cache API responses with TTL (Time To Live) support
+- **Mock Data Limitation**: Relationships between modules (drivers, vehicles, shipments) are not automatically synchronized across sections due to mock data structure
 
 ### API Layer
 - **Centralized API service** with consistent error handling
