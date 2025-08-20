@@ -34,12 +34,15 @@ DexFreight is a comprehensive transport management system designed for logistics
 - **Routing**: Vue Router 4
 - **Testing**: Vitest + Vue Test Utils
 
+### Architectural Decisions
+- **Vue 3**: Modern reactivity system and Composition API for better code organization
+- **TypeScript**: Type safety and better developer experience for a technical assessment
+- **Vite**: Fast development server and optimized builds for quick iteration
+- **Pinia**: Simpler state management compared to Vuex, perfect for this scope
+- **Tailwind CSS**: Rapid UI development with utility-first approach
+
 ### UI Framework Base
 This project is built upon the **TailAdmin** free template, a modern admin dashboard template built with Tailwind CSS. For more information about TailAdmin features and documentation, visit: [https://tailadmin.com/docs](https://tailadmin.com/docs)
-
-### Additional Libraries
-- **Icons**: Lucide Vue Next
-- **Forms**: Dropzone
 
 ## 🚀 Quick Start
 
@@ -74,7 +77,10 @@ This project is built upon the **TailAdmin** free template, a modern admin dashb
 ```bash
 # Development
 npm run dev             # Start development server
+
+# Production
 npm run build           # Build for production
+npm run prod            # Start the production server
 
 # Code Quality
 npm run lint            # ESLint code linting
@@ -139,6 +145,14 @@ The mock data is automatically loaded through the API service layer (`src/servic
 ## 🧪 Testing
 
 For detailed testing information, see [`src/__tests__/README.md`](src/__tests__/README.md).
+
+## 📊 Performance & Analysis Reports
+
+### Performance Report
+For detailed performance analysis and optimization insights, see [`performance-report.pdf`](./performance-report.pdf).
+
+### Bundle Analysis Report
+For comprehensive bundle size analysis and optimization recommendations, see [`bundle-analysis-report.pdf`](./bundle-analysis-report.pdf).
 
 ## 🏗️ Architecture
 
