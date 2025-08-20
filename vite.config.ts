@@ -38,21 +38,20 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          if (id.includes('vue/dist') || id.includes('vue-router/dist')) {
+          if (id.includes('vue/dist') && !id.includes('vue-router') && !id.includes('pinia')) {
             return 'vue-core'
+          }
+          if (id.includes('vue-router/dist')) {
+            return 'vue-router'
           }
           if (id.includes('pinia')) {
-            return 'vue-core'
+            return 'pinia'
           }
           if (id.includes('lucide-vue-next') || id.includes('/icons/')) {
-            return 'ui-icons'
+            return 'ui'
           }
-          if (id.includes('dropzone')) {
-            return 'forms-lazy'
-          }
-          if (id.includes('vuevectormap') || 
-              id.includes('vuedraggable')) {
-            return 'utils-lazy'
+          if (id.includes('dropzone') || id.includes('vuevectormap') || id.includes('vuedraggable')) {
+            return 'utils'
           }
           if (id.includes('/pages/Dashboard.vue')) {
             return 'page-dashboard'
@@ -100,8 +99,7 @@ export default defineConfig({
         return deps.filter(dep => 
           dep.includes('vue-core') || 
           dep.includes('page-dashboard') ||
-          dep.includes('layout-admin') ||
-          dep.includes('main.css')
+          dep.includes('layout-admin')
         )
       }
     },

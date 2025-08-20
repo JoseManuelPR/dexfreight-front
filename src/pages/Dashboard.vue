@@ -294,9 +294,9 @@ onMounted(async () => {
   }
   
   if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(loadSecondaryData, { timeout: 1000 })
+    window.requestIdleCallback(loadSecondaryData, { timeout: 2000 })
   } else {
-    setTimeout(loadSecondaryData, 50)
+    setTimeout(loadSecondaryData, 100)
   }
 })
 
