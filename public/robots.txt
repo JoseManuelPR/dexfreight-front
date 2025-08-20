@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://dexfreight.com/sitemap.xml
+Sitemap: https://dexfreight.io/sitemap.xml
 
 # Crawl-delay (opcional)
 Crawl-delay: 1
