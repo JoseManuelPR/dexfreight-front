@@ -393,12 +393,11 @@ const showErrorAlert = ref(false)
 const errorMessage = ref('')
 
 const loading = computed(() => shipmentsStore.loading)
-const shipments = computed(() => shipmentsStore.shipments)
 const drivers = computed(() => driversStore.drivers)
 const vehicles = computed(() => vehiclesStore.vehicles)
 
 const filteredShipments = computed(() => {
-  let filtered = shipments.value
+  let filtered = shipmentsStore.filteredShipments
 
   if (searchTerm.value) {
     const term = searchTerm.value.toLowerCase()

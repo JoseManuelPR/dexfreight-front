@@ -61,6 +61,124 @@ const mockShipments: Shipment[] = [
       estimatedTime: 8
     },
     notes: ['Handle with care']
+  },
+  {
+    id: 'S002',
+    trackingNumber: 'TRK002',
+    origin: {
+      street: '789 Pine St',
+      city: 'Valencia',
+      state: 'Valencia',
+      zipCode: '46001',
+      country: 'Spain'
+    },
+    destination: {
+      street: '321 Elm St',
+      city: 'Sevilla',
+      state: 'Sevilla',
+      zipCode: '41001',
+      country: 'Spain'
+    },
+    status: 'in_transit',
+    priority: 'high',
+    createdAt: '2024-01-02T15:30:00Z',
+    scheduledPickup: '2024-01-03T08:00:00Z',
+    estimatedDelivery: '2024-01-04T18:00:00Z',
+    weight: 750,
+    volume: 3.0,
+    value: 2200,
+    currency: 'EUR',
+    goods: [
+      {
+        id: 'G002',
+        description: 'Furniture',
+        quantity: 5,
+        unit: 'pieces',
+        weight: 750,
+        value: 2200,
+        category: 'Furniture',
+        fragile: true,
+        hazardous: false
+      }
+    ],
+    customer: {
+      id: 'C002',
+      name: 'Jane Smith',
+      email: 'jane@example.com',
+      phone: '+34 987 654 321',
+      address: {
+        street: '789 Pine St',
+        city: 'Valencia',
+        state: 'Valencia',
+        zipCode: '46001',
+        country: 'Spain'
+      },
+      accountType: 'business'
+    },
+    route: {
+      distance: 350,
+      estimatedTime: 6
+    },
+    notes: ['Fragile items']
+  },
+  {
+    id: 'S003',
+    trackingNumber: 'TRK003',
+    origin: {
+      street: '456 Oak Ave',
+      city: 'Bilbao',
+      state: 'Vizcaya',
+      zipCode: '48001',
+      country: 'Spain'
+    },
+    destination: {
+      street: '123 Main St',
+      city: 'Madrid',
+      state: 'Madrid',
+      zipCode: '28001',
+      country: 'Spain'
+    },
+    status: 'delivered',
+    priority: 'low',
+    createdAt: '2024-01-03T09:15:00Z',
+    scheduledPickup: '2024-01-04T10:00:00Z',
+    estimatedDelivery: '2024-01-05T16:00:00Z',
+    weight: 300,
+    volume: 1.5,
+    value: 800,
+    currency: 'EUR',
+    goods: [
+      {
+        id: 'G003',
+        description: 'Books',
+        quantity: 100,
+        unit: 'pieces',
+        weight: 300,
+        value: 800,
+        category: 'Books',
+        fragile: false,
+        hazardous: false
+      }
+    ],
+    customer: {
+      id: 'C003',
+      name: 'Bob Johnson',
+      email: 'bob@example.com',
+      phone: '+34 555 123 456',
+      address: {
+        street: '456 Oak Ave',
+        city: 'Bilbao',
+        state: 'Vizcaya',
+        zipCode: '48001',
+        country: 'Spain'
+      },
+      accountType: 'individual'
+    },
+    route: {
+      distance: 400,
+      estimatedTime: 7
+    },
+    notes: ['Standard delivery']
   }
 ]
 
@@ -77,8 +195,10 @@ describe('Shipments Logic', () => {
 
     const result = filterBySearchTerm(mockShipments, 'TRK')
 
-    expect(result).toHaveLength(1)
+    expect(result).toHaveLength(3)
     expect(result[0].trackingNumber).toBe('TRK001')
+    expect(result[1].trackingNumber).toBe('TRK002')
+    expect(result[2].trackingNumber).toBe('TRK003')
   })
 
   it('filters shipments by status', () => {
@@ -169,5 +289,22 @@ describe('Shipments Logic', () => {
     const isValid = validateAddressFormat(mockShipments[0].origin)
 
     expect(isValid).toBe(true)
+  })
+
+  it('sorts shipments by creation date (most recent first)', () => {
+    const sortByCreationDate = (shipments: Shipment[]): Shipment[] => {
+      return shipments.sort((a, b) => {
+        const dateA = new Date(a.createdAt).getTime()
+        const dateB = new Date(b.createdAt).getTime()
+
+        return dateB - dateA
+      })
+    }
+
+    const sortedShipments = sortByCreationDate([...mockShipments])
+
+    expect(sortedShipments[0].id).toBe('S003')
+    expect(sortedShipments[1].id).toBe('S002')
+    expect(sortedShipments[2].id).toBe('S001')
   })
 })
