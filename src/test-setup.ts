@@ -3,6 +3,7 @@ import { createPinia, setActivePinia } from 'pinia'
 
 // Set up Pinia for tests
 const pinia = createPinia()
+
 setActivePinia(pinia)
 
 Object.defineProperty(window, 'matchMedia', {

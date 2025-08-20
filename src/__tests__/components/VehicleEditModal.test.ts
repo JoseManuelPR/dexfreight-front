@@ -124,6 +124,7 @@ describe('VehicleEditModal', () => {
     // Find the driver selection dropdown (the last select element)
     const selects = wrapper.findAll('select')
     const driverSelect = selects[selects.length - 1]
+
     expect(driverSelect.exists()).toBe(true)
     expect(driverSelect.text()).toContain('Sin asignar')
   })
@@ -145,6 +146,7 @@ describe('VehicleEditModal', () => {
 
     const buttons = wrapper.findAll('button')
     const cancelButton = buttons.find(button => button.text().includes('Cancelar'))
+
     if (cancelButton) {
       await cancelButton.trigger('click')
       expect(wrapper.emitted('close')).toBeTruthy()
@@ -168,6 +170,7 @@ describe('VehicleEditModal', () => {
 
     // Check that date inputs exist
     const dateInputs = wrapper.findAll('input[type="date"]')
+
     expect(dateInputs.length).toBeGreaterThan(0)
   })
 
@@ -187,6 +190,7 @@ describe('VehicleEditModal', () => {
     })
 
     const form = wrapper.find('form')
+
     await form.trigger('submit')
 
     // Should emit saved event with vehicle ID
@@ -210,6 +214,7 @@ describe('VehicleEditModal', () => {
     })
 
     const form = wrapper.find('form')
+
     await form.trigger('submit')
     await wrapper.vm.$nextTick()
 
@@ -235,16 +240,17 @@ describe('VehicleEditModal', () => {
 
     const buttons = wrapper.findAll('button')
     const saveButton = buttons.find(button => button.text().includes('Guardar Cambios'))
-    
+
     if (saveButton) {
       // Initially should not be loading
       expect(saveButton.text()).toBe('Guardar Cambios')
-      
+
       // Trigger form submission and wait for async operation
       const form = wrapper.find('form')
+
       await form.trigger('submit')
       await wrapper.vm.$nextTick()
-      
+
       // The loading state might not be visible immediately due to async nature
       // So we just verify the button exists and has the correct initial text
       expect(saveButton.exists()).toBe(true)
@@ -274,7 +280,7 @@ describe('VehicleEditModal', () => {
     const selects = wrapper.findAll('select')
     const driverSelect = selects[selects.length - 1]
     const options = driverSelect.findAll('option')
-    
+
     // Should include "Sin asignar" and both drivers
     expect(options.length).toBeGreaterThanOrEqual(3)
     expect(options[0].text()).toBe('Sin asignar')

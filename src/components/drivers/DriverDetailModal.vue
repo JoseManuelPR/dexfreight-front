@@ -12,7 +12,7 @@
             </p>
           </div>
           <div class="flex items-center gap-3">
-            <Badge 
+            <Badge
               :color="getStatusColor(driver.status)"
               variant="light"
               size="sm"
@@ -96,7 +96,7 @@
 
                   <div class="flex items-center justify-between">
                     <span class="text-sm text-gray-600 dark:text-gray-400">Nivel de rendimiento:</span>
-                    <Badge 
+                    <Badge
                       :color="getPerformanceColor()"
                       variant="light"
                       size="sm"
@@ -111,7 +111,7 @@
                       <span>{{ driver.rating }}/5.0</span>
                     </div>
                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div 
+                      <div
                         :class="[
                           'h-2 rounded-full transition-all duration-300',
                           driver.rating >= 4.5 ? 'bg-green-500' :
@@ -145,7 +145,7 @@
                   <div class="flex justify-between">
                     <span class="text-sm text-gray-600 dark:text-gray-400">Porcentaje de puntualidad:</span>
                     <div class="flex items-center gap-2">
-                      <span 
+                      <span
                         :class="[
                           'text-sm font-medium',
                           getOnTimePercentage() >= 95 ? 'text-green-600 dark:text-green-400' :
@@ -156,7 +156,7 @@
                       >
                         {{ getOnTimePercentage() }}%
                       </span>
-                      <Badge 
+                      <Badge
                         :color="getPunctualityColor()"
                         variant="light"
                         size="sm"
@@ -173,7 +173,7 @@
                     <span>{{ getOnTimePercentage() }}%</span>
                   </div>
                   <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div 
+                    <div
                       :class="[
                         'h-2 rounded-full transition-all duration-300',
                         getOnTimePercentage() >= 95 ? 'bg-green-500' :
@@ -204,7 +204,7 @@
                       <p class="text-sm font-medium text-gray-900 dark:text-white">{{ assignedVehicle.brand }} {{ assignedVehicle.model }}</p>
                       <p class="text-xs text-gray-600 dark:text-gray-400">{{ assignedVehicle.licensePlate }}</p>
                     </div>
-                    <Badge 
+                    <Badge
                       :color="getVehicleStatusColor(assignedVehicle.status)"
                       variant="light"
                       size="sm"
@@ -257,7 +257,7 @@
                 <div class="space-y-3">
                   <div class="flex items-center justify-between">
                     <span class="text-sm text-gray-600 dark:text-gray-400">Estado:</span>
-                    <Badge 
+                    <Badge
                       :color="getStatusColor(driver.status)"
                       variant="light"
                       size="sm"
@@ -268,11 +268,11 @@
                   <div class="flex items-center justify-between">
                     <span class="text-sm text-gray-600 dark:text-gray-400">Disponibilidad:</span>
                     <div class="flex items-center gap-2">
-                      <div 
+                      <div
                         :class="[
                           'w-2 h-2 rounded-full',
-                          driver.status === 'available' ? 'bg-green-500' : 
-                          driver.status === 'on-delivery' ? 'bg-blue-500' : 
+                          driver.status === 'available' ? 'bg-green-500' :
+                          driver.status === 'on-delivery' ? 'bg-blue-500' :
                           driver.status === 'off-duty' ? 'bg-yellow-500' : 'bg-red-500'
                         ]"
                       ></div>
@@ -301,7 +301,7 @@
                     <span class="text-sm text-gray-600 dark:text-gray-400">Entregas por mes:</span>
                     <span class="text-sm font-medium text-gray-900 dark:text-white">{{ getMonthlyDeliveries() }}</span>
                   </div>
-                  
+
                   <div class="mt-4">
                     <p class="text-sm font-medium text-gray-900 dark:text-white mb-2">Logros:</p>
                     <div class="flex flex-wrap gap-2">
@@ -357,6 +357,7 @@ defineEmits(['close', 'edit'])
 
 const assignedVehicle = computed(() => {
   if (!props.driver.currentVehicle || !props.vehicles) return null
+
   return props.vehicles.find(v => v.id === props.driver.currentVehicle) || null
 })
 
@@ -371,6 +372,7 @@ function getStatusColor(status: string) {
     'off-duty': 'warning',
     suspended: 'error'
   }
+
   return colors[status] || 'light'
 }
 
@@ -381,6 +383,7 @@ function getStatusLabel(status: string) {
     'off-duty': 'Fuera de Servicio',
     suspended: 'Suspendido'
   }
+
   return labels[status] || status
 }
 
@@ -391,6 +394,7 @@ function getVehicleStatusColor(status: string) {
     maintenance: 'warning',
     offline: 'error'
   }
+
   return colors[status] || 'light'
 }
 
@@ -401,6 +405,7 @@ function getVehicleStatusLabel(status: string) {
     maintenance: 'Mantenimiento',
     offline: 'Fuera de Línea'
   }
+
   return labels[status] || status
 }
 
@@ -411,6 +416,7 @@ function getVehicleTypeLabel(type: string) {
     trailer: 'Tráiler',
     pickup: 'Pickup'
   }
+
   return labels[type] || type
 }
 
@@ -420,6 +426,7 @@ function getLateDeliveries() {
 
 function getOnTimePercentage() {
   if (props.driver.totalDeliveries === 0) return 0
+
   return Math.round((props.driver.onTimeDeliveries / props.driver.totalDeliveries) * 100)
 }
 
@@ -427,6 +434,7 @@ function getPerformanceColor() {
   if (props.driver.rating >= 4.5) return 'success'
   if (props.driver.rating >= 4.0) return 'primary'
   if (props.driver.rating >= 3.5) return 'warning'
+
   return 'error'
 }
 
@@ -435,22 +443,27 @@ function getPerformanceLevel() {
   if (props.driver.rating >= 4.5) return 'Excelente'
   if (props.driver.rating >= 4.0) return 'Muy Bueno'
   if (props.driver.rating >= 3.5) return 'Bueno'
+
   return 'Necesita Mejora'
 }
 
 function getPunctualityColor() {
   const percentage = getOnTimePercentage()
+
   if (percentage >= 95) return 'success'
   if (percentage >= 90) return 'primary'
   if (percentage >= 80) return 'warning'
+
   return 'error'
 }
 
 function getPunctualityLabel() {
   const percentage = getOnTimePercentage()
+
   if (percentage >= 95) return 'Excelente'
   if (percentage >= 90) return 'Muy Bueno'
   if (percentage >= 80) return 'Bueno'
+
   return 'Mejorable'
 }
 
@@ -468,11 +481,13 @@ function getExperienceLevel() {
   if (props.driver.totalDeliveries >= 200) return 'Experto (3+ años)'
   if (props.driver.totalDeliveries >= 100) return 'Experimentado (2+ años)'
   if (props.driver.totalDeliveries >= 50) return 'Intermedio (1+ año)'
+
   return 'Principiante (<1 año)'
 }
 
 function getMonthlyDeliveries() {
   const monthlyAvg = Math.round(props.driver.totalDeliveries / 12)
+
   return `~${monthlyAvg} entregas/mes`
 }
 </script>

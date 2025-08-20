@@ -1,6 +1,5 @@
 <script>
 
-
 export default {
   created(el, binding) {
     el.clickOutsideEvent = (event) => {

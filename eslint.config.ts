@@ -32,7 +32,16 @@ export default defineConfigWithVueTs(
       'vue/block-lang': 'off',
       '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
-      'vue/no-deprecated-v-on-native-modifier': 'off'
+      'vue/no-deprecated-v-on-native-modifier': 'off',
+      'no-trailing-spaces': 'error',
+      'no-multiple-empty-lines': ['error', { 'max': 1, 'maxEOF': 1 }],
+      'lines-between-class-members': ['error', 'always', { 'exceptAfterSingleLine': true }],
+      'padding-line-between-statements': [
+        'error',
+        { 'blankLine': 'always', 'prev': '*', 'next': 'return' },
+        { 'blankLine': 'always', 'prev': ['const', 'let', 'var'], 'next': '*' },
+        { 'blankLine': 'any', 'prev': ['const', 'let', 'var'], 'next': ['const', 'let', 'var'] }
+      ]
     }
   }
 )

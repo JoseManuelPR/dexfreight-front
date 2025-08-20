@@ -32,6 +32,7 @@ describe('NotificationAlert', () => {
     })
 
     const alert = wrapper.findComponent({ name: 'Alert' })
+
     expect(alert.props('variant')).toBe('success')
     expect(alert.props('title')).toBe('¡Operación exitosa!')
     expect(alert.props('message')).toBe('La operación se ha completado correctamente.')
@@ -47,6 +48,7 @@ describe('NotificationAlert', () => {
     })
 
     const alert = wrapper.findComponent({ name: 'Alert' })
+
     expect(alert.props('title')).toBe('¡Vehículo actualizado!')
     expect(alert.props('message')).toBe('El vehículo ha sido editado exitosamente.')
   })
@@ -60,6 +62,7 @@ describe('NotificationAlert', () => {
     })
 
     const alert = wrapper.findComponent({ name: 'Alert' })
+
     expect(alert.props('variant')).toBe('success')
   })
 
@@ -72,6 +75,7 @@ describe('NotificationAlert', () => {
     })
 
     const alert = wrapper.findComponent({ name: 'Alert' })
+
     expect(alert.props('variant')).toBe('info')
   })
 
@@ -84,6 +88,7 @@ describe('NotificationAlert', () => {
     })
 
     const alert = wrapper.findComponent({ name: 'Alert' })
+
     expect(alert.props('variant')).toBe('warning')
   })
 
@@ -96,6 +101,7 @@ describe('NotificationAlert', () => {
     })
 
     const alert = wrapper.findComponent({ name: 'Alert' })
+
     expect(alert.props('variant')).toBe('error')
   })
 
@@ -107,6 +113,7 @@ describe('NotificationAlert', () => {
     })
 
     const container = wrapper.find('.fixed')
+
     expect(container.classes()).toContain('bottom-4')
     expect(container.classes()).toContain('right-4')
     expect(container.classes()).toContain('z-[9999]')
@@ -124,6 +131,7 @@ describe('NotificationAlert', () => {
     })
 
     const alert = wrapper.findComponent({ name: 'Alert' })
+
     expect(alert.props('variant')).toBe('warning')
     expect(alert.props('title')).toBe('¡Advertencia!')
     expect(alert.props('message')).toBe('Este es un mensaje de advertencia.')

@@ -44,6 +44,7 @@ describe('VehicleDetailModal.vue', () => {
         maintenance: 'warning',
         offline: 'error'
       }
+
       return colors[status] || 'light'
     }
 
@@ -62,6 +63,7 @@ describe('VehicleDetailModal.vue', () => {
         maintenance: 'Mantenimiento',
         offline: 'Fuera de Línea'
       }
+
       return labels[status] || status
     }
 
@@ -79,6 +81,7 @@ describe('VehicleDetailModal.vue', () => {
         trailer: 'Tráiler',
         pickup: 'Pickup'
       }
+
       return labels[type] || type
     }
 
@@ -96,6 +99,7 @@ describe('VehicleDetailModal.vue', () => {
         electric: 'Eléctrico',
         hybrid: 'Híbrido'
       }
+
       return labels[fuelType] || fuelType
     }
 
@@ -113,6 +117,7 @@ describe('VehicleDetailModal.vue', () => {
         'off-duty': 'warning',
         suspended: 'error'
       }
+
       return colors[status] || 'light'
     }
 
@@ -132,6 +137,7 @@ describe('VehicleDetailModal.vue', () => {
     }
 
     const result = formatDate('2025-12-31T00:00:00Z')
+
     expect(result).toBeDefined()
     expect(typeof result).toBe('string')
   })
@@ -142,22 +148,27 @@ describe('VehicleDetailModal.vue', () => {
       const today = new Date()
       const diffTime = nextMaintenance.getTime() - today.getTime()
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
       return diffDays
     }
 
     const futureDate = new Date()
+
     futureDate.setDate(futureDate.getDate() + 30)
     const futureDateString = futureDate.toISOString()
 
     const result = getDaysUntilMaintenance(futureDateString)
+
     expect(result).toBeGreaterThanOrEqual(29)
     expect(result).toBeLessThanOrEqual(31)
 
     const pastDate = new Date()
+
     pastDate.setDate(pastDate.getDate() - 10)
     const pastDateString = pastDate.toISOString()
 
     const pastResult = getDaysUntilMaintenance(pastDateString)
+
     expect(pastResult).toBeLessThan(0)
   })
 
@@ -167,21 +178,25 @@ describe('VehicleDetailModal.vue', () => {
       const today = new Date()
       const diffTime = expiryDate.getTime() - today.getTime()
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-      
+
       if (diffDays < 0) return 'expired'
       if (diffDays <= 30) return 'warning'
+
       return 'valid'
     }
 
     const expiredDate = new Date()
+
     expiredDate.setDate(expiredDate.getDate() - 10)
     expect(getExpirationStatus(expiredDate.toISOString())).toBe('expired')
 
     const warningDate = new Date()
+
     warningDate.setDate(warningDate.getDate() + 15)
     expect(getExpirationStatus(warningDate.toISOString())).toBe('warning')
 
     const validDate = new Date()
+
     validDate.setDate(validDate.getDate() + 60)
     expect(getExpirationStatus(validDate.toISOString())).toBe('valid')
   })
@@ -189,10 +204,12 @@ describe('VehicleDetailModal.vue', () => {
   it('calculates vehicle age correctly', () => {
     const getVehicleAge = (year: number): number => {
       const currentYear = new Date().getFullYear()
+
       return currentYear - year
     }
 
     const currentYear = new Date().getFullYear()
+
     expect(getVehicleAge(2020)).toBe(currentYear - 2020)
     expect(getVehicleAge(2023)).toBe(currentYear - 2023)
     expect(getVehicleAge(currentYear)).toBe(0)
@@ -202,7 +219,9 @@ describe('VehicleDetailModal.vue', () => {
     const getAverageKmPerYear = (mileage: number, year: number): number => {
       const currentYear = new Date().getFullYear()
       const age = currentYear - year
+
       if (age === 0) return mileage
+
       return Math.round(mileage / age)
     }
 
@@ -215,6 +234,7 @@ describe('VehicleDetailModal.vue', () => {
     const getEfficiencyColor = (avgKmPerYear: number): string => {
       if (avgKmPerYear < 20000) return 'success'
       if (avgKmPerYear < 40000) return 'warning'
+
       return 'error'
     }
 
@@ -229,6 +249,7 @@ describe('VehicleDetailModal.vue', () => {
     const getEfficiencyLabel = (avgKmPerYear: number): string => {
       if (avgKmPerYear < 20000) return 'Excelente'
       if (avgKmPerYear < 40000) return 'Buena'
+
       return 'Intensiva'
     }
 
@@ -251,6 +272,7 @@ describe('VehicleDetailModal.vue', () => {
     expect(mockVehicle.gpsEnabled).toBe(true)
 
     const vehicleWithoutGPS = { ...mockVehicle, gpsEnabled: false }
+
     expect(vehicleWithoutGPS.gpsEnabled).toBe(false)
   })
 
@@ -275,9 +297,11 @@ describe('VehicleDetailModal.vue', () => {
 
   it('handles assigned driver relationship', () => {
     const vehicleWithDriver = { ...mockVehicle, currentDriverId: 'D001' }
+
     expect(vehicleWithDriver.currentDriverId).toBe('D001')
 
     const unassignedVehicle = { ...mockVehicle, currentDriverId: undefined }
+
     expect(unassignedVehicle.currentDriverId).toBeUndefined()
   })
 })

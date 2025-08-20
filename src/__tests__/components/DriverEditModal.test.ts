@@ -130,6 +130,7 @@ describe('DriverEditModal', () => {
     // Find the vehicle selection dropdown (the last select element)
     const selects = wrapper.findAll('select')
     const vehicleSelect = selects[selects.length - 1]
+
     expect(vehicleSelect.exists()).toBe(true)
     expect(vehicleSelect.text()).toContain('Sin asignar')
   })
@@ -151,6 +152,7 @@ describe('DriverEditModal', () => {
 
     const buttons = wrapper.findAll('button')
     const cancelButton = buttons.find(button => button.text().includes('Cancelar'))
+
     if (cancelButton) {
       await cancelButton.trigger('click')
       expect(wrapper.emitted('close')).toBeTruthy()
@@ -173,6 +175,7 @@ describe('DriverEditModal', () => {
     })
 
     const form = wrapper.find('form')
+
     await form.trigger('submit')
 
     // Should emit saved event with driver ID
@@ -197,16 +200,17 @@ describe('DriverEditModal', () => {
 
     const buttons = wrapper.findAll('button')
     const saveButton = buttons.find(button => button.text().includes('Guardar Cambios'))
-    
+
     if (saveButton) {
       // Initially should not be loading
       expect(saveButton.text()).toBe('Guardar Cambios')
-      
+
       // Trigger form submission and wait for async operation
       const form = wrapper.find('form')
+
       await form.trigger('submit')
       await wrapper.vm.$nextTick()
-      
+
       // The loading state might not be visible immediately due to async nature
       // So we just verify the button exists and has the correct initial text
       expect(saveButton.exists()).toBe(true)
@@ -236,7 +240,7 @@ describe('DriverEditModal', () => {
     const selects = wrapper.findAll('select')
     const vehicleSelect = selects[selects.length - 1]
     const options = vehicleSelect.findAll('option')
-    
+
     // Should include "Sin asignar" and both vehicles (current vehicle + available vehicles)
     expect(options.length).toBeGreaterThanOrEqual(3)
     expect(options[0].text()).toBe('Sin asignar')

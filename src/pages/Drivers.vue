@@ -11,9 +11,9 @@
           </p>
         </div>
         <div class="flex items-center gap-3">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             :start-icon="RefreshIcon"
             @click="refreshDrivers"
             :disabled="loading"
@@ -22,7 +22,7 @@
           </Button>
         </div>
       </div>
-  
+
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-1">
           <div class="rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 text-white shadow-lg">
@@ -52,7 +52,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
               <div class="flex items-center justify-between">
                 <div>
@@ -64,7 +64,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
               <div class="flex items-center justify-between">
                 <div>
@@ -76,7 +76,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
               <div class="flex items-center justify-between">
                 <div>
@@ -91,7 +91,7 @@
           </div>
         </div>
       </div>
-  
+
       <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -105,7 +105,7 @@
               class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
             />
           </div>
-  
+
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Estado
@@ -123,20 +123,20 @@
           </div>
         </div>
       </div>
-  
+
       <div class="rounded-lg bg-white dark:bg-gray-800 shadow-theme-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white">
             Conductores ({{ filteredDrivers.length }})
           </h3>
         </div>
-  
+
         <div v-if="loading" class="p-6">
           <div class="animate-pulse space-y-4">
             <div v-for="i in 5" :key="i" class="h-16 bg-gray-200 dark:bg-gray-700 rounded"></div>
           </div>
         </div>
-  
+
         <div v-else-if="filteredDrivers.length === 0" class="p-12 text-center">
           <UserGroupIcon class="mx-auto h-12 w-12 text-gray-400" />
           <h3 class="mt-4 text-sm font-medium text-gray-900 dark:text-white">
@@ -146,7 +146,7 @@
             Intenta ajustar los filtros o agregar un nuevo conductor
           </p>
         </div>
-  
+
         <div v-else class="overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead class="bg-gray-50 dark:bg-gray-900">
@@ -169,8 +169,8 @@
               </tr>
             </thead>
             <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-              <tr 
-                v-for="driver in filteredDrivers" 
+              <tr
+                v-for="driver in filteredDrivers"
                 :key="driver.id"
                 class="hover:bg-gray-50 dark:hover:bg-gray-700/50"
               >
@@ -205,7 +205,7 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <Badge 
+                  <Badge
                     :color="getStatusColor(driver.status)"
                     variant="light"
                     size="sm"
@@ -287,7 +287,8 @@ const filteredDrivers = computed(() => {
 
   if (searchTerm.value) {
     const term = searchTerm.value.toLowerCase()
-    filtered = filtered.filter(d => 
+
+    filtered = filtered.filter(d =>
       d.name.toLowerCase().includes(term) ||
       d.email.toLowerCase().includes(term) ||
       d.phone.includes(term) ||
@@ -309,6 +310,7 @@ function getStatusColor(status: string) {
     'off-duty': 'warning',
     suspended: 'error'
   }
+
   return colors[status] || 'light'
 }
 
@@ -319,9 +321,9 @@ function getStatusLabel(status: string) {
     'off-duty': 'Fuera de Servicio',
     suspended: 'Suspendido'
   }
+
   return labels[status] || status
 }
-
 
 async function refreshDrivers() {
   await driversStore.fetchDrivers()
@@ -350,11 +352,9 @@ function closeEditModal() {
 
 function handleDriverSaved() {
   driversStore.fetchDrivers()
-  
-  // Show success alert
+
   showSuccessAlert.value = true
-  
-  // Hide alert after 3 seconds
+
   setTimeout(() => {
     showSuccessAlert.value = false
   }, 3000)
@@ -364,7 +364,6 @@ onMounted(() => {
   driversStore.fetchDrivers()
   vehiclesStore.fetchVehicles()
 })
-
 
 defineComponent({
   components: {

@@ -60,7 +60,7 @@ export default defineConfig({
             return 'page-shipments'
           }
           if (id.includes('/pages/Vehicles.vue') || id.includes('/components/vehicles/')) {
-            return 'page-vehicles'  
+            return 'page-vehicles'
           }
           if (id.includes('/pages/Drivers.vue') || id.includes('/components/drivers/')) {
             return 'page-drivers'
@@ -96,8 +96,8 @@ export default defineConfig({
     modulePreload: {
       polyfill: false,
       resolveDependencies: (url, deps) => {
-        return deps.filter(dep => 
-          dep.includes('vue-core') || 
+        return deps.filter(dep =>
+          dep.includes('vue-core') ||
           dep.includes('page-dashboard') ||
           dep.includes('layout-admin')
         )

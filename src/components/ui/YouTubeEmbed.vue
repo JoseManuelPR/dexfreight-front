@@ -36,6 +36,7 @@ const aspectRatioClass = computed(() => {
     '21:9': 'aspect-21/9',
     '1:1': 'aspect-square',
   }
+
   return aspectRatioClasses[props.aspectRatio]
 })
 </script>

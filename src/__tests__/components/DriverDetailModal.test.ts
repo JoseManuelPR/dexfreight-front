@@ -49,6 +49,7 @@ describe('DriverDetailModal.vue', () => {
         'off-duty': 'warning',
         suspended: 'error'
       }
+
       return colors[status] || 'light'
     }
 
@@ -67,6 +68,7 @@ describe('DriverDetailModal.vue', () => {
         'off-duty': 'Fuera de Servicio',
         suspended: 'Suspendido'
       }
+
       return labels[status] || status
     }
 
@@ -82,29 +84,35 @@ describe('DriverDetailModal.vue', () => {
     }
 
     expect(getLateDeliveries(mockDriver)).toBe(8)
-    
+
     const perfectDriver = { totalDeliveries: 50, onTimeDeliveries: 50 } as Driver
+
     expect(getLateDeliveries(perfectDriver)).toBe(0)
 
     const newDriver = { totalDeliveries: 0, onTimeDeliveries: 0 } as Driver
+
     expect(getLateDeliveries(newDriver)).toBe(0)
   })
 
   it('calculates on-time percentage correctly', () => {
     const getOnTimePercentage = (driver: Driver): number => {
       if (driver.totalDeliveries === 0) return 0
+
       return Math.round((driver.onTimeDeliveries / driver.totalDeliveries) * 100)
     }
 
     expect(getOnTimePercentage(mockDriver)).toBe(95)
-    
+
     const perfectDriver = { totalDeliveries: 50, onTimeDeliveries: 50 } as Driver
+
     expect(getOnTimePercentage(perfectDriver)).toBe(100)
 
     const newDriver = { totalDeliveries: 0, onTimeDeliveries: 0 } as Driver
+
     expect(getOnTimePercentage(newDriver)).toBe(0)
 
     const poorDriver = { totalDeliveries: 100, onTimeDeliveries: 75 } as Driver
+
     expect(getOnTimePercentage(poorDriver)).toBe(75)
   })
 
@@ -113,6 +121,7 @@ describe('DriverDetailModal.vue', () => {
       if (rating >= 4.5) return 'success'
       if (rating >= 4.0) return 'primary'
       if (rating >= 3.5) return 'warning'
+
       return 'error'
     }
 
@@ -130,6 +139,7 @@ describe('DriverDetailModal.vue', () => {
       if (rating >= 4.5) return 'Excelente'
       if (rating >= 4.0) return 'Muy Bueno'
       if (rating >= 3.5) return 'Bueno'
+
       return 'Necesita Mejora'
     }
 
@@ -146,6 +156,7 @@ describe('DriverDetailModal.vue', () => {
       if (percentage >= 95) return 'success'
       if (percentage >= 90) return 'primary'
       if (percentage >= 80) return 'warning'
+
       return 'error'
     }
 
@@ -161,6 +172,7 @@ describe('DriverDetailModal.vue', () => {
       if (percentage >= 95) return 'Excelente'
       if (percentage >= 90) return 'Muy Bueno'
       if (percentage >= 80) return 'Bueno'
+
       return 'Mejorable'
     }
 
@@ -193,6 +205,7 @@ describe('DriverDetailModal.vue', () => {
       if (totalDeliveries >= 200) return 'Experto (3+ años)'
       if (totalDeliveries >= 100) return 'Experimentado (2+ años)'
       if (totalDeliveries >= 50) return 'Intermedio (1+ año)'
+
       return 'Principiante (<1 año)'
     }
 
@@ -205,6 +218,7 @@ describe('DriverDetailModal.vue', () => {
   it('calculates monthly deliveries average', () => {
     const getMonthlyDeliveries = (totalDeliveries: number): string => {
       const monthlyAvg = Math.round(totalDeliveries / 12)
+
       return `~${monthlyAvg} entregas/mes`
     }
 
@@ -222,6 +236,7 @@ describe('DriverDetailModal.vue', () => {
         trailer: 'Tráiler',
         pickup: 'Pickup'
       }
+
       return labels[type] || type
     }
 

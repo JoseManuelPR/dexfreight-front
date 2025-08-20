@@ -12,7 +12,7 @@
             </p>
           </div>
           <div class="flex items-center gap-3">
-            <Badge 
+            <Badge
               :color="getStatusColor(shipment.status)"
               variant="light"
               size="sm"
@@ -44,7 +44,7 @@
                   </div>
                   <div class="flex justify-between">
                     <span class="text-sm text-gray-600 dark:text-gray-400">Prioridad:</span>
-                    <Badge 
+                    <Badge
                       :color="getPriorityColor(shipment.priority)"
                       variant="light"
                       size="sm"
@@ -80,7 +80,7 @@
                       {{ shipment.origin.zipCode }}, {{ shipment.origin.country }}
                     </p>
                   </div>
-                  
+
                   <div class="flex items-center justify-center py-2">
                     <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                       <div class="flex items-center gap-1">
@@ -263,8 +263,8 @@
                   Notas
                 </h3>
                 <div v-if="shipment.notes.length > 0" class="space-y-2">
-                  <div 
-                    v-for="(note, index) in shipment.notes" 
+                  <div
+                    v-for="(note, index) in shipment.notes"
                     :key="index"
                     class="bg-white dark:bg-gray-800 p-3 rounded border border-gray-200 dark:border-gray-600"
                   >
@@ -312,14 +312,15 @@ defineEmits(['close', 'edit'])
 
 const assignedDriver = computed(() => {
   if (!props.shipment.driverId || !props.drivers) return null
+
   return props.drivers.find(d => d.id === props.shipment.driverId) || null
 })
 
 const assignedVehicle = computed(() => {
   if (!props.shipment.vehicleId || !props.vehicles) return null
+
   return props.vehicles.find(v => v.id === props.shipment.vehicleId) || null
 })
-
 
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
@@ -329,6 +330,7 @@ function getStatusColor(status: string) {
     cancelled: 'error',
     delayed: 'error'
   }
+
   return colors[status] || 'light'
 }
 
@@ -340,6 +342,7 @@ function getStatusLabel(status: string) {
     cancelled: 'Cancelado',
     delayed: 'Retrasado'
   }
+
   return labels[status] || status
 }
 
@@ -350,6 +353,7 @@ function getPriorityColor(priority: string) {
     high: 'warning',
     urgent: 'error'
   }
+
   return colors[priority] || 'light'
 }
 
@@ -360,6 +364,7 @@ function getPriorityLabel(priority: string) {
     high: 'Alta',
     urgent: 'Urgente'
   }
+
   return labels[priority] || priority
 }
 
@@ -370,6 +375,7 @@ function getVehicleTypeLabel(type: string) {
     trailer: 'Tráiler',
     pickup: 'Pickup'
   }
+
   return labels[type] || type
 }
 
@@ -380,6 +386,7 @@ function getFuelTypeLabel(fuelType: string) {
     electric: 'Eléctrico',
     hybrid: 'Híbrido'
   }
+
   return labels[fuelType] || fuelType
 }
 
@@ -403,9 +410,11 @@ function formatDateTime(dateString: string) {
 function formatDuration(minutes: number) {
   const hours = Math.floor(minutes / 60)
   const mins = minutes % 60
+
   if (hours > 0) {
     return `${hours}h ${mins}m`
   }
+
   return `${mins}m`
 }
 </script>

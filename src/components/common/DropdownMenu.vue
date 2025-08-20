@@ -1,8 +1,8 @@
 <template>
   <div class="relative" v-click-outside="closeDropdown" ref="dropdown">
     <!-- Dropdown Trigger Button -->
-    <button 
-      @click="toggleDropdown" 
+    <button
+      @click="toggleDropdown"
       :class="buttonClass"
       :aria-label="ariaLabel"
       :aria-expanded="open"

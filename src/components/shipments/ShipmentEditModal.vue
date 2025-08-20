@@ -42,7 +42,7 @@
                       placeholder="TRK123456789"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Estado *
@@ -59,7 +59,7 @@
                       <option value="delayed">Retrasado</option>
                     </select>
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Prioridad *
@@ -75,7 +75,7 @@
                       <option value="urgent">Urgente</option>
                     </select>
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Valor ({{ form.currency }}) *
@@ -113,7 +113,7 @@
                       placeholder="50.5"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Volumen (m³) *
@@ -150,7 +150,7 @@
                       class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Entrega Estimada *
@@ -162,7 +162,7 @@
                       class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Recolección Real
@@ -173,7 +173,7 @@
                       class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Entrega Real
@@ -202,16 +202,16 @@
                       class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                     >
                       <option value="">Sin asignar</option>
-                      <option 
-                        v-for="driver in availableDrivers" 
-                        :key="driver.id" 
+                      <option
+                        v-for="driver in availableDrivers"
+                        :key="driver.id"
                         :value="driver.id"
                       >
                         {{ driver.name }} ({{ driver.license }})
                       </option>
                     </select>
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Vehículo
@@ -221,9 +221,9 @@
                       class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                     >
                       <option value="">Sin asignar</option>
-                      <option 
-                        v-for="vehicle in availableVehicles" 
-                        :key="vehicle.id" 
+                      <option
+                        v-for="vehicle in availableVehicles"
+                        :key="vehicle.id"
                         :value="vehicle.id"
                       >
                         {{ vehicle.brand }} {{ vehicle.model }} ({{ vehicle.licensePlate }})
@@ -329,17 +329,17 @@
         </form>
 
         <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             @click="$emit('close')"
             :disabled="saving"
           >
             Cancelar
           </Button>
-          <Button 
-            variant="primary" 
-            size="sm" 
+          <Button
+            variant="primary"
+            size="sm"
             @click="handleSubmit"
             :disabled="saving"
             :loading="saving"
@@ -371,7 +371,6 @@ const emit = defineEmits(['close', 'saved'])
 const shipmentsStore = useShipmentsStore()
 const saving = ref(false)
 
-// Form data
 const form = ref({
   trackingNumber: '',
   status: 'pending' as Shipment['status'],
@@ -402,7 +401,6 @@ const form = ref({
   }
 })
 
-// Initialize form with shipment data
 watch(() => props.shipment, (shipment) => {
   if (shipment) {
     form.value = {
@@ -425,28 +423,22 @@ watch(() => props.shipment, (shipment) => {
   }
 }, { immediate: true })
 
-// Available drivers (not currently assigned to other shipments)
 const availableDrivers = computed(() => {
   if (!props.drivers) return []
-  
+
   return props.drivers.filter(driver => {
-    // Include the current driver if this shipment is assigned to them
     if (driver.id === props.shipment.driverId) return true
-    
-    // Include available drivers
+
     return driver.status === 'available'
   })
 })
 
-// Available vehicles (not currently assigned to other shipments)
 const availableVehicles = computed(() => {
   if (!props.vehicles) return []
-  
+
   return props.vehicles.filter(vehicle => {
-    // Include the current vehicle if this shipment is assigned to it
     if (vehicle.id === props.shipment.vehicleId) return true
-    
-    // Include available vehicles
+
     return vehicle.status === 'available'
   })
 })
@@ -457,7 +449,7 @@ function formatDateTimeForInput(dateString: string): string {
 
 async function handleSubmit() {
   saving.value = true
-  
+
   try {
     const updateData = {
       ...form.value,
@@ -468,7 +460,7 @@ async function handleSubmit() {
       driverId: form.value.driverId || undefined,
       vehicleId: form.value.vehicleId || undefined
     }
-    
+
     await shipmentsStore.updateShipment(props.shipment.id, updateData)
     emit('saved', props.shipment.id)
     emit('close')

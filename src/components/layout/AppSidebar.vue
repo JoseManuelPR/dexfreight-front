@@ -284,6 +284,7 @@ const isActive = (path: string) => route.path === path;
 
 const toggleSubmenu = (groupIndex: number, itemIndex: number) => {
   const key = `${groupIndex}-${itemIndex}`;
+
   openSubmenu.value = openSubmenu.value === key ? null : key;
 };
 
@@ -298,6 +299,7 @@ const isAnySubmenuRouteActive = computed(() => {
 
 const isSubmenuOpen = (groupIndex: number, itemIndex: number) => {
   const key = `${groupIndex}-${itemIndex}`;
+
   return (
     openSubmenu.value === key ||
     (isAnySubmenuRouteActive.value &&
@@ -309,8 +311,10 @@ const isSubmenuOpen = (groupIndex: number, itemIndex: number) => {
 
 const startTransition = (el: Element) => {
   const htmlEl = el as HTMLElement;
+
   htmlEl.style.height = "auto";
   const height = htmlEl.scrollHeight;
+
   htmlEl.style.height = "0px";
   htmlEl.offsetHeight; // eslint-disable-line @typescript-eslint/no-unused-expressions
   htmlEl.style.height = height + "px";
@@ -318,6 +322,7 @@ const startTransition = (el: Element) => {
 
 const endTransition = (el: Element) => {
   const htmlEl = el as HTMLElement;
+
   htmlEl.style.height = "";
 };
 </script>

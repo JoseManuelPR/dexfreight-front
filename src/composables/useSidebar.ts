@@ -26,6 +26,7 @@ export function useSidebarProvider() {
 
   const handleResize = () => {
     const mobile = window.innerWidth < 768
+
     isMobile.value = mobile
     if (!mobile) {
       isMobileOpen.value = false
@@ -85,10 +86,12 @@ export function useSidebarProvider() {
 
 export function useSidebar(): SidebarContextType {
   const context = inject<SidebarContextType>(SidebarSymbol)
+
   if (!context) {
     throw new Error(
       'useSidebar must be used within a component that has SidebarProvider as an ancestor',
     )
   }
+
   return context
 }

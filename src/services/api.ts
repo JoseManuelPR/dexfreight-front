@@ -1,5 +1,5 @@
 import shipmentsData from '@/mock/shipments.json'
-import vehiclesData from '@/mock/vehicles.json' 
+import vehiclesData from '@/mock/vehicles.json'
 import driversData from '@/mock/drivers.json'
 import type {
   Shipment,
@@ -23,7 +23,7 @@ function createApiResponse<T>(data: T, success = true, message = 'Success'): Api
   }
 }
 
-// Mock data - in production this would come from your backend
+// Mock data
 let mockShipments: Shipment[] = []
 let mockVehicles: Vehicle[] = []
 let mockDrivers: Driver[] = []
@@ -34,7 +34,7 @@ function loadMockData() {
     mockShipments = shipmentsData as Shipment[] || []
     mockVehicles = vehiclesData as Vehicle[] || []
     mockDrivers = driversData as Driver[] || []
-    
+
     console.log('Mock data loaded:', {
       shipments: mockShipments.length,
       vehicles: mockVehicles.length,
@@ -62,7 +62,7 @@ function initializeDefaultData() {
       },
       destination: {
         street: 'Av. Tacna 258',
-        city: 'Tacna',  
+        city: 'Tacna',
         state: 'Tacna',
         zipCode: '23001',
         country: 'Perú'
@@ -116,7 +116,6 @@ function initializeDefaultData() {
       ]
     }
   ]
-
   mockVehicles = [
     {
       id: 'VH001',
@@ -137,7 +136,6 @@ function initializeDefaultData() {
       gpsEnabled: true
     }
   ]
-
   mockDrivers = [
     {
       id: 'DR001',
@@ -162,190 +160,189 @@ export const api = {
   // Shipments
   async getShipments(filters?: ShipmentFilters): Promise<ApiResponse<Shipment[]>> {
     const cacheKey = CacheService.createKey('shipments', filters)
-    
-    // Check cache first
+
     const cached = apiCache.get<Shipment[]>(cacheKey)
+
     if (cached) {
       return createApiResponse(cached)
     }
-    
+
     await delay(200)
-    
+
     let filtered = [...mockShipments]
-    
+
     if (filters?.status) {
       filtered = filtered.filter(s => filters.status?.includes(s.status))
     }
-    
+
     if (filters?.priority) {
       filtered = filtered.filter(s => filters.priority?.includes(s.priority))
     }
-    
-    // Save to cache
+
     apiCache.set(cacheKey, filtered)
-    
+
     return createApiResponse(filtered)
   },
 
   async getShipment(id: string): Promise<ApiResponse<Shipment | null>> {
     await delay(200)
-    
+
     const shipment = mockShipments.find(s => s.id === id)
+
     return createApiResponse(shipment || null)
   },
 
   async createShipment(shipmentData: Omit<Shipment, 'id' | 'createdAt'>): Promise<ApiResponse<Shipment>> {
     await delay(700)
-    
+
     const newShipment: Shipment = {
       ...shipmentData,
       id: `SH${String(mockShipments.length + 1).padStart(3, '0')}`,
       createdAt: new Date().toISOString()
     }
-    
+
     mockShipments.push(newShipment)
-    
-    // Invalidate related cache
+
     apiCache.invalidatePattern('shipments')
     apiCache.invalidatePattern('dashboard-stats')
-    
+
     return createApiResponse(newShipment, true, 'Envío creado exitosamente')
   },
 
   async updateShipment(id: string, data: Partial<Shipment>): Promise<ApiResponse<Shipment>> {
     await delay(500)
-    
+
     const index = mockShipments.findIndex(s => s.id === id)
+
     if (index === -1) {
       throw new Error('Envío no encontrado')
     }
-    
+
     mockShipments[index] = { ...mockShipments[index], ...data }
-    
-    // Invalidate related cache
+
     apiCache.invalidatePattern('shipments')
     apiCache.invalidatePattern('dashboard-stats')
-    
+
     return createApiResponse(mockShipments[index], true, 'Envío actualizado exitosamente')
   },
 
   async deleteShipment(id: string): Promise<ApiResponse<boolean>> {
     await delay(400)
-    
+
     const index = mockShipments.findIndex(s => s.id === id)
+
     if (index === -1) {
       throw new Error('Envío no encontrado')
     }
-    
+
     mockShipments.splice(index, 1)
-    
-    // Invalidate related cache
+
     apiCache.invalidatePattern('shipments')
     apiCache.invalidatePattern('dashboard-stats')
-    
+
     return createApiResponse(true, true, 'Envío eliminado exitosamente')
   },
 
   // Vehicles
   async getVehicles(): Promise<ApiResponse<Vehicle[]>> {
     const cacheKey = 'vehicles'
-    
-    // Check cache first
+
     const cached = apiCache.get<Vehicle[]>(cacheKey)
+
     if (cached) {
       return createApiResponse(cached)
     }
-    
+
     await delay(200)
-    
+
     const vehicles = [...mockVehicles]
-    
-    // Save to cache
+
     apiCache.set(cacheKey, vehicles)
-    
+
     return createApiResponse(vehicles)
   },
 
   async getVehicle(id: string): Promise<ApiResponse<Vehicle | null>> {
     await delay(200)
-    
+
     const vehicle = mockVehicles.find(v => v.id === id)
+
     return createApiResponse(vehicle || null)
   },
 
   async updateVehicle(id: string, data: Partial<Vehicle>): Promise<ApiResponse<Vehicle>> {
     await delay(500)
-    
+
     const index = mockVehicles.findIndex(v => v.id === id)
+
     if (index === -1) {
       throw new Error('Vehículo no encontrado')
     }
-    
+
     mockVehicles[index] = { ...mockVehicles[index], ...data }
-    
-    // Invalidate related cache
+
     apiCache.invalidatePattern('vehicles')
     apiCache.invalidatePattern('dashboard-stats')
-    
+
     return createApiResponse(mockVehicles[index], true, 'Vehículo actualizado exitosamente')
   },
 
   // Drivers
   async getDrivers(): Promise<ApiResponse<Driver[]>> {
     const cacheKey = 'drivers'
-    
-    // Check cache first
+
     const cached = apiCache.get<Driver[]>(cacheKey)
+
     if (cached) {
       return createApiResponse(cached)
     }
-    
+
     await delay(200)
-    
+
     const drivers = [...mockDrivers]
-    
-    // Save to cache
+
     apiCache.set(cacheKey, drivers)
-    
+
     return createApiResponse(drivers)
   },
 
   async getDriver(id: string): Promise<ApiResponse<Driver | null>> {
     await delay(200)
-    
+
     const driver = mockDrivers.find(d => d.id === id)
+
     return createApiResponse(driver || null)
   },
 
   async updateDriver(id: string, data: Partial<Driver>): Promise<ApiResponse<Driver>> {
     await delay(500)
-    
+
     const index = mockDrivers.findIndex(d => d.id === id)
+
     if (index === -1) {
       throw new Error('Conductor no encontrado')
     }
-    
+
     mockDrivers[index] = { ...mockDrivers[index], ...data }
-    
-    // Invalidate related cache
+
     apiCache.invalidatePattern('drivers')
     apiCache.invalidatePattern('dashboard-stats')
-    
+
     return createApiResponse(mockDrivers[index], true, 'Conductor actualizado exitosamente')
   },
 
   // Dashboard
   async getDashboardStats(): Promise<ApiResponse<DashboardStats>> {
     const cacheKey = 'dashboard-stats'
-    
-    // Check cache first
+
     const cached = apiCache.get<DashboardStats>(cacheKey)
+
     if (cached) {
       return createApiResponse(cached)
     }
-    
+
     await delay(200)
-    
+
     const stats: DashboardStats = {
       totalShipments: mockShipments.length,
       activeShipments: mockShipments.filter(s => s.status === 'in_transit').length,
@@ -356,10 +353,9 @@ export const api = {
       availableDrivers: mockDrivers.filter(d => ['available', 'on-delivery'].includes(d.status)).length,
       maintenanceVehicles: mockVehicles.filter(v => v.status === 'maintenance').length
     }
-    
-    // Save to cache
+
     apiCache.set(cacheKey, stats)
-    
+
     return createApiResponse(stats)
   }
 }
@@ -368,22 +364,24 @@ export const api = {
 export function handleApiError(error: unknown): string {
   if (typeof error === 'object' && error !== null) {
     const errorObj = error as Record<string, unknown>
-    
+
     if (errorObj.response && typeof errorObj.response === 'object') {
       const response = errorObj.response as Record<string, unknown>
+
       if (response.data && typeof response.data === 'object') {
         const data = response.data as Record<string, unknown>
+
         if (typeof data.message === 'string') {
           return data.message
         }
       }
     }
-    
+
     if (typeof errorObj.message === 'string') {
       return errorObj.message
     }
   }
-  
+
   return 'Ha ocurrido un error inesperado'
 }
 

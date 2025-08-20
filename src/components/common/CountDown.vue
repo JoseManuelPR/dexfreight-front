@@ -109,14 +109,13 @@ const getMaxValueForUnit = (unit) => {
 const getTimeArray = (value, unit) => {
   const stringValue = format(value).toString()
   const percentage = (value / getMaxValueForUnit(unit)) * 100
+
   return stringValue.split('').map((digit) => ({
     value: digit,
     visible: true,
     remainingPercentage: percentage,
   }))
 }
-
-
 
 const resetTimeArrays = () => {
   daysArray.value = [{ value: '0', visible: true }]

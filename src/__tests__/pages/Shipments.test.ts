@@ -67,7 +67,7 @@ const mockShipments: Shipment[] = [
 describe('Shipments Logic', () => {
   it('filters shipments by search term', () => {
     const filterBySearchTerm: TestFilterFunction<Shipment> = (shipments: Shipment[], searchTerm: string) => {
-      return shipments.filter(shipment => 
+      return shipments.filter(shipment =>
         shipment.trackingNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
         shipment.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         shipment.origin.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -76,6 +76,7 @@ describe('Shipments Logic', () => {
     }
 
     const result = filterBySearchTerm(mockShipments, 'TRK')
+
     expect(result).toHaveLength(1)
     expect(result[0].trackingNumber).toBe('TRK001')
   })
@@ -86,6 +87,7 @@ describe('Shipments Logic', () => {
     }
 
     const result = filterByStatus(mockShipments, 'pending')
+
     expect(result).toHaveLength(1)
     expect(result[0].status).toBe('pending')
   })
@@ -96,6 +98,7 @@ describe('Shipments Logic', () => {
     }
 
     const result = filterByPriority(mockShipments, 'medium')
+
     expect(result).toHaveLength(1)
     expect(result[0].priority).toBe('medium')
   })
@@ -103,18 +106,19 @@ describe('Shipments Logic', () => {
   it('applies multiple filters correctly', () => {
     const applyFilters = (shipments: Shipment[], searchTerm: string, status: string, priority: string) => {
       return shipments.filter(shipment => {
-        const matchesSearch = !searchTerm || 
+        const matchesSearch = !searchTerm ||
           shipment.trackingNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
           shipment.customer.name.toLowerCase().includes(searchTerm.toLowerCase())
-        
+
         const matchesStatus = !status || shipment.status === status
         const matchesPriority = !priority || shipment.priority === priority
-        
+
         return matchesSearch && matchesStatus && matchesPriority
       })
     }
 
     const result = applyFilters(mockShipments, 'TRK', 'pending', 'medium')
+
     expect(result).toHaveLength(1)
     expect(result[0].trackingNumber).toBe('TRK001')
   })
@@ -128,6 +132,7 @@ describe('Shipments Logic', () => {
         cancelled: 'error',
         delayed: 'error'
       }
+
       return colors[status] || 'light'
     }
 
@@ -146,6 +151,7 @@ describe('Shipments Logic', () => {
         high: 'warning',
         urgent: 'error'
       }
+
       return colors[priority] || 'light'
     }
 
@@ -161,6 +167,7 @@ describe('Shipments Logic', () => {
     }
 
     const isValid = validateAddressFormat(mockShipments[0].origin)
+
     expect(isValid).toBe(true)
   })
 })

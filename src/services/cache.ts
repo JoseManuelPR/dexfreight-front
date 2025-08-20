@@ -15,7 +15,7 @@ export class CacheService {
   constructor(defaultTTL: number = 5 * 60 * 1000) { // 5 minutes default
     this.cache = new Map()
     this.defaultTTL = defaultTTL
-    
+
     // Start automatic cleanup
     this.startCleanupInterval()
   }
@@ -27,7 +27,7 @@ export class CacheService {
    */
   get<T>(key: string): T | null {
     const entry = this.cache.get(key)
-    
+
     if (!entry) {
       return null
     }
@@ -35,6 +35,7 @@ export class CacheService {
     // Check if entry is expired
     if (Date.now() - entry.timestamp >= this.defaultTTL) {
       this.cache.delete(key)
+
       return null
     }
 
@@ -60,7 +61,7 @@ export class CacheService {
    */
   has(key: string): boolean {
     const entry = this.cache.get(key)
-    
+
     if (!entry) {
       return false
     }
@@ -68,6 +69,7 @@ export class CacheService {
     // Check if expired
     if (Date.now() - entry.timestamp >= this.defaultTTL) {
       this.cache.delete(key)
+
       return false
     }
 
@@ -117,6 +119,7 @@ export class CacheService {
    */
   clearExpired(): void {
     const now = Date.now()
+
     for (const [key, entry] of this.cache.entries()) {
       if (now - entry.timestamp >= this.defaultTTL) {
         this.cache.delete(key)
@@ -143,6 +146,7 @@ export class CacheService {
     if (!params) {
       return prefix
     }
+
     return `${prefix}-${JSON.stringify(params)}`
   }
 }

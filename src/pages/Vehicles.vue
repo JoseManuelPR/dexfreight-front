@@ -11,9 +11,9 @@
           </p>
         </div>
         <div class="flex items-center gap-3">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             :start-icon="RefreshIcon"
             @click="refreshVehicles"
             :disabled="loading"
@@ -22,7 +22,7 @@
           </Button>
         </div>
       </div>
-  
+
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-1">
           <div class="rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 p-6 text-white shadow-lg">
@@ -52,7 +52,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
               <div class="flex items-center justify-between">
                 <div>
@@ -64,7 +64,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
               <div class="flex items-center justify-between">
                 <div>
@@ -76,7 +76,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="rounded-lg bg-white dark:bg-gray-800 p-4 shadow-theme-sm border border-gray-200 dark:border-gray-700">
               <div class="flex items-center justify-between">
                 <div>
@@ -91,7 +91,7 @@
           </div>
         </div>
       </div>
-  
+
       <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
@@ -105,7 +105,7 @@
               class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
             />
           </div>
-  
+
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Estado
@@ -121,7 +121,7 @@
               <option value="offline">Fuera de Línea</option>
             </select>
           </div>
-  
+
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Tipo
@@ -139,13 +139,13 @@
           </div>
         </div>
       </div>
-  
+
       <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div v-for="i in 6" :key="i" class="animate-pulse">
           <div class="h-64 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
         </div>
       </div>
-  
+
       <div v-else-if="filteredVehicles.length === 0" class="text-center py-12">
         <BoxIcon class="mx-auto h-12 w-12 text-gray-400" />
         <h3 class="mt-4 text-sm font-medium text-gray-900 dark:text-white">
@@ -155,10 +155,10 @@
           Intenta ajustar los filtros o agregar un nuevo vehículo
         </p>
       </div>
-  
+
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div 
-          v-for="vehicle in filteredVehicles" 
+        <div
+          v-for="vehicle in filteredVehicles"
           :key="vehicle.id"
           class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700 hover:shadow-theme-md transition-shadow"
         >
@@ -171,7 +171,7 @@
                 {{ vehicle.licensePlate }} • {{ vehicle.year }}
               </p>
             </div>
-            <Badge 
+            <Badge
               :color="getStatusColor(vehicle.status)"
               variant="light"
               size="sm"
@@ -179,7 +179,7 @@
               {{ getStatusLabel(vehicle.status) }}
             </Badge>
           </div>
-  
+
           <div class="space-y-3">
             <div class="flex items-center justify-between text-sm">
               <span class="text-gray-600 dark:text-gray-400">Tipo:</span>
@@ -187,28 +187,28 @@
                 {{ getTypeLabel(vehicle.type) }}
               </span>
             </div>
-            
+
             <div class="flex items-center justify-between text-sm">
               <span class="text-gray-600 dark:text-gray-400">Capacidad:</span>
               <span class="font-medium text-gray-900 dark:text-white">
                 {{ vehicle.capacity.toLocaleString() }} kg
               </span>
             </div>
-            
+
             <div class="flex items-center justify-between text-sm">
               <span class="text-gray-600 dark:text-gray-400">Kilometraje:</span>
               <span class="font-medium text-gray-900 dark:text-white">
                 {{ vehicle.mileage.toLocaleString() }} km
               </span>
             </div>
-            
+
             <div class="flex items-center justify-between text-sm">
               <span class="text-gray-600 dark:text-gray-400">Combustible:</span>
               <span class="font-medium text-gray-900 dark:text-white">
                 {{ getFuelTypeLabel(vehicle.fuelType) }}
               </span>
             </div>
-  
+
             <div v-if="vehicle.currentDriverId" class="flex items-center justify-between text-sm">
               <span class="text-gray-600 dark:text-gray-400">Conductor:</span>
               <span class="font-medium text-gray-900 dark:text-white">
@@ -216,7 +216,7 @@
               </span>
             </div>
           </div>
-  
+
           <div class="mt-6 flex items-center gap-2">
             <Button variant="outline" size="sm" class="flex-1" @click="showVehicleDetails(vehicle)">
               Ver Detalles
@@ -287,7 +287,8 @@ const filteredVehicles = computed(() => {
 
   if (searchTerm.value) {
     const term = searchTerm.value.toLowerCase()
-    filtered = filtered.filter(v => 
+
+    filtered = filtered.filter(v =>
       v.licensePlate.toLowerCase().includes(term) ||
       v.model.toLowerCase().includes(term) ||
       v.brand.toLowerCase().includes(term)
@@ -312,6 +313,7 @@ function getStatusColor(status: string) {
     maintenance: 'warning',
     offline: 'error'
   }
+
   return colors[status] || 'light'
 }
 
@@ -322,6 +324,7 @@ function getStatusLabel(status: string) {
     maintenance: 'Mantenimiento',
     offline: 'Fuera de Línea'
   }
+
   return labels[status] || status
 }
 
@@ -332,6 +335,7 @@ function getTypeLabel(type: string) {
     trailer: 'Tráiler',
     pickup: 'Pickup'
   }
+
   return labels[type] || type
 }
 
@@ -342,6 +346,7 @@ function getFuelTypeLabel(fuelType: string) {
     electric: 'Eléctrico',
     hybrid: 'Híbrido'
   }
+
   return labels[fuelType] || fuelType
 }
 
@@ -372,9 +377,9 @@ function closeEditModal() {
 
 function handleVehicleSaved() {
   vehiclesStore.fetchVehicles()
-  
+
   showSuccessAlert.value = true
-  
+
   setTimeout(() => {
     showSuccessAlert.value = false
   }, 3000)

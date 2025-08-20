@@ -129,6 +129,7 @@ const toggleDropdown = () => {
 
 const toggleItem = (item) => {
   const index = selectedItems.value.findIndex((selected) => selected.value === item.value)
+
   if (index === -1) {
     selectedItems.value.push(item)
   } else {
@@ -139,6 +140,7 @@ const toggleItem = (item) => {
 
 const removeItem = (item) => {
   const index = selectedItems.value.findIndex((selected) => selected.value === item.value)
+
   if (index !== -1) {
     selectedItems.value.splice(index, 1)
     emit('update:modelValue', selectedItems.value)

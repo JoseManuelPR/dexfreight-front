@@ -167,6 +167,7 @@ describe('ShipmentEditModal', () => {
     // Find the driver selection dropdown
     const selects = wrapper.findAll('select')
     const driverSelect = selects.find(select => select.text().includes('Sin asignar'))
+
     expect(driverSelect?.exists()).toBe(true)
     expect(driverSelect?.text()).toContain('Sin asignar')
   })
@@ -190,6 +191,7 @@ describe('ShipmentEditModal', () => {
     // Find the vehicle selection dropdown
     const selects = wrapper.findAll('select')
     const vehicleSelect = selects.find(select => select.text().includes('Sin asignar'))
+
     expect(vehicleSelect?.exists()).toBe(true)
     expect(vehicleSelect?.text()).toContain('Sin asignar')
   })
@@ -212,6 +214,7 @@ describe('ShipmentEditModal', () => {
 
     const buttons = wrapper.findAll('button')
     const cancelButton = buttons.find(button => button.text().includes('Cancelar'))
+
     if (cancelButton) {
       await cancelButton.trigger('click')
       expect(wrapper.emitted('close')).toBeTruthy()
@@ -235,6 +238,7 @@ describe('ShipmentEditModal', () => {
     })
 
     const form = wrapper.find('form')
+
     await form.trigger('submit')
 
     // Should emit saved event with shipment ID
@@ -260,16 +264,17 @@ describe('ShipmentEditModal', () => {
 
     const buttons = wrapper.findAll('button')
     const saveButton = buttons.find(button => button.text().includes('Guardar Cambios'))
-    
+
     if (saveButton) {
       // Initially should not be loading
       expect(saveButton.text()).toBe('Guardar Cambios')
-      
+
       // Trigger form submission and wait for async operation
       const form = wrapper.find('form')
+
       await form.trigger('submit')
       await wrapper.vm.$nextTick()
-      
+
       // The loading state might not be visible immediately due to async nature
       // So we just verify the button exists and has the correct initial text
       expect(saveButton.exists()).toBe(true)
@@ -300,7 +305,7 @@ describe('ShipmentEditModal', () => {
     const selects = wrapper.findAll('select')
     const driverSelect = selects.find(select => select.text().includes('Sin asignar'))
     const options = driverSelect?.findAll('option')
-    
+
     // Should include "Sin asignar" and the driver
     expect(options?.length).toBeGreaterThanOrEqual(2)
     expect(options?.[0].text()).toBe('Sin asignar')
@@ -330,7 +335,7 @@ describe('ShipmentEditModal', () => {
     const selects = wrapper.findAll('select')
     const vehicleSelect = selects.find(select => select.text().includes('Sin asignar'))
     const options = vehicleSelect?.findAll('option')
-    
+
     // Should include "Sin asignar" and the vehicle
     expect(options?.length).toBeGreaterThanOrEqual(2)
     expect(options?.[0].text()).toBe('Sin asignar')
@@ -354,6 +359,7 @@ describe('ShipmentEditModal', () => {
 
     // Check that datetime inputs exist
     const datetimeInputs = wrapper.findAll('input[type="datetime-local"]')
+
     expect(datetimeInputs.length).toBeGreaterThan(0)
   })
 })

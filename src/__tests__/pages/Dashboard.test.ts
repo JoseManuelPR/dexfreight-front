@@ -15,6 +15,7 @@ describe('Dashboard Page Logic', () => {
     }
 
     const result = formatCurrency(1500)
+
     expect(result).toContain('1,500')
     expect(result.includes('PEN') || result.includes('S/')).toBe(true)
   })
@@ -29,6 +30,7 @@ describe('Dashboard Page Logic', () => {
     }
 
     const result = formatDate('2025-01-18T10:00:00Z')
+
     expect(result).toBeDefined()
     expect(typeof result).toBe('string')
   })
@@ -42,6 +44,7 @@ describe('Dashboard Page Logic', () => {
         cancelled: 'error',
         delayed: 'error'
       }
+
       return colors[status] || 'light'
     }
 
@@ -60,6 +63,7 @@ describe('Dashboard Page Logic', () => {
         cancelled: 'Cancelado',
         delayed: 'Retrasado'
       }
+
       return labels[status] || status
     }
 

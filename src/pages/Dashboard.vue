@@ -11,9 +11,9 @@
           </p>
         </div>
         <div class="flex items-center gap-3">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             :start-icon="RefreshIcon"
             @click="refreshData"
             :disabled="loading"
@@ -49,7 +49,7 @@
           color="orange"
         />
       </div>
-  
+
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div class="lg:col-span-2">
           <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
@@ -57,27 +57,27 @@
               <h3 class="text-lg font-medium text-gray-900 dark:text-white">
                 Envíos Recientes
               </h3>
-              <router-link 
+              <router-link
                 to="/shipments"
                 class="text-sm font-medium text-brand-500 hover:text-brand-600"
               >
                 Ver todos
               </router-link>
             </div>
-            
+
             <div v-if="shipmentsLoading" class="space-y-3">
               <div v-for="i in 5" :key="i" class="animate-pulse">
                 <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
               </div>
             </div>
-  
+
             <div v-else-if="recentShipments.length === 0" class="text-center py-8">
               <p class="text-gray-500 dark:text-gray-400">No hay envíos recientes</p>
             </div>
-  
+
             <div v-else class="space-y-4">
-              <div 
-                v-for="shipment in recentShipments" 
+              <div
+                v-for="shipment in recentShipments"
                 :key="shipment.id"
                 class="flex items-center justify-between p-4 rounded-lg border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer"
                 @click="openShipmentDetail(shipment)"
@@ -87,7 +87,7 @@
                     <span class="font-medium text-gray-900 dark:text-white">
                       {{ shipment.trackingNumber }}
                     </span>
-                    <Badge 
+                    <Badge
                       :color="getStatusColor(shipment.status)"
                       variant="light"
                       size="sm"
@@ -111,7 +111,7 @@
             </div>
           </div>
         </div>
-  
+
         <div class="space-y-6">
           <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
             <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
@@ -144,7 +144,7 @@
               </div>
             </div>
           </div>
-  
+
           <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
             <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
               Estado de Conductores
@@ -215,12 +215,13 @@ import Badge from '@/components/ui/Badge.vue'
 import StatsCard from '@/components/dashboard/StatsCard.vue'
 import NotificationAlert from '@/components/ui/NotificationAlert.vue'
 
-const ShipmentDetailModal = defineAsyncComponent(() => 
+const ShipmentDetailModal = defineAsyncComponent(() =>
   import('@/components/shipments/ShipmentDetailModal.vue')
 )
-const ShipmentEditModal = defineAsyncComponent(() => 
+const ShipmentEditModal = defineAsyncComponent(() =>
   import('@/components/shipments/ShipmentEditModal.vue')
 )
+
 import { useShipmentsStore } from '@/store'
 import { useVehiclesStore } from '@/store'
 import { useDriversStore } from '@/store'
@@ -244,14 +245,12 @@ const shipmentsLoading = computed(() => shipmentsStore.loading)
 const drivers = computed(() => driversStore.drivers)
 const vehicles = computed(() => vehiclesStore.vehicles)
 
-const recentShipments = computed(() => 
+const recentShipments = computed(() =>
   shipmentsStore.shipments
     .slice()
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(0, 5)
 )
-
-
 
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
@@ -261,6 +260,7 @@ function getStatusColor(status: string) {
     cancelled: 'error',
     delayed: 'error'
   }
+
   return colors[status] || 'light'
 }
 
@@ -272,6 +272,7 @@ function getStatusLabel(status: string) {
     cancelled: 'Cancelado',
     delayed: 'Retrasado'
   }
+
   return labels[status] || status
 }
 
@@ -292,7 +293,7 @@ function formatDate(dateString: string) {
 
 async function refreshData() {
   await dashboardStore.fetchDashboardStats()
-  
+
   Promise.all([
     shipmentsStore.fetchShipments(),
     vehiclesStore.fetchVehicles(),
@@ -324,11 +325,9 @@ function closeShipmentEdit() {
 function handleShipmentSaved() {
   refreshData()
   closeShipmentEdit()
-  
-  // Show success alert
+
   showSuccessAlert.value = true
-  
-  // Hide alert after 3 seconds
+
   setTimeout(() => {
     showSuccessAlert.value = false
   }, 3000)
@@ -336,7 +335,7 @@ function handleShipmentSaved() {
 
 onMounted(async () => {
   await dashboardStore.fetchDashboardStats()
-  
+
   const loadSecondaryData = () => {
     Promise.allSettled([
       shipmentsStore.fetchShipments(),
@@ -344,7 +343,7 @@ onMounted(async () => {
       driversStore.fetchDrivers()
     ]).catch(err => console.error('Error loading secondary data:', err))
   }
-  
+
   if ('requestIdleCallback' in window) {
     window.requestIdleCallback(loadSecondaryData, { timeout: 2000 })
   } else {

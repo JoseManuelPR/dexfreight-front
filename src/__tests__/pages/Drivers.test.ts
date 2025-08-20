@@ -31,7 +31,7 @@ const mockDrivers: Driver[] = [
 describe('Drivers Logic', () => {
   it('filters drivers by search term', () => {
     const filterBySearchTerm: TestFilterFunction<Driver> = (drivers: Driver[], searchTerm: string) => {
-      return drivers.filter(driver => 
+      return drivers.filter(driver =>
         driver.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         driver.license.toLowerCase().includes(searchTerm.toLowerCase()) ||
         driver.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -39,6 +39,7 @@ describe('Drivers Logic', () => {
     }
 
     const result = filterBySearchTerm(mockDrivers, 'John')
+
     expect(result).toHaveLength(1)
     expect(result[0].name).toBe('John Smith')
   })
@@ -49,6 +50,7 @@ describe('Drivers Logic', () => {
     }
 
     const result = filterByStatus(mockDrivers, 'available')
+
     expect(result).toHaveLength(1)
     expect(result[0].status).toBe('available')
   })
@@ -66,6 +68,7 @@ describe('Drivers Logic', () => {
     }
 
     const stats = calculateDriverStats(mockDrivers)
+
     expect(stats.total).toBe(2)
     expect(stats.available).toBe(1)
     expect(stats.onDelivery).toBe(1)
@@ -92,6 +95,7 @@ describe('Drivers Logic', () => {
     }
 
     const result = sortByRating(mockDrivers, false)
+
     expect(result[0].rating).toBe(4.8)
     expect(result[1].rating).toBe(4.5)
   })
@@ -99,17 +103,18 @@ describe('Drivers Logic', () => {
   it('applies multiple filters correctly', () => {
     const applyFilters = (drivers: Driver[], searchTerm: string, status: string) => {
       return drivers.filter(driver => {
-        const matchesSearch = !searchTerm || 
+        const matchesSearch = !searchTerm ||
           driver.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           driver.license.toLowerCase().includes(searchTerm.toLowerCase())
-        
+
         const matchesStatus = !status || driver.status === status
-        
+
         return matchesSearch && matchesStatus
       })
     }
 
     const result = applyFilters(mockDrivers, 'John', 'available')
+
     expect(result).toHaveLength(1)
     expect(result[0].name).toBe('John Smith')
   })
@@ -122,6 +127,7 @@ describe('Drivers Logic', () => {
         'off-duty': 'warning',
         suspended: 'error'
       }
+
       return colors[status] || 'light'
     }
 
@@ -139,6 +145,7 @@ describe('Drivers Logic', () => {
         'off-duty': 'Fuera de Servicio',
         suspended: 'Suspendido'
       }
+
       return labels[status] || status
     }
 

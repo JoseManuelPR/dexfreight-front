@@ -9,8 +9,8 @@
           {{ formattedValue }}
         </p>
         <div v-if="trend" class="mt-2 flex items-center gap-1">
-          <component 
-            :is="trendIcon" 
+          <component
+            :is="trendIcon"
             :class="trendColorClass"
             class="h-4 w-4"
           />
@@ -54,6 +54,7 @@ const formattedValue = computed(() => {
   if (typeof props.value === 'number') {
     return props.value.toLocaleString()
   }
+
   return props.value
 })
 
@@ -69,6 +70,7 @@ const iconBackgroundClass = computed(() => {
     orange: 'bg-orange-500',
     red: 'bg-error-500'
   }
+
   return colors[props.color]
 })
 
@@ -77,8 +79,8 @@ const trendIcon = computed(() => {
 })
 
 const trendColorClass = computed(() => {
-  return props.trendType === 'up' 
-    ? 'text-success-500' 
+  return props.trendType === 'up'
+    ? 'text-success-500'
     : 'text-error-500'
 })
 </script>

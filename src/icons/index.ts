@@ -44,7 +44,6 @@ import LayoutDashboardIcon from "./LayoutDashboardIcon.vue";
 import UserGroupIcon from "./UserGroupIcon.vue";
 import BellIcon from "./BellIcon.vue";
 
-
 export {
   BellIcon,
 

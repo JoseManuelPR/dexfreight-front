@@ -43,7 +43,7 @@ const mockVehicles: Vehicle[] = [
 describe('Vehicles Logic', () => {
   it('filters vehicles by search term', () => {
     const filterBySearchTerm: TestFilterFunction<Vehicle> = (vehicles: Vehicle[], searchTerm: string) => {
-      return vehicles.filter(vehicle => 
+      return vehicles.filter(vehicle =>
         vehicle.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) ||
         vehicle.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
         vehicle.brand.toLowerCase().includes(searchTerm.toLowerCase())
@@ -51,6 +51,7 @@ describe('Vehicles Logic', () => {
     }
 
     const result = filterBySearchTerm(mockVehicles, 'ABC')
+
     expect(result).toHaveLength(1)
     expect(result[0].licensePlate).toBe('ABC123')
   })
@@ -61,6 +62,7 @@ describe('Vehicles Logic', () => {
     }
 
     const result = filterByStatus(mockVehicles, 'available')
+
     expect(result).toHaveLength(1)
     expect(result[0].status).toBe('available')
   })
@@ -71,6 +73,7 @@ describe('Vehicles Logic', () => {
     }
 
     const result = filterByType(mockVehicles, 'truck')
+
     expect(result).toHaveLength(1)
     expect(result[0].type).toBe('truck')
   })
@@ -87,6 +90,7 @@ describe('Vehicles Logic', () => {
     }
 
     const stats = calculateVehicleStats(mockVehicles)
+
     expect(stats.total).toBe(2)
     expect(stats.available).toBe(1)
     expect(stats.inUse).toBe(1)
@@ -109,6 +113,7 @@ describe('Vehicles Logic', () => {
     }
 
     const result = sortByCapacity(mockVehicles, false)
+
     expect(result[0].capacity).toBe(5000)
     expect(result[1].capacity).toBe(2000)
   })
@@ -121,6 +126,7 @@ describe('Vehicles Logic', () => {
     }
 
     const result = sortByMileage(mockVehicles, true)
+
     expect(result[0].mileage).toBe(30000)
     expect(result[1].mileage).toBe(50000)
   })
@@ -128,18 +134,19 @@ describe('Vehicles Logic', () => {
   it('applies multiple filters correctly', () => {
     const applyFilters = (vehicles: Vehicle[], searchTerm: string, status: string, type: string) => {
       return vehicles.filter(vehicle => {
-        const matchesSearch = !searchTerm || 
+        const matchesSearch = !searchTerm ||
           vehicle.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) ||
           vehicle.model.toLowerCase().includes(searchTerm.toLowerCase())
-        
+
         const matchesStatus = !status || vehicle.status === status
         const matchesType = !type || vehicle.type === type
-        
+
         return matchesSearch && matchesStatus && matchesType
       })
     }
 
     const result = applyFilters(mockVehicles, 'ABC', 'available', 'truck')
+
     expect(result).toHaveLength(1)
     expect(result[0].licensePlate).toBe('ABC123')
   })
@@ -152,6 +159,7 @@ describe('Vehicles Logic', () => {
         maintenance: 'warning',
         offline: 'error'
       }
+
       return colors[status] || 'light'
     }
 
@@ -169,6 +177,7 @@ describe('Vehicles Logic', () => {
         trailer: 'Tráiler',
         pickup: 'Pickup'
       }
+
       return labels[type] || type
     }
 
@@ -180,20 +189,20 @@ describe('Vehicles Logic', () => {
 
   it('handles vehicle edit success notification', () => {
     let showSuccessAlert = false
-    
+
     const handleVehicleSaved = () => {
       showSuccessAlert = true
-      
+
       setTimeout(() => {
         showSuccessAlert = false
       }, 3000)
     }
-    
+
     expect(showSuccessAlert).toBe(false)
-    
+
     handleVehicleSaved()
     expect(showSuccessAlert).toBe(true)
-    
+
     setTimeout(() => {
       expect(showSuccessAlert).toBe(false)
     }, 3000)
@@ -206,7 +215,7 @@ describe('Vehicles Logic', () => {
       title: '¡Vehículo actualizado!',
       message: 'El vehículo ha sido editado exitosamente.'
     }
-    
+
     expect(expectedProps.show).toBe(true)
     expect(expectedProps.variant).toBe('success')
     expect(expectedProps.title).toBe('¡Vehículo actualizado!')
@@ -229,20 +238,20 @@ describe('Vehicles Logic', () => {
 
   it('handles refresh vehicles with info notification', () => {
     let showUpdateAlert = false
-    
+
     const refreshVehicles = async () => {
       showUpdateAlert = true
-      
+
       setTimeout(() => {
         showUpdateAlert = false
       }, 3000)
     }
-    
+
     expect(showUpdateAlert).toBe(false)
-    
+
     refreshVehicles()
     expect(showUpdateAlert).toBe(true)
-    
+
     setTimeout(() => {
       expect(showUpdateAlert).toBe(false)
     }, 3000)

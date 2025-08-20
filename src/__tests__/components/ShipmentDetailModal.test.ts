@@ -87,6 +87,7 @@ describe('ShipmentDetailModal.vue', () => {
         cancelled: 'error',
         delayed: 'error'
       }
+
       return colors[status] || 'light'
     }
 
@@ -107,6 +108,7 @@ describe('ShipmentDetailModal.vue', () => {
         cancelled: 'Cancelado',
         delayed: 'Retrasado'
       }
+
       return labels[status] || status
     }
 
@@ -125,6 +127,7 @@ describe('ShipmentDetailModal.vue', () => {
         high: 'warning',
         urgent: 'error'
       }
+
       return colors[priority] || 'light'
     }
 
@@ -143,6 +146,7 @@ describe('ShipmentDetailModal.vue', () => {
         high: 'Alta',
         urgent: 'Urgente'
       }
+
       return labels[priority] || priority
     }
 
@@ -160,6 +164,7 @@ describe('ShipmentDetailModal.vue', () => {
         trailer: 'Tráiler',
         pickup: 'Pickup'
       }
+
       return labels[type] || type
     }
 
@@ -177,6 +182,7 @@ describe('ShipmentDetailModal.vue', () => {
         electric: 'Eléctrico',
         hybrid: 'Híbrido'
       }
+
       return labels[fuelType] || fuelType
     }
 
@@ -198,11 +204,13 @@ describe('ShipmentDetailModal.vue', () => {
     // Check for different possible formats based on locale
     const hasCorrectNumber = result1.includes('5') && (result1.includes('000') || result1.includes(' 000'))
     const hasCorrectCurrency = result1.includes('EUR') || result1.includes('€') || result1.includes('€')
+
     expect(hasCorrectNumber).toBe(true)
     expect(hasCorrectCurrency).toBe(true)
 
     const result2 = formatCurrency(1500.50, 'EUR')
     const hasCorrectNumber2 = result2.includes('1') && (result2.includes('500') || result2.includes(' 500'))
+
     expect(hasCorrectNumber2).toBe(true)
   })
 
@@ -218,6 +226,7 @@ describe('ShipmentDetailModal.vue', () => {
     }
 
     const result = formatDateTime('2024-01-18T10:30:00Z')
+
     expect(result).toBeDefined()
     expect(typeof result).toBe('string')
     expect(result.length).toBeGreaterThan(10)
@@ -227,9 +236,11 @@ describe('ShipmentDetailModal.vue', () => {
     const formatDuration = (minutes: number): string => {
       const hours = Math.floor(minutes / 60)
       const mins = minutes % 60
+
       if (hours > 0) {
         return `${hours}h ${mins}m`
       }
+
       return `${mins}m`
     }
 
@@ -256,23 +267,27 @@ describe('ShipmentDetailModal.vue', () => {
 
   it('calculates route information correctly', () => {
     const route = mockShipment.route
+
     expect(route.distance).toBe(500)
     expect(route.estimatedTime).toBe(8)
-    
+
     const formatDuration = (minutes: number): string => {
       const hours = Math.floor(minutes / 60)
       const mins = minutes % 60
+
       if (hours > 0) {
         return `${hours}h ${mins}m`
       }
+
       return `${mins}m`
     }
-    
+
     expect(formatDuration(route.estimatedTime)).toBe('8m')
   })
 
   it('validates goods properties', () => {
     const goods = mockShipment.goods[0]
+
     expect(goods.fragile).toBe(true)
     expect(goods.hazardous).toBe(false)
     expect(goods.weight).toBe(500)

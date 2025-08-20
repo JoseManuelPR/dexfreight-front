@@ -12,7 +12,7 @@
             </p>
           </div>
           <div class="flex items-center gap-3">
-            <Badge 
+            <Badge
               :color="getStatusColor(vehicle.status)"
               variant="light"
               size="sm"
@@ -86,7 +86,7 @@
                     <span class="text-sm text-gray-600 dark:text-gray-400">GPS:</span>
                     <div class="flex items-center gap-2">
                       <div class="flex items-center">
-                        <div 
+                        <div
                           :class="[
                             'w-2 h-2 rounded-full mr-2',
                             vehicle.gpsEnabled ? 'bg-green-500' : 'bg-red-500'
@@ -116,12 +116,12 @@
                   </div>
                   <div class="flex justify-between">
                     <span class="text-sm text-gray-600 dark:text-gray-400">Días hasta mantenimiento:</span>
-                    <span 
+                    <span
                       :class="[
                         'text-sm font-medium',
-                        getDaysUntilMaintenance() <= 30 
-                          ? 'text-red-600 dark:text-red-400' 
-                          : getDaysUntilMaintenance() <= 60 
+                        getDaysUntilMaintenance() <= 30
+                          ? 'text-red-600 dark:text-red-400'
+                          : getDaysUntilMaintenance() <= 60
                             ? 'text-yellow-600 dark:text-yellow-400'
                             : 'text-gray-900 dark:text-white'
                       ]"
@@ -135,7 +135,7 @@
             </div>
 
             <div class="space-y-6">
-              
+
               <div v-if="assignedDriver" class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Conductor Asignado
@@ -176,7 +176,7 @@
                     </div>
                     <div class="flex justify-between">
                       <span class="text-sm text-gray-600 dark:text-gray-400">Estado:</span>
-                      <Badge 
+                      <Badge
                         :color="getDriverStatusColor(assignedDriver.status)"
                         variant="light"
                         size="sm"
@@ -211,7 +211,7 @@
                     <span class="text-sm text-gray-600 dark:text-gray-400">Registro:</span>
                     <div class="flex items-center gap-2">
                       <span class="text-sm font-medium text-gray-900 dark:text-white">{{ formatDate(vehicle.registrationExpiry) }}</span>
-                      <div 
+                      <div
                         :class="[
                           'w-2 h-2 rounded-full',
                           getExpirationStatus(vehicle.registrationExpiry) === 'expired' ? 'bg-red-500' :
@@ -225,7 +225,7 @@
                     <span class="text-sm text-gray-600 dark:text-gray-400">Seguro:</span>
                     <div class="flex items-center gap-2">
                       <span class="text-sm font-medium text-gray-900 dark:text-white">{{ formatDate(vehicle.insuranceExpiry) }}</span>
-                      <div 
+                      <div
                         :class="[
                           'w-2 h-2 rounded-full',
                           getExpirationStatus(vehicle.insuranceExpiry) === 'expired' ? 'bg-red-500' :
@@ -271,7 +271,7 @@
                   </div>
                   <div class="flex justify-between">
                     <span class="text-sm text-gray-600 dark:text-gray-400">Eficiencia:</span>
-                    <Badge 
+                    <Badge
                       :color="getEfficiencyColor()"
                       variant="light"
                       size="sm"
@@ -317,6 +317,7 @@ defineEmits(['close', 'edit'])
 
 const assignedDriver = computed(() => {
   if (!props.vehicle.currentDriverId || !props.drivers) return null
+
   return props.drivers.find(d => d.id === props.vehicle.currentDriverId) || null
 })
 
@@ -327,6 +328,7 @@ function getStatusColor(status: string) {
     maintenance: 'warning',
     offline: 'error'
   }
+
   return colors[status] || 'light'
 }
 
@@ -337,6 +339,7 @@ function getStatusLabel(status: string) {
     maintenance: 'Mantenimiento',
     offline: 'Fuera de Línea'
   }
+
   return labels[status] || status
 }
 
@@ -347,6 +350,7 @@ function getTypeLabel(type: string) {
     trailer: 'Tráiler',
     pickup: 'Pickup'
   }
+
   return labels[type] || type
 }
 
@@ -357,6 +361,7 @@ function getFuelTypeLabel(fuelType: string) {
     electric: 'Eléctrico',
     hybrid: 'Híbrido'
   }
+
   return labels[fuelType] || fuelType
 }
 
@@ -367,6 +372,7 @@ function getDriverStatusColor(status: string) {
     'off-duty': 'warning',
     suspended: 'error'
   }
+
   return colors[status] || 'light'
 }
 
@@ -377,6 +383,7 @@ function getDriverStatusLabel(status: string) {
     'off-duty': 'Fuera de Servicio',
     suspended: 'Suspendido'
   }
+
   return labels[status] || status
 }
 
@@ -393,6 +400,7 @@ function getDaysUntilMaintenance() {
   const today = new Date()
   const diffTime = nextMaintenance.getTime() - today.getTime()
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
   return diffDays
 }
 
@@ -401,34 +409,42 @@ function getExpirationStatus(dateString: string) {
   const today = new Date()
   const diffTime = expiryDate.getTime() - today.getTime()
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-  
+
   if (diffDays < 0) return 'expired'
   if (diffDays <= 30) return 'warning'
+
   return 'valid'
 }
 
 function getVehicleAge() {
   const currentYear = new Date().getFullYear()
+
   return currentYear - props.vehicle.year
 }
 
 function getAverageKmPerYear() {
   const age = getVehicleAge()
+
   if (age === 0) return props.vehicle.mileage
+
   return Math.round(props.vehicle.mileage / age)
 }
 
 function getEfficiencyColor() {
   const avgKmPerYear = getAverageKmPerYear()
+
   if (avgKmPerYear < 20000) return 'success'
   if (avgKmPerYear < 40000) return 'warning'
+
   return 'error'
 }
 
 function getEfficiencyLabel() {
   const avgKmPerYear = getAverageKmPerYear()
+
   if (avgKmPerYear < 20000) return 'Excelente'
   if (avgKmPerYear < 40000) return 'Buena'
+
   return 'Intensiva'
 }
 </script>

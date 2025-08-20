@@ -30,7 +30,8 @@ export const useShipmentsStore = defineStore('shipments', () => {
 
     if (filters.value.searchTerm) {
       const term = filters.value.searchTerm.toLowerCase()
-      filtered = filtered.filter(s => 
+
+      filtered = filtered.filter(s =>
         s.trackingNumber.toLowerCase().includes(term) ||
         s.customer.name.toLowerCase().includes(term) ||
         s.origin.city.toLowerCase().includes(term) ||
@@ -41,23 +42,23 @@ export const useShipmentsStore = defineStore('shipments', () => {
     return filtered
   })
 
-  const activeShipments = computed(() => 
+  const activeShipments = computed(() =>
     shipments.value.filter(s => s.status === 'in_transit')
   )
 
-  const pendingShipments = computed(() => 
+  const pendingShipments = computed(() =>
     shipments.value.filter(s => s.status === 'pending')
   )
 
-  const deliveredShipments = computed(() => 
+  const deliveredShipments = computed(() =>
     shipments.value.filter(s => s.status === 'delivered')
   )
 
-  const cancelledShipments = computed(() => 
+  const cancelledShipments = computed(() =>
     shipments.value.filter(s => s.status === 'cancelled')
   )
 
-  const delayedShipments = computed(() => 
+  const delayedShipments = computed(() =>
     shipments.value.filter(s => s.status === 'delayed')
   )
 
@@ -65,9 +66,10 @@ export const useShipmentsStore = defineStore('shipments', () => {
   async function fetchShipments() {
     loading.value = true
     error.value = null
-    
+
     try {
       const response = await api.getShipments()
+
       shipments.value = response.data
     } catch (err) {
       error.value = handleApiError(err)
@@ -83,7 +85,9 @@ export const useShipmentsStore = defineStore('shipments', () => {
 
     try {
       const response = await api.createShipment(shipmentData)
+
       shipments.value.push(response.data)
+
       return response.data
     } catch (err) {
       error.value = handleApiError(err)
@@ -101,9 +105,11 @@ export const useShipmentsStore = defineStore('shipments', () => {
     try {
       const response = await api.updateShipment(id, data)
       const index = shipments.value.findIndex(s => s.id === id)
+
       if (index !== -1) {
         shipments.value[index] = response.data
       }
+
       return response.data
     } catch (err) {
       error.value = handleApiError(err)
@@ -150,19 +156,19 @@ export const useVehiclesStore = defineStore('vehicles', () => {
   const loading = ref(false)
   const error = ref<string | null>(null)
 
-  const availableVehicles = computed(() => 
+  const availableVehicles = computed(() =>
     vehicles.value.filter(v => v.status === 'available')
   )
 
-  const vehiclesInUse = computed(() => 
+  const vehiclesInUse = computed(() =>
     vehicles.value.filter(v => v.status === 'in-use')
   )
 
-  const vehiclesInMaintenance = computed(() => 
+  const vehiclesInMaintenance = computed(() =>
     vehicles.value.filter(v => v.status === 'maintenance')
   )
 
-  const vehiclesOffline = computed(() => 
+  const vehiclesOffline = computed(() =>
     vehicles.value.filter(v => v.status === 'offline')
   )
 
@@ -172,9 +178,10 @@ export const useVehiclesStore = defineStore('vehicles', () => {
   async function fetchVehicles() {
     loading.value = true
     error.value = null
-    
+
     try {
       const response = await api.getVehicles()
+
       vehicles.value = response.data
     } catch (err) {
       error.value = handleApiError(err)
@@ -191,9 +198,11 @@ export const useVehiclesStore = defineStore('vehicles', () => {
     try {
       const response = await api.updateVehicle(id, data)
       const index = vehicles.value.findIndex(v => v.id === id)
+
       if (index !== -1) {
         vehicles.value[index] = response.data
       }
+
       return response.data
     } catch (err) {
       error.value = handleApiError(err)
@@ -224,7 +233,7 @@ export const useDriversStore = defineStore('drivers', () => {
   const loading = ref(false)
   const error = ref<string | null>(null)
 
-  const activeDrivers = computed(() => 
+  const activeDrivers = computed(() =>
     drivers.value.filter(d => ['available', 'on-delivery'].includes(d.status))
   )
 
@@ -232,24 +241,25 @@ export const useDriversStore = defineStore('drivers', () => {
     return drivers.value.filter(d => d.status === 'available')
   })
 
-  const driversOnDelivery = computed(() => 
+  const driversOnDelivery = computed(() =>
     drivers.value.filter(d => d.status === 'on-delivery')
   )
 
-  const driversOffDuty = computed(() => 
+  const driversOffDuty = computed(() =>
     drivers.value.filter(d => d.status === 'off-duty')
   )
 
-  const driversSuspended = computed(() => 
+  const driversSuspended = computed(() =>
     drivers.value.filter(d => d.status === 'suspended')
   )
 
   async function fetchDrivers() {
     loading.value = true
     error.value = null
-    
+
     try {
       const response = await api.getDrivers()
+
       drivers.value = response.data
     } catch (err) {
       error.value = handleApiError(err)
@@ -266,9 +276,11 @@ export const useDriversStore = defineStore('drivers', () => {
     try {
       const response = await api.updateDriver(id, data)
       const index = drivers.value.findIndex(d => d.id === id)
+
       if (index !== -1) {
         drivers.value[index] = response.data
       }
+
       return response.data
     } catch (err) {
       error.value = handleApiError(err)
@@ -304,9 +316,10 @@ export const useDashboardStore = defineStore('dashboard', () => {
       loading.value = true
     }
     error.value = null
-    
+
     try {
       const response = await api.getDashboardStats()
+
       stats.value = response.data
     } catch (err) {
       error.value = handleApiError(err)

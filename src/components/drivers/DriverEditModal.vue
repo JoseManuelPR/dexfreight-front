@@ -42,7 +42,7 @@
                       placeholder="Juan Pérez"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Email *
@@ -55,7 +55,7 @@
                       placeholder="juan@example.com"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Teléfono *
@@ -68,7 +68,7 @@
                       placeholder="123456789"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Número de Licencia *
@@ -105,7 +105,7 @@
                       <option value="suspended">Suspendido</option>
                     </select>
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Rating *
@@ -140,9 +140,9 @@
                     class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                   >
                     <option value="">Sin asignar</option>
-                    <option 
-                      v-for="vehicle in availableVehicles" 
-                      :key="vehicle.id" 
+                    <option
+                      v-for="vehicle in availableVehicles"
+                      :key="vehicle.id"
                       :value="vehicle.id"
                     >
                       {{ vehicle.brand }} {{ vehicle.model }} ({{ vehicle.licensePlate }})
@@ -169,7 +169,7 @@
                       placeholder="150"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Entregas a Tiempo *
@@ -184,7 +184,7 @@
                       placeholder="140"
                     />
                   </div>
-                  
+
                   <div class="flex items-center justify-between text-sm">
                     <span class="text-gray-600 dark:text-gray-400">Porcentaje de éxito:</span>
                     <span class="font-medium text-gray-900 dark:text-white">
@@ -198,17 +198,17 @@
         </form>
 
         <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             @click="$emit('close')"
             :disabled="saving"
           >
             Cancelar
           </Button>
-          <Button 
-            variant="primary" 
-            size="sm" 
+          <Button
+            variant="primary"
+            size="sm"
             @click="handleSubmit"
             :disabled="saving"
             :loading="saving"
@@ -239,7 +239,6 @@ const emit = defineEmits(['close', 'saved'])
 const driversStore = useDriversStore()
 const saving = ref(false)
 
-// Form data
 const form = ref({
   name: '',
   email: '',
@@ -252,7 +251,6 @@ const form = ref({
   onTimeDeliveries: 0
 })
 
-// Initialize form with driver data
 watch(() => props.driver, (driver) => {
   if (driver) {
     form.value = {
@@ -269,33 +267,31 @@ watch(() => props.driver, (driver) => {
   }
 }, { immediate: true })
 
-// Available vehicles (not currently assigned to other drivers)
 const availableVehicles = computed(() => {
   if (!props.vehicles) return []
-  
+
   return props.vehicles.filter(vehicle => {
-    // Include the current vehicle if this driver is assigned to it
     if (vehicle.id === props.driver.currentVehicle) return true
-    
-    // Include vehicles without driver assignment
+
     return !vehicle.currentDriverId
   })
 })
 
 function getSuccessPercentage(): number {
   if (form.value.totalDeliveries === 0) return 0
+
   return Math.round((form.value.onTimeDeliveries / form.value.totalDeliveries) * 100)
 }
 
 async function handleSubmit() {
   saving.value = true
-  
+
   try {
     const updateData = {
       ...form.value,
       currentVehicle: form.value.currentVehicle || undefined
     }
-    
+
     await driversStore.updateDriver(props.driver.id, updateData)
     emit('saved', props.driver.id)
     emit('close')

@@ -42,7 +42,7 @@
                       placeholder="Ej: Mercedes-Benz"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Modelo *
@@ -55,7 +55,7 @@
                       placeholder="Ej: Actros"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Año *
@@ -70,7 +70,7 @@
                       placeholder="2022"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Placa *
@@ -83,7 +83,7 @@
                       placeholder="ABC-123"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Tipo de Vehículo *
@@ -121,7 +121,7 @@
                       placeholder="5000"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Tipo de Combustible *
@@ -137,7 +137,7 @@
                       <option value="hybrid">Híbrido</option>
                     </select>
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Kilometraje (km) *
@@ -151,7 +151,7 @@
                       placeholder="45000"
                     />
                   </div>
-                  
+
                   <div class="flex items-center">
                     <input
                       v-model="form.gpsEnabled"
@@ -189,7 +189,7 @@
                       <option value="offline">Fuera de Línea</option>
                     </select>
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Último Mantenimiento *
@@ -201,7 +201,7 @@
                       class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Próximo Mantenimiento *
@@ -233,7 +233,7 @@
                       class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Vencimiento de Seguro *
@@ -262,9 +262,9 @@
                     class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                   >
                     <option value="">Sin asignar</option>
-                    <option 
-                      v-for="driver in availableDrivers" 
-                      :key="driver.id" 
+                    <option
+                      v-for="driver in availableDrivers"
+                      :key="driver.id"
                       :value="driver.id"
                     >
                       {{ driver.name }} ({{ driver.license }})
@@ -277,17 +277,17 @@
         </form>
 
         <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             @click="$emit('close')"
             :disabled="saving"
           >
             Cancelar
           </Button>
-          <Button 
-            variant="primary" 
-            size="sm" 
+          <Button
+            variant="primary"
+            size="sm"
             @click="handleSubmit"
             :disabled="saving"
             :loading="saving"
@@ -318,7 +318,6 @@ const emit = defineEmits(['close', 'saved'])
 const vehiclesStore = useVehiclesStore()
 const saving = ref(false)
 
-// Form data
 const form = ref({
   brand: '',
   model: '',
@@ -337,7 +336,6 @@ const form = ref({
   gpsEnabled: false
 })
 
-// Initialize form with vehicle data
 watch(() => props.vehicle, (vehicle) => {
   if (vehicle) {
     form.value = {
@@ -360,15 +358,12 @@ watch(() => props.vehicle, (vehicle) => {
   }
 }, { immediate: true })
 
-// Available drivers (not currently assigned to other vehicles)
 const availableDrivers = computed(() => {
   if (!props.drivers) return []
-  
+
   return props.drivers.filter(driver => {
-    // Include the current driver if this vehicle is assigned to them
     if (driver.id === props.vehicle.currentDriverId) return true
-    
-    // Include drivers without vehicle assignment
+
     return !driver.currentVehicle
   })
 })
@@ -379,9 +374,8 @@ function formatDateForInput(dateString: string): string {
 
 async function handleSubmit() {
   saving.value = true
-  
+
   try {
-    // Convert form data back to API format
     const updateData = {
       ...form.value,
       lastMaintenance: new Date(form.value.lastMaintenance).toISOString(),
@@ -390,14 +384,13 @@ async function handleSubmit() {
       insuranceExpiry: new Date(form.value.insuranceExpiry).toISOString(),
       currentDriverId: form.value.currentDriverId || undefined
     }
-    
+
     await vehiclesStore.updateVehicle(props.vehicle.id, updateData)
-    
+
     emit('saved', props.vehicle.id)
     emit('close')
   } catch (error) {
     console.error('Error updating vehicle:', error)
-    // You could add a toast notification here
   } finally {
     saving.value = false
   }

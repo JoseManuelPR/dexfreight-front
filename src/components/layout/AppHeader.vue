@@ -101,7 +101,6 @@ const handleToggle = () => {
   }
 }
 
-
 const isApplicationMenuOpen = ref(false)
 
 const toggleApplicationMenu = () => {
