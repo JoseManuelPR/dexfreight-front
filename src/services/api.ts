@@ -287,6 +287,23 @@ export const api = {
     return createApiResponse(mockVehicles[index], true, 'Vehículo actualizado exitosamente')
   },
 
+  async deleteVehicle(id: string): Promise<ApiResponse<boolean>> {
+    await delay(400)
+
+    const index = mockVehicles.findIndex(v => v.id === id)
+
+    if (index === -1) {
+      throw new Error('Vehículo no encontrado')
+    }
+
+    mockVehicles.splice(index, 1)
+
+    apiCache.invalidatePattern('vehicles')
+    apiCache.invalidatePattern('dashboard-stats')
+
+    return createApiResponse(true, true, 'Vehículo eliminado exitosamente')
+  },
+
   // Drivers
   async getDrivers(): Promise<ApiResponse<Driver[]>> {
     const cacheKey = 'drivers'
@@ -329,6 +346,23 @@ export const api = {
     apiCache.invalidatePattern('dashboard-stats')
 
     return createApiResponse(mockDrivers[index], true, 'Conductor actualizado exitosamente')
+  },
+
+  async deleteDriver(id: string): Promise<ApiResponse<boolean>> {
+    await delay(400)
+
+    const index = mockDrivers.findIndex(d => d.id === id)
+
+    if (index === -1) {
+      throw new Error('Conductor no encontrado')
+    }
+
+    mockDrivers.splice(index, 1)
+
+    apiCache.invalidatePattern('drivers')
+    apiCache.invalidatePattern('dashboard-stats')
+
+    return createApiResponse(true, true, 'Conductor eliminado exitosamente')
   },
 
   // Dashboard

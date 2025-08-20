@@ -92,6 +92,27 @@
         </div>
       </div>
 
+      <!-- Explanation of vehicle statuses -->
+      <div class="rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4">
+        <div class="flex items-start gap-3">
+          <div class="flex-shrink-0">
+            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200 mb-1">
+              Información sobre los estados de vehículos
+            </h4>
+            <p class="text-sm text-blue-700 dark:text-blue-300">
+              <strong>Disponibles:</strong> Vehículos que no están asignados a un conductor.
+              <strong>En Uso:</strong> Vehículos que ya están asignados a un conductor.
+              Estos estados se refieren únicamente a la asignación de conductores, no al estado de los envíos.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div class="rounded-lg bg-white dark:bg-gray-800 p-6 shadow-theme-sm border border-gray-200 dark:border-gray-700">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
@@ -215,11 +236,41 @@
                 Asignado
               </span>
             </div>
+
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-600 dark:text-gray-400">Envíos:</span>
+              <span class="font-medium text-gray-900 dark:text-white">
+                {{ getVehicleShipmentsCount(vehicle) }} envíos
+              </span>
+            </div>
+          </div>
+
+          <div v-if="needsDriverUrgently(vehicle)" class="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-yellow-600 dark:text-yellow-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+                ¡Asignar conductor urgente!
+              </span>
+            </div>
+            <p class="text-xs text-yellow-700 dark:text-yellow-300 mt-1 ml-6">
+              Este vehículo tiene envíos asignados pero no tiene conductor
+            </p>
           </div>
 
           <div class="mt-6 flex items-center gap-2">
             <Button variant="outline" size="sm" class="flex-1" @click="showVehicleDetails(vehicle)">
               Ver Detalles
+            </Button>
+            <Button
+              v-if="canDeleteVehicle(vehicle)"
+              variant="outline"
+              size="sm"
+              className="text-red-600 border-red-300 hover:bg-red-50 dark:text-red-400 dark:border-red-600 dark:hover:bg-red-900/20"
+              @click="confirmDeleteVehicle(vehicle)"
+            >
+              Eliminar
             </Button>
           </div>
         </div>
@@ -248,6 +299,28 @@
       title="¡Vehículo actualizado!"
       message="El vehículo ha sido editado exitosamente."
     />
+
+    <NotificationAlert
+      :show="showDeleteAlert"
+      variant="success"
+      title="¡Vehículo eliminado!"
+      message="El vehículo ha sido eliminado exitosamente."
+    />
+
+    <NotificationAlert
+      :show="showErrorAlert"
+      variant="error"
+      title="Error"
+      :message="errorMessage"
+    />
+
+    <div class="mt-6">
+      <Alert
+        variant="warning"
+        title="Política de Eliminación de Vehículos"
+        message="Solo se pueden eliminar vehículos que no tengan envíos en tránsito o pendientes. Los vehículos con envíos activos no pueden ser eliminados por razones de seguridad y trazabilidad."
+      />
+    </div>
   </admin-layout>
 </template>
 
@@ -257,9 +330,10 @@ import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
 import NotificationAlert from '@/components/ui/NotificationAlert.vue'
+import Alert from '@/components/ui/Alert.vue'
 import VehicleDetailModal from '@/components/vehicles/VehicleDetailModal.vue'
 import VehicleEditModal from '@/components/vehicles/VehicleEditModal.vue'
-import { useVehiclesStore, useDriversStore } from '@/store'
+import { useVehiclesStore, useDriversStore, useShipmentsStore } from '@/store'
 import type { Vehicle } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
 import BoxIcon from '@/icons/BoxIcon.vue'
@@ -268,6 +342,7 @@ import WarningIcon from '@/icons/WarningIcon.vue'
 
 const vehiclesStore = useVehiclesStore()
 const driversStore = useDriversStore()
+const shipmentsStore = useShipmentsStore()
 
 const searchTerm = ref('')
 const statusFilter = ref('')
@@ -277,6 +352,9 @@ const showDetailModal = ref(false)
 const showEditModal = ref(false)
 const selectedVehicle = ref<Vehicle | null>(null)
 const showSuccessAlert = ref(false)
+const showDeleteAlert = ref(false)
+const showErrorAlert = ref(false)
+const errorMessage = ref('')
 
 const loading = computed(() => vehiclesStore.loading)
 const vehicles = computed(() => vehiclesStore.vehicles)
@@ -350,8 +428,38 @@ function getFuelTypeLabel(fuelType: string) {
   return labels[fuelType] || fuelType
 }
 
+function canDeleteVehicle(vehicle: Vehicle): boolean {
+  const activeShipments = shipmentsStore.shipments.filter(shipment =>
+    shipment.vehicleId === vehicle.id &&
+    (shipment.status === 'in_transit' || shipment.status === 'pending')
+  )
+
+  return activeShipments.length === 0
+}
+
+function getVehicleShipmentsCount(vehicle: Vehicle): number {
+  return shipmentsStore.shipments.filter(shipment => shipment.vehicleId === vehicle.id).length
+}
+
+function needsDriverUrgently(vehicle: Vehicle): boolean {
+  if (!shipmentsStore.shipments || shipmentsStore.shipments.length === 0) {
+    return false
+  }
+
+  const vehicleShipments = shipmentsStore.shipments.filter(shipment => shipment.vehicleId === vehicle.id)
+  const hasShipments = vehicleShipments.length > 0
+  const isAvailable = vehicle.status === 'available'
+  const noDriver = vehicle.currentDriverId === null || vehicle.currentDriverId === undefined
+
+  return isAvailable && noDriver && hasShipments
+}
+
 async function refreshVehicles() {
-  await vehiclesStore.fetchVehicles()
+  await Promise.all([
+    vehiclesStore.fetchVehicles(),
+    driversStore.fetchDrivers(),
+    shipmentsStore.fetchShipments()
+  ])
 }
 
 function showVehicleDetails(vehicle: Vehicle) {
@@ -385,9 +493,31 @@ function handleVehicleSaved() {
   }, 3000)
 }
 
+async function confirmDeleteVehicle(vehicle: Vehicle) {
+  if (confirm(`¿Estás seguro de que deseas eliminar el vehículo ${vehicle.licensePlate}? Esta acción no se puede deshacer.`)) {
+    try {
+      await vehiclesStore.deleteVehicle(vehicle.id)
+
+      showDeleteAlert.value = true
+      setTimeout(() => {
+        showDeleteAlert.value = false
+      }, 3000)
+    } catch (error) {
+      errorMessage.value = error instanceof Error ? error.message : 'Error al eliminar el vehículo'
+      showErrorAlert.value = true
+      setTimeout(() => {
+        showErrorAlert.value = false
+      }, 5000)
+    }
+  }
+}
+
 onMounted(() => {
-  vehiclesStore.fetchVehicles()
-  driversStore.fetchDrivers()
+  Promise.all([
+    vehiclesStore.fetchVehicles(),
+    driversStore.fetchDrivers(),
+    shipmentsStore.fetchShipments()
+  ])
 })
 
 defineComponent({

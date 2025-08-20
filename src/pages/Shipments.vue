@@ -197,7 +197,7 @@
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Fecha
                 </th>
-                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Acciones
                 </th>
               </tr>
@@ -254,14 +254,23 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   {{ formatDate(shipment.createdAt) }}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div class="flex items-center justify-end gap-2">
+                <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                  <div class="flex items-center justify-start gap-2">
                     <Button
                       variant="outline"
                       size="sm"
                       @click="openShipmentDetail(shipment)"
                     >
                       Ver
+                    </Button>
+                    <Button
+                      v-if="canDeleteShipment(shipment)"
+                      variant="outline"
+                      size="sm"
+                      className="text-red-600 border-red-300 hover:bg-red-50 dark:text-red-400 dark:border-red-600 dark:hover:bg-red-900/20"
+                      @click="confirmDeleteShipment(shipment)"
+                    >
+                      Eliminar
                     </Button>
                   </div>
                 </td>
@@ -277,6 +286,7 @@
       :shipment="selectedShipment"
       :drivers="drivers"
       :vehicles="vehicles"
+      :can-edit="canEditShipment(selectedShipment)"
       @close="closeShipmentDetail"
       @edit="editShipment"
     />
@@ -296,6 +306,28 @@
       title="¡Envío actualizado!"
       message="El envío ha sido editado exitosamente."
     />
+
+    <NotificationAlert
+      :show="showDeleteAlert"
+      variant="success"
+      title="¡Envío eliminado!"
+      message="El envío ha sido eliminado exitosamente."
+    />
+
+    <NotificationAlert
+      :show="showErrorAlert"
+      variant="error"
+      title="Error"
+      :message="errorMessage"
+    />
+
+    <div class="mt-6">
+      <Alert
+        variant="warning"
+        title="Política de Gestión de Envíos"
+        message="Solo se pueden editar y eliminar envíos que estén en estado 'Pendiente', 'Cancelado' o 'Retrasado'. Los envíos en tránsito y entregados no pueden ser modificados por razones de seguridad y trazabilidad."
+      />
+    </div>
   </admin-layout>
 </template>
 
@@ -305,6 +337,7 @@ import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
 import NotificationAlert from '@/components/ui/NotificationAlert.vue'
+import Alert from '@/components/ui/Alert.vue'
 
 import { useShipmentsStore, useDriversStore, useVehiclesStore } from '@/store'
 import type { Shipment } from '@/types/models'
@@ -332,6 +365,9 @@ const showDetailModal = ref(false)
 const showEditModal = ref(false)
 const selectedShipment = ref<Shipment | null>(null)
 const showSuccessAlert = ref(false)
+const showDeleteAlert = ref(false)
+const showErrorAlert = ref(false)
+const errorMessage = ref('')
 
 const loading = computed(() => shipmentsStore.loading)
 const shipments = computed(() => shipmentsStore.shipments)
@@ -410,6 +446,14 @@ function getPriorityLabel(priority: string) {
   return labels[priority] || priority
 }
 
+function canDeleteShipment(shipment: Shipment): boolean {
+  return shipment.status === 'pending' || shipment.status === 'cancelled' || shipment.status === 'delayed'
+}
+
+function canEditShipment(shipment: Shipment): boolean {
+  return shipment.status === 'pending' || shipment.status === 'cancelled' || shipment.status === 'delayed'
+}
+
 function formatDate(dateString: string) {
   return new Intl.DateTimeFormat('es-PE', {
     day: 'numeric',
@@ -461,6 +505,25 @@ function handleShipmentSaved() {
   setTimeout(() => {
     showSuccessAlert.value = false
   }, 3000)
+}
+
+async function confirmDeleteShipment(shipment: Shipment) {
+  if (confirm(`¿Estás seguro de que deseas eliminar el envío ${shipment.trackingNumber}? Esta acción no se puede deshacer.`)) {
+    try {
+      await shipmentsStore.deleteShipment(shipment.id)
+
+      showDeleteAlert.value = true
+      setTimeout(() => {
+        showDeleteAlert.value = false
+      }, 3000)
+    } catch (error) {
+      errorMessage.value = error instanceof Error ? error.message : 'Error al eliminar el envío'
+      showErrorAlert.value = true
+      setTimeout(() => {
+        showErrorAlert.value = false
+      }, 5000)
+    }
+  }
 }
 
 watch([searchTerm, statusFilter, priorityFilter], () => {

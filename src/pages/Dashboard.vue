@@ -185,6 +185,7 @@
       :shipment="selectedShipment"
       :drivers="drivers"
       :vehicles="vehicles"
+      :can-edit="canEditShipment(selectedShipment)"
       @close="closeShipmentDetail"
       @edit="editShipment"
     />
@@ -274,6 +275,10 @@ function getStatusLabel(status: string) {
   }
 
   return labels[status] || status
+}
+
+function canEditShipment(shipment: Shipment): boolean {
+  return shipment.status === 'pending' || shipment.status === 'cancelled' || shipment.status === 'delayed'
 }
 
 function formatCurrency(value: number) {

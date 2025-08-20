@@ -330,7 +330,12 @@
           <Button variant="outline" size="sm" @click="$emit('close')">
             Cerrar
           </Button>
-          <Button variant="primary" size="sm" @click="$emit('edit', driver)">
+          <Button
+            v-if="canEdit !== false"
+            variant="primary"
+            size="sm"
+            @click="$emit('edit', driver)"
+          >
             Editar Conductor
           </Button>
         </div>
@@ -349,6 +354,7 @@ import type { Driver, Vehicle } from '@/types/models'
 interface Props {
   driver: Driver
   vehicles?: Vehicle[]
+  canEdit?: boolean
 }
 
 const props = defineProps<Props>()

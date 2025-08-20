@@ -284,7 +284,12 @@
           <Button variant="outline" size="sm" @click="$emit('close')">
             Cerrar
           </Button>
-          <Button variant="primary" size="sm" @click="$emit('edit', shipment)">
+          <Button
+            v-if="canEdit !== false"
+            variant="primary"
+            size="sm"
+            @click="$emit('edit', shipment)"
+          >
             Editar Envío
           </Button>
         </div>
@@ -304,6 +309,7 @@ interface Props {
   shipment: Shipment
   drivers?: Driver[]
   vehicles?: Vehicle[]
+  canEdit?: boolean
 }
 
 const props = defineProps<Props>()

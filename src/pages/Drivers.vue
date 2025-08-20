@@ -163,7 +163,7 @@
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Estado
                 </th>
-                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Acciones
                 </th>
               </tr>
@@ -213,10 +213,19 @@
                     {{ getStatusLabel(driver.status) }}
                   </Badge>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div class="flex items-center justify-end gap-2">
+                <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+                  <div class="flex items-center justify-start gap-2">
                     <Button variant="outline" size="sm" @click="showDriverDetails(driver)">
                       Ver
+                    </Button>
+                    <Button
+                      v-if="canDeleteDriver(driver)"
+                      variant="outline"
+                      size="sm"
+                      className="text-red-600 border-red-300 hover:bg-red-50 dark:text-red-400 dark:border-red-600 dark:hover:bg-red-900/20"
+                      @click="confirmDeleteDriver(driver)"
+                    >
+                      Eliminar
                     </Button>
                   </div>
                 </td>
@@ -231,6 +240,7 @@
       v-if="showDetailModal && selectedDriver"
       :driver="selectedDriver"
       :vehicles="vehicles"
+      :can-edit="canEditDriver(selectedDriver)"
       @close="closeDriverDetail"
       @edit="editDriver"
     />
@@ -249,6 +259,29 @@
       title="¡Conductor actualizado!"
       message="El conductor ha sido editado exitosamente."
     />
+
+    <NotificationAlert
+      :show="showDeleteAlert"
+      variant="success"
+      title="¡Conductor eliminado!"
+      message="El conductor ha sido eliminado exitosamente."
+    />
+
+    <NotificationAlert
+      :show="showErrorAlert"
+      variant="error"
+      title="Error"
+      :message="errorMessage"
+    />
+
+    <!-- Warning about driver management policy -->
+    <div class="mt-6">
+      <Alert
+        variant="warning"
+        title="Política de Gestión de Conductores"
+        message="Los conductores que están 'En Entrega' no pueden ser editados ni eliminados por razones de seguridad y trazabilidad operativa."
+      />
+    </div>
   </admin-layout>
 </template>
 
@@ -258,9 +291,10 @@ import AdminLayout from '@/components/layout/AdminLayout.vue'
 import Button from '@/components/ui/Button.vue'
 import Badge from '@/components/ui/Badge.vue'
 import NotificationAlert from '@/components/ui/NotificationAlert.vue'
+import Alert from '@/components/ui/Alert.vue'
 import DriverDetailModal from '@/components/drivers/DriverDetailModal.vue'
 import DriverEditModal from '@/components/drivers/DriverEditModal.vue'
-import { useDriversStore, useVehiclesStore } from '@/store'
+import { useDriversStore, useVehiclesStore, useShipmentsStore } from '@/store'
 import type { Driver } from '@/types/models'
 import RefreshIcon from '@/icons/RefreshIcon.vue'
 import UserGroupIcon from '@/icons/UserGroupIcon.vue'
@@ -269,6 +303,7 @@ import CheckIcon from '@/icons/CheckIcon.vue'
 
 const driversStore = useDriversStore()
 const vehiclesStore = useVehiclesStore()
+const shipmentsStore = useShipmentsStore()
 
 const searchTerm = ref('')
 const statusFilter = ref('')
@@ -277,6 +312,9 @@ const showDetailModal = ref(false)
 const showEditModal = ref(false)
 const selectedDriver = ref<Driver | null>(null)
 const showSuccessAlert = ref(false)
+const showDeleteAlert = ref(false)
+const showErrorAlert = ref(false)
+const errorMessage = ref('')
 
 const loading = computed(() => driversStore.loading)
 const drivers = computed(() => driversStore.drivers)
@@ -325,8 +363,20 @@ function getStatusLabel(status: string) {
   return labels[status] || status
 }
 
+function canDeleteDriver(driver: Driver): boolean {
+  return driver.status !== 'on-delivery'
+}
+
+function canEditDriver(driver: Driver): boolean {
+  return driver.status !== 'on-delivery'
+}
+
 async function refreshDrivers() {
-  await driversStore.fetchDrivers()
+  await Promise.all([
+    driversStore.fetchDrivers(),
+    vehiclesStore.fetchVehicles(),
+    shipmentsStore.fetchShipments()
+  ])
 }
 
 function showDriverDetails(driver: Driver) {
@@ -360,9 +410,31 @@ function handleDriverSaved() {
   }, 3000)
 }
 
+async function confirmDeleteDriver(driver: Driver) {
+  if (confirm(`¿Estás seguro de que deseas eliminar al conductor ${driver.name}? Esta acción no se puede deshacer.`)) {
+    try {
+      await driversStore.deleteDriver(driver.id)
+
+      showDeleteAlert.value = true
+      setTimeout(() => {
+        showDeleteAlert.value = false
+      }, 3000)
+    } catch (error) {
+      errorMessage.value = error instanceof Error ? error.message : 'Error al eliminar el conductor'
+      showErrorAlert.value = true
+      setTimeout(() => {
+        showErrorAlert.value = false
+      }, 5000)
+    }
+  }
+}
+
 onMounted(() => {
-  driversStore.fetchDrivers()
-  vehiclesStore.fetchVehicles()
+  Promise.all([
+    driversStore.fetchDrivers(),
+    vehiclesStore.fetchVehicles(),
+    shipmentsStore.fetchShipments()
+  ])
 })
 
 defineComponent({

@@ -23,7 +23,6 @@
 
         <form @submit.prevent="handleSubmit" class="p-6 max-h-[70vh] overflow-y-auto">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <!-- Información General -->
             <div class="space-y-6">
               <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
@@ -93,7 +92,6 @@
                 </div>
               </div>
 
-              <!-- Dimensiones y Peso -->
               <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Dimensiones y Peso
@@ -132,7 +130,6 @@
               </div>
             </div>
 
-            <!-- Fechas y Asignaciones -->
             <div class="space-y-6">
               <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
@@ -187,7 +184,6 @@
                 </div>
               </div>
 
-              <!-- Asignaciones -->
               <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   Asignaciones
@@ -235,14 +231,12 @@
             </div>
           </div>
 
-          <!-- Direcciones -->
           <div class="mt-6 space-y-6">
             <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
               <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                 Direcciones
               </h3>
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Origen -->
                 <div>
                   <h4 class="text-md font-medium text-gray-900 dark:text-white mb-3">Origen</h4>
                   <div class="space-y-3">
@@ -283,7 +277,6 @@
                   </div>
                 </div>
 
-                <!-- Destino -->
                 <div>
                   <h4 class="text-md font-medium text-gray-900 dark:text-white mb-3">Destino</h4>
                   <div class="space-y-3">

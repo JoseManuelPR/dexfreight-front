@@ -120,6 +120,28 @@ export const useShipmentsStore = defineStore('shipments', () => {
     }
   }
 
+  async function deleteShipment(id: string) {
+    loading.value = true
+    error.value = null
+
+    try {
+      await api.deleteShipment(id)
+      const index = shipments.value.findIndex(s => s.id === id)
+
+      if (index !== -1) {
+        shipments.value.splice(index, 1)
+      }
+
+      return true
+    } catch (err) {
+      error.value = handleApiError(err)
+      console.error('Error deleting shipment:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   function updateFilters(newFilters: FilterOptions) {
     filters.value = { ...filters.value, ...newFilters }
   }
@@ -145,6 +167,7 @@ export const useShipmentsStore = defineStore('shipments', () => {
     fetchShipments,
     createShipment,
     updateShipment,
+    deleteShipment,
     updateFilters,
     clearFilters
   }
@@ -213,6 +236,28 @@ export const useVehiclesStore = defineStore('vehicles', () => {
     }
   }
 
+  async function deleteVehicle(id: string) {
+    loading.value = true
+    error.value = null
+
+    try {
+      await api.deleteVehicle(id)
+      const index = vehicles.value.findIndex(v => v.id === id)
+
+      if (index !== -1) {
+        vehicles.value.splice(index, 1)
+      }
+
+      return true
+    } catch (err) {
+      error.value = handleApiError(err)
+      console.error('Error deleting vehicle:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   return {
     vehicles,
     loading,
@@ -223,7 +268,8 @@ export const useVehiclesStore = defineStore('vehicles', () => {
     vehiclesOffline,
     vehiclesInTransit, // Legacy - alias for vehiclesInUse
     fetchVehicles,
-    updateVehicle
+    updateVehicle,
+    deleteVehicle
   }
 })
 
@@ -291,6 +337,28 @@ export const useDriversStore = defineStore('drivers', () => {
     }
   }
 
+  async function deleteDriver(id: string) {
+    loading.value = true
+    error.value = null
+
+    try {
+      await api.deleteDriver(id)
+      const index = drivers.value.findIndex(d => d.id === id)
+
+      if (index !== -1) {
+        drivers.value.splice(index, 1)
+      }
+
+      return true
+    } catch (err) {
+      error.value = handleApiError(err)
+      console.error('Error deleting driver:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   return {
     drivers,
     loading,
@@ -301,7 +369,8 @@ export const useDriversStore = defineStore('drivers', () => {
     driversOffDuty,
     driversSuspended,
     fetchDrivers,
-    updateDriver
+    updateDriver,
+    deleteDriver
   }
 })
 

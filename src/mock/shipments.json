@@ -560,10 +560,10 @@
     "vehicleId": "VH004",
     "customer": {
       "id": "CU008",
-      "name": "Souvenirs Amazonia Perú EIRL",
+      "name": "Souvenirs Amazonia EIRL",
       "email": "pedidos@amazoniasouvenirs.pe",
       "phone": "+51 961 567 890",
-      "company": "Souvenirs Amazonia Perú EIRL",
+      "company": "Souvenirs Amazonia EIRL",
       "address": {
         "street": "Centro Logístico 456",
         "city": "Pucallpa",
@@ -634,10 +634,10 @@
     "vehicleId": "VH006",
     "customer": {
       "id": "CU009",
-      "name": "Industrias Mineras del Norte SAC",
+      "name": "Industrias Mineras SAC",
       "email": "compras@industriasmineras.pe",
       "phone": "+51 976 789 012",
-      "company": "Industrias Mineras del Norte SAC",
+      "company": "Industrias Mineras SAC",
       "address": {
         "street": "Puerto Matarani 234",
         "city": "Matarani",
@@ -709,10 +709,10 @@
     "vehicleId": "VH007",
     "customer": {
       "id": "CU010",
-      "name": "Orgánicos de la Sierra Peruana SAC",
+      "name": "Sierra Peruana SAC",
       "email": "ventas@organicossierra.pe",
       "phone": "+51 956 234 567",
-      "company": "Orgánicos de la Sierra Peruana SAC",
+      "company": "Sierra Peruana SAC",
       "address": {
         "street": "Mercado Central 345",
         "city": "Ica",
@@ -1215,10 +1215,10 @@
     ],
     "customer": {
       "id": "CU017",
-      "name": "Agro Implementos del Norte SAC",
+      "name": "Agro Implementos SAC",
       "email": "compras@agroimplementosnorte.pe",
       "phone": "+51 942 345 678",
-      "company": "Agro Implementos del Norte SAC",
+      "company": "Agro Implementos SAC",
       "address": {
         "street": "Zona Centro 123",
         "city": "Moyobamba",
@@ -1286,10 +1286,10 @@
     ],
     "customer": {
       "id": "CU018",
-      "name": "Construcciones Mineras del Centro SAC",
+      "name": "Construcciones Mineras SAC",
       "email": "material@construccionesmineras.pe",
       "phone": "+51 963 456 789",
-      "company": "Construcciones Mineras del Centro SAC",
+      "company": "Construcciones Mineras SAC",
       "address": {
         "street": "Av. López Mateos 789",
         "city": "Cerro de Pasco",
