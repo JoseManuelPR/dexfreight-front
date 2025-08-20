@@ -157,9 +157,21 @@
                 </Badge>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-600 dark:text-gray-400">Activos</span>
+                <span class="text-sm text-gray-600 dark:text-gray-400">En Entrega</span>
                 <Badge color="primary" variant="light" size="sm">
-                  {{ activeDrivers }}
+                  {{ driversStore.driversOnDelivery.length }}
+                </Badge>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-600 dark:text-gray-400">Fuera de Servicio</span>
+                <Badge color="warning" variant="light" size="sm">
+                  {{ driversStore.driversOffDuty.length }}
+                </Badge>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-600 dark:text-gray-400">Suspendidos</span>
+                <Badge color="error" variant="light" size="sm">
+                  {{ driversStore.driversSuspended.length }}
                 </Badge>
               </div>
             </div>
@@ -217,7 +229,7 @@ const recentShipments = computed(() =>
     .slice(0, 5)
 )
 
-const activeDrivers = computed(() => driversStore.activeDrivers.length)
+
 
 function getStatusColor(status: string) {
   const colors: Record<string, string> = {
